@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import { components } from "./app-ui";
 
+
 const { Home, SignUp, LogOut, LogIn, Navigation, PrivateRoute } = components;
 
 function App() {

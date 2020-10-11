@@ -5,14 +5,16 @@ import events from "./events";
 export default createReducer({
     session: {
         token: undefined,
+        userId: undefined,
         isLoggedIn: false,
         isLogInPending: false,
         isSignUpPending: false,
         errors: []
     }}, 
     builder => {
-        builder.addCase(actions.logIn.fulfilled,(state,{payload: token})=>{
-            state.session.token = token;
+        builder.addCase(actions.logIn.fulfilled,(state,{payload})=>{
+            state.session.token = payload.token;
+            state.session.userId = payload.userId;
             state.session.isLoggedIn = true;
             state.session.isLogInPending = false;
         })
@@ -39,6 +41,7 @@ export default createReducer({
         })
         .addCase(events.loggedOut, (state) => {
             state.session.token = undefined;
+            state.session.userId = undefined;
             state.session.isLoggedIn = false;
             state.session.errors = [];
         })

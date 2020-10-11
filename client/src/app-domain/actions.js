@@ -12,8 +12,8 @@ export const logIn = createAsyncThunk(
             body: params
         })
         const responseJson = await response.json();
-        const { token } = responseJson;
-        return token; 
+        const { token, userId } = responseJson;
+        return { token, userId }; 
     }
 )
 

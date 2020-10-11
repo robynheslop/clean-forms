@@ -6,4 +6,12 @@ const selectIsSignUpPending = state => state?.appDomain?.session?.isSignUpPendin
 
 const selectToken = (state) => state?.appDomain?.session?.token
 
-export default { selectToken, selectIsUserLoggedIn, selectIsLogInPending, selectIsSignUpPending };
+const selectUserId = (state) => state?.appDomain?.session?.userId
+
+export default { 
+    selectToken, 
+    selectIsUserLoggedIn, 
+    selectIsLogInPending, 
+    selectIsSignUpPending, 
+    selectUserId 
+};
