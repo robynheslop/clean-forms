@@ -15,7 +15,10 @@ passport.use(
                 return done(null, false, {message: "Could not authenticate"})
             } 
             user.login(password)
-            .then(() => done(null, user))
+            .then((result) => {
+                if (!result) done (null, false, {message: "Could not authenticate"})
+                done(null, user)
+            })
             .catch(error => done(error, false, {message: "Could not authenticate"}))
         })
     })

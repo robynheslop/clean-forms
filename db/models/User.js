@@ -11,15 +11,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         lowercase: true
     },
-    email: {
-        type: String,
-        index: true,
-        unique: true,
-        minlength: 2,
-        maxlength: 20,
-        required: true,
-        lowercase: true
-    },
     password: {
         type: String,
         required: true
@@ -39,15 +30,12 @@ userSchema.pre("save", function (next) {
     }
 });
 
+
+
 userSchema.methods.login = function(password) {
     const user = this;
-    return new Promise((resolve, reject) => {
-        bcrypt.compare(password, user.password, (error, result) => {
-            if (error) reject(error);
-            if (result === false) reject();
-            resolve(user);
-        })
-    })
+    return bcrypt.compare(password, user.password)
+    
 }
 
 const User = mongoose.model("User", userSchema);

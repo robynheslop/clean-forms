@@ -9,7 +9,6 @@ export function Home() {
                 {/* Send Forms */}
             </div>
             <div>
-                
                 {/* Review Data */}
             </div>
         </div>

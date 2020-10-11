@@ -1,21 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import { isAuthenticated } from './lib';
-import * as components from "./components";
+import { components } from "./app-ui";
 
+const { Home, SignUp, LogOut, LogIn, Navigation, PrivateRoute } = components;
 
-import { TokenProvider } from "./lib/GlobalState"
-
-const { Home, SignUp, LogIn, LogOut, Form, Navigation, PrivateRoute } = components
 function App() {
 
-  const [authenticated, setAuthenticated] = useState(isAuthenticated);
-  
   return (
     <div className="App">
-      <TokenProvider>
-        <Navigation props={{authenticated: authenticated}}/>
+        <Navigation />
         <main>
           <Switch>
             <PrivateRoute exact path="/" component={Home}/>
@@ -23,8 +17,7 @@ function App() {
             <Route path="/login" component={LogIn}/>
             <Route path="/logout" component={LogOut}/>
           </Switch>
-        </main>
-      </TokenProvider>   
+        </main>  
     </div>
   );
 }

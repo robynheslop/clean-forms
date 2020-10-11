@@ -7,8 +7,7 @@ const router = express.Router();
 
 router.post("/signup", (request, response) => {
     const user = new User({
-        username: request.body.clinicname, 
-        email: request.body.email,
+        username: request.body.username, 
         password: request.body.password
     });
     user.save()
@@ -25,8 +24,7 @@ router.post("/signup", (request, response) => {
 router.post("/login", passport.authenticate("local", { session: false }), 
     (request,response) => {
         const token = jwt.sign({id: request.user.id}, "jwt_secret");
-        console.log("token",token);
-        response.json({token:token})
+        response.json({token})
 });
 
 router.get("/user", passport.authenticate("jwt", { session: false }), (request, response) => {
