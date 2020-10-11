@@ -1,12 +1,12 @@
 const express =require("express");
 const passport =require("passport");
 const jwt = require("jsonwebtoken");
-const User= require("../db/models/User")
+const db = require("../db/models")
 
 const router = express.Router();
 
 router.post("/signup", (request, response) => {
-    const user = new User({
+    const user = new db.User({
         username: request.body.username, 
         password: request.body.password
     });
@@ -22,14 +22,14 @@ router.post("/signup", (request, response) => {
 });
 
 router.post("/login", passport.authenticate("local", { session: false }), 
-    (request,response) => {
+    (request, response) => {
         const token = jwt.sign({id: request.user.id}, "jwt_secret");
-        response.json({token})
+        response.json({token, userId: request.user.id})
 });
 
 router.get("/user", passport.authenticate("jwt", { session: false }), (request, response) => {
     if (!request.user) {
-        response.json({clinicname: "nobody"})
+        response.json({username: "nobody"})
     } else {
         response.json({
             clinicname: request.user.username,
@@ -37,5 +37,34 @@ router.get("/user", passport.authenticate("jwt", { session: false }), (request, 
         })
     }
 });
+
+router.get("/clinics/:owner", (request, response) => {
+    db.Clinic.find(
+        {owner: request.params.owner}, 
+        (error, clinics) => {
+        if (error) response.status(500).json("Could not find clinics");
+        if (!clinics) {
+            response.status(500).json("Could not find clinics");
+        } 
+        response.json(clinics);
+    })
+})
+
+router.post("/new-clinic", (request, response) => {
+    const clinic = new db.Clinic({
+        owner: request.body.owner,
+        clinicname: request.body.clinicname, 
+        email: request.body.email,
+        phone: request.body.phone
+    });
+    clinic.save()
+    .then(clinic => {
+        response.json(clinic)
+    })
+    .catch(error => {
+        console.log(error.message)
+        response.status(500).json("Could not create clinic");
+    })
+})
 
 module.exports = router;
