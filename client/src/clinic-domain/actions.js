@@ -54,6 +54,10 @@ export const addClinic = createAsyncThunk(
     }
 )
 
+// export const logOut = () => (dispatch) => {
+//     dispatch(events.loggedOut());
+// }
+
 const actions = {
     getClinics,
     addClinic

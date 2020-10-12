@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 export function LogOut({handleLogOut}) {
     useEffect(()=> {
         handleLogOut()
-    }, []);
+    }, [handleLogOut]);
 
     return(
         <Redirect to="/login"/>

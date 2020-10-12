@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Button, TextField } from '@material-ui/core';
 
 export function SignUp({isLoggedIn, location, handleSignUp, isSignUpPending}) {
     const usernameRef = useRef();
@@ -9,7 +10,14 @@ export function SignUp({isLoggedIn, location, handleSignUp, isSignUpPending}) {
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
-        handleSignUp({username: usernameRef.current.value, password:passwordRef.current.value})
+        console.log({
+            username: usernameRef.current.value, 
+            password: passwordRef.current.value
+        })
+        handleSignUp({
+            username: usernameRef.current.value, 
+            password: passwordRef.current.value
+        })
     }
 
     return (
@@ -18,15 +26,29 @@ export function SignUp({isLoggedIn, location, handleSignUp, isSignUpPending}) {
                 <h2>Sign Up</h2>
                 <form onSubmit={handleFormSubmit}>
                     <div>
-                        <label>Username: </label>
-                        <input type="text" name="username" pattern=".{2,20}" ref={usernameRef} required />
+                        <input
+                            label="Username"
+                            type="text"
+                            name="password"
+                            pattern=".{2,20}"
+                            ref={ usernameRef }
+                            required />
                     </div>
                     <div>
-                        <label>Password: </label>
-                        <input type="password" name="password" ref={passwordRef} required />
+                        <input
+                            label="Password"
+                            type="password"
+                            name="password"
+                            ref={ passwordRef }
+                            required />
                     </div>
                     <div>
-                        <input type="submit" value="Sign Up" />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            style={{ margin: 8 }}
+                            color="secondary"
+                        >Log In</Button>
                     </div>
                 </form>
             </div>

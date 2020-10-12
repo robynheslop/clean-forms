@@ -4,6 +4,7 @@ import events from "./events";
 export const logIn = createAsyncThunk(
     'app-domain/LOG_IN',
     async ({username, password}) => {
+        console.log(username, password);
         const params = new URLSearchParams();
         params.append('username', username);
         params.append('password', password);
@@ -13,6 +14,7 @@ export const logIn = createAsyncThunk(
         })
         const responseJson = await response.json();
         const { token, userId } = responseJson;
+        console.log(token, userId);
         return { token, userId }; 
     }
 )
@@ -28,14 +30,15 @@ export const signUp = createAsyncThunk(
             body: params
         })
         const responseJson = await response.json();
-        const { token } = responseJson;
-        return token; 
+        const { token, userId } = responseJson;
+        return { token, userId }; 
     }
 )
 
 export const logOut = () => (dispatch) => {
     dispatch(events.loggedOut());
 }
+
 const actions = {
     logIn,
     signUp,

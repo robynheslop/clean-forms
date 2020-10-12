@@ -12,7 +12,7 @@ export default createReducer({
         errors: []
     }}, 
     builder => {
-        builder.addCase(actions.logIn.fulfilled,(state,{payload})=>{
+        builder.addCase(actions.logIn.fulfilled,(state, {payload})=>{
             state.session.token = payload.token;
             state.session.userId = payload.userId;
             state.session.isLoggedIn = true;
@@ -26,8 +26,9 @@ export default createReducer({
             state.session.errors = [];
             state.session.isLogInPending = true;
         })
-        .addCase(actions.signUp.fulfilled, (state,{payload: token})=>{
-            state.session.token = token;
+        .addCase(actions.signUp.fulfilled, (state, {payload})=>{
+            state.session.token = payload.token;
+            state.session.userId = payload.userId;
             state.session.isLoggedIn = true;
             state.session.isSignUpPending = false;
         })
