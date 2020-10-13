@@ -32,16 +32,9 @@ userSchema.pre("save", function (next) {
 
 userSchema.methods.login = function(password) {
     const user = this;
-    return new Promise((resolve, reject) => {
-        bcrypt.compare(password, user.password, (error) => {
-            if (error) reject(error);
-            console.log('password matched')
-            resolve(user);
-        })
-    })
+    return bcrypt.compare(password, user.password);
 }
-
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = User
+module.exports = User;

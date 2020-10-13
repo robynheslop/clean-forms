@@ -9,13 +9,16 @@ const JWTStrategy = passportJwt.Strategy;
   
 passport.use(
     new LocalStrategy((username, password, done) => {
-        User.findOne({username:username}, (error, user) => {
+        User.findOne({username: username}, (error, user) => {
             if (error) return done(error);
             if (!user) {
                 return done(null, false, {message: "Could not authenticate"})
             } 
             user.login(password)
-            .then(() => done(null, user))
+            .then((result) => {
+                if (!result) done (null, false, {message: "Could not authenticate"})
+                done(null, user)
+            })
             .catch(error => done(error, false, {message: "Could not authenticate"}))
         })
     })
