@@ -10,7 +10,6 @@ function App() {
   return (
     <div className="App">
       <Navigation />
-      <Container maxWidth="sm">
         <main>
           <Switch>
             <Route path="/signup" component={SignUp} />
@@ -19,7 +18,6 @@ function App() {
             <PrivateRoute path="/" component={Body} />
           </Switch>
         </main>
-      </Container>
     </div>
   );
 }
