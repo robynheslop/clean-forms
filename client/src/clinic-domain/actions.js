@@ -53,7 +53,8 @@ export const loadBookings = createAsyncThunk(
                 clientname: booking.clientname,
                 email: booking.email,
                 phone: booking.phone,
-                status: booking.status
+                status: booking.status,
+                date: booking.date
             }
         });
         return bookings;

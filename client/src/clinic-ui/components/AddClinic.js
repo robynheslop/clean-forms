@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import PropTypes from "prop-types";
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 
 function AddClinics({ addClinic, userId }) {
     const clinicNameRef = useRef();
@@ -9,7 +9,7 @@ function AddClinics({ addClinic, userId }) {
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
-        console.log("submit", userId);
+        console.log('submit', userId);
         addClinic({
             owner: userId,
             clinicname: clinicNameRef.current.value,
@@ -24,18 +24,18 @@ function AddClinics({ addClinic, userId }) {
             <form onSubmit={handleFormSubmit}>
                 <div>
                     <label>Clinic Name: </label>
-                    <input type="text" name="clinicName" pattern=".{2,20}" ref={clinicNameRef} required />
+                    <input type='text' name='clinicName' pattern='.{2,20}' ref={clinicNameRef} required />
                 </div>
                 <div>
                     <label>Email: </label>
-                    <input type="email" name="email" ref={emailRef} required />
+                    <input type='email' name='email' ref={emailRef} required />
                 </div>
                 <div>
                     <label>Office Number: </label>
-                    <input type="phone" name="phone" ref={phoneRef} required />
+                    <input type='phone' name='phone' ref={phoneRef} required />
                 </div>
                 <div>
-                    <input type="submit" value="Add Clinic" />
+                    <input type='submit' value='Add Clinic' />
                 </div>
             </form>
         </div>

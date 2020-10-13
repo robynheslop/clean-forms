@@ -1,23 +1,23 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import { Container } from "@material-ui/core";
 import { appComponents } from "./app-ui";
-const { SignUp, LogOut, LogIn, Navigation, PrivateRoute, Body } = appComponents;
+import { makeStyles } from '@material-ui/core/styles';
+const { Navigation } = appComponents;
 
+const useStyles = makeStyles({
+  root: {
+    textAlign: 'center',
+    minHeight: '100vh',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+})
 
 function App() {
+  const classes = useStyles()
   return (
-    <div className="App">
+    <div className={classes.root}>
       <Navigation />
-        <main>
-          <Switch>
-            <Route path="/signup" component={SignUp} />
-            <Route path="/login" component={LogIn} />
-            <Route path="/logout" component={LogOut} />
-            <PrivateRoute path="/" component={Body} />
-          </Switch>
-        </main>
     </div>
   );
 }

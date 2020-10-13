@@ -1,8 +1,8 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { reducer as appDomainReducer } from "./app-domain";
-import { reducer as clinicDomainReducer } from "./clinic-domain"
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { reducer as appDomainReducer } from './app-domain';
+import { reducer as clinicDomainReducer } from './clinic-domain'
 import createSagaMiddleware from 'redux-saga';
-import sagas from "./sagas";
+import sagas from './sagas';
 
 const sagaMiddleware = createSagaMiddleware()
 const reducer = {

@@ -1,19 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles, Table, TableCell, TableHead, TableContainer, TableRow, TableBody } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
-        width: "100%"
+        maxWidth: '83.333333%',
+        margin: '0 auto',
     },
-    Failed: {
-        backgroundColor: "#f07b7b"
+    failed: {
+        backgroundColor: '#e58ca2'
     },
-    Passed: {
-        backgroundColor: "#7bf0b2"
+    passed: {
+        backgroundColor: '#7bf0b2'
     },
-    Incomplete: {
-        backgroundColor: "#d3d3d3"
+    incomplete: {
+        backgroundColor: '#e8e4e4'
     }
 })
 
@@ -25,7 +26,7 @@ function BookingsList({ activeClinic }) {
         <div className={classes.root}>
             {bookings.length > 0 ?
                 <div>
-                    <h2>Your Bookings: </h2>
+                    <h1>Your Bookings: </h1>
                     <TableContainer>
                         <Table>
                             <TableHead>
@@ -38,10 +39,10 @@ function BookingsList({ activeClinic }) {
                             {bookings.map(({ id, clientname, status, date }) => {
                                 return (
                                 <TableBody key={id}>
-                                    <TableRow className={classes[status]}>
+                                    <TableRow className={classes[status.toLowerCase()]}>
                                         <TableCell>{clientname}</TableCell>
-                                        <TableCell>{status}</TableCell>
-                                        <TableCell>{date}</TableCell>
+                                        <TableCell>{status === 'failed'? <b>{status.toUpperCase()}</b> : status.toUpperCase()}</TableCell>
+                                        <TableCell>{date.toString().slice(0,10)}</TableCell>
                                     </TableRow>
                                 </TableBody>)
                             })}

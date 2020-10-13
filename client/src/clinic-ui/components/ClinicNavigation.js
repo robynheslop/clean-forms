@@ -1,102 +1,40 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Grid, AppBar, Box, Tab, Tabs } from "@material-ui/core";
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { ConnectedViewClinics as ViewClinics } from "./ConnectedViewClinics";
-import { ConnectedAddClinic as AddClinic } from "./ConnectedAddClinic";
+import { AppBar } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-function TabPanel(props) {
-    const { children: Component, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`wrapped-tabpanel-${index}`}
-            aria-labelledby={`wrapped-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Component></Component>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.any,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `vertical-tabpanel-${index}`,
-        'aria-controls': `wrapped-tabpanel-${index}`,
-    };
-}
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     root: {
-        backgroundColor: "#ffffff",
-        flex: 1,
+        backgroundColor: '#b1acae',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(120, 102, 105, .3)',
+        color: 'white',
+        height: 48,
+        padding: '70px 30px',
+        minHeight: 'calc(100vh - 50px)'
     },
-    fullHeight: {
-        height: "fill!important",
-    },
-    height: {
-        height: "100%",
-        paddingTop: "50px"
-    },
-    container: {
-        minHeight: "calc(100vh - 60px)"
+    link: {
+        fontSize: '1.2em',
+        color: 'white',
+        padding: '2em 0px',
+        textDecoration: 'none',
+        float: 'right'
     }
-}));
+})
+
 
 export function ClinicNavigation() {
-    const classes = useStyles()
-
-    const [value, setValue] = useState('view-clinics');
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+    const classes = useStyles();
     return (
-        <Grid container className={classes.container} >
-            <Grid item sm={2}
-                className={classes.fullHeight}>
-                <AppBar
-                    color="secondary"
-                    className={classes.height}
-                    position="static" >
-                    <Tabs
-                        orientation="vertical"
-                        value={value}
-                        onChange={handleChange}
-                        aria-label="clinic tabs">
-                        <Tab
-                            value="view-clinics"
-                            label="View Clinics"
-                            {...a11yProps('view-clinics')}
-                        />
-                        <Tab
-                            value="add-clinic"
-                            label="Add New Clinic"
-                            {...a11yProps('add-clinic')} />
-                    </Tabs>
-                </AppBar>
-            </Grid>
-            <Grid item sm={9}>
-                <TabPanel value={value} index="view-clinics">
-                    {ViewClinics}
-                </TabPanel>
-                <TabPanel value={value} index="add-clinic" >
-                    {AddClinic}
-                </TabPanel>
-            </Grid>
-        </Grid>
-    );
+        <div>
+            <AppBar position='static' className={classes.root}>
+                <Link className={classes.link} to='/clinic'>View Clinics</Link>
+                <Link className={classes.link} to='/clinic/add-clinic'>Add New Clinics</Link>
+            </AppBar>
+
+        </div>
+    )
 }
 
 export default ClinicNavigation;
