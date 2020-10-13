@@ -9,6 +9,8 @@ export default createReducer({
         id: undefined,
         isLoadBookingsPending: false,
         isAddBookingPending: false,
+        isAddingBookingSuccess: false,
+        isAddingBookingFailed: false,
         bookings: [],
         errors: [],
     },
@@ -76,14 +78,18 @@ export default createReducer({
             .addCase(actions.addBooking.pending, (state) => {
                 state.activeClinic.errors = [];
                 state.activeClinic.isAddBookingPending = true;
+                state.activeClinic.isAddingBookingSuccess = false;
+                state.activeClinic.isAddingBookingFailed = false;
             })
             .addCase(actions.addBooking.rejected, (state, { error: { message } }) => {
                 state.activeClinic.errors.push(message);
                 state.activeClinic.isAddBookingPending = false;
+                state.activeClinic.isAddingBookingFailed = true;
             })
             .addCase(actions.addBooking.fulfilled, (state) => {
                 state.activeClinic.errors = [];
                 state.activeClinic.isAddBookingPending = false;
+                state.activeClinic.isAddingBookingSuccess = true;
             })
             .addCase(events.activeClinicSelected, (state, { payload: clinicId }) => {
                 state.activeClinic.id = clinicId;

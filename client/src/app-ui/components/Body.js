@@ -6,12 +6,10 @@ import { ClinicDashboard } from "../../clinic-ui";
 
 export function Body() {
     return (
-        <Container>
-            <Switch>
-                <Route path="/clinic" component={ClinicDashboard} />
-                <Route path="/" component={Home} />
-            </Switch>
-        </Container>
+        <Switch>
+            <Route path="/clinic" component={ClinicDashboard} />
+            <Route path="/" component={Home} />
+        </Switch>
     )
 }
 

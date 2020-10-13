@@ -68,7 +68,7 @@ router.post("/new-clinic", (request, response) => {
 })
 
 router.post("/new-booking", (request, response) => {
-    console.log("body",request.body)
+    console.log("request body", request.body)
     const booking = new db.Booking(request.body);
     booking.save()
     .then(booking => {
@@ -76,7 +76,7 @@ router.post("/new-booking", (request, response) => {
     })
     .catch(error => {
         console.log(error.message)
-        response.status(500).json("Could not create booking");
+     response.status(500).json("Could not create booking");
     })
 })
 

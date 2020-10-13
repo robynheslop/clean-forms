@@ -1,3 +1,3 @@
-import clinicDomainSagas from "./clinic-domain/sagas";
+import clinicDomainSagas from './clinic-domain/sagas';
 
 export default [...clinicDomainSagas]

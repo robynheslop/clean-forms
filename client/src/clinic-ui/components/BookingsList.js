@@ -1,31 +1,59 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Card, Typography } from '@material-ui/core';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles, Table, TableCell, TableHead, TableContainer, TableRow, TableBody } from '@material-ui/core';
 
-function BookingsList({ bookings }) {
+const useStyles = makeStyles({
+    root: {
+        maxWidth: '83.333333%',
+        margin: '0 auto',
+    },
+    failed: {
+        backgroundColor: '#e58ca2'
+    },
+    passed: {
+        backgroundColor: '#7bf0b2'
+    },
+    incomplete: {
+        backgroundColor: '#e8e4e4'
+    }
+})
+
+
+function BookingsList({ activeClinic }) {
+    const classes = useStyles();
+    const { bookings } = activeClinic;
     return (
-        <div>
-            {bookings ?
-
+        <div className={classes.root}>
+            {bookings.length > 0 ?
                 <div>
-                    <h2>Your Bookings: </h2>
-                    {bookings.map(({ id, clientname, status, date }) =>
-                        <Card key={id}>
-                            <Typography color="textSecondary">
-                                Client Name: {clientname}
-                            </Typography>
-                            <Typography color="textSecondary">
-                                COVID Booking Status: {status}
-                            </Typography>
-                            <Typography color="textSecondary">
-                                Booking Date: {}
-                            </Typography>
-                        </Card>
-                    )}
+                    <h1>Your Bookings: </h1>
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Client Name</TableCell>
+                                    <TableCell>Email</TableCell>
+                                    <TableCell>Screening Status</TableCell>
+                                    <TableCell>Appointment Date</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            {bookings.map(({ id, clientname, status, date, email }) => {
+                                return (
+                                <TableBody key={id}>
+                                    <TableRow className={classes[status.toLowerCase()]}>
+                                        <TableCell>{status === 'failed'? <b>{clientname}</b> : clientname}</TableCell>
+                                        <TableCell>{status === 'failed'? <b>{email}</b> : email}</TableCell>
+                                        <TableCell>{status === 'failed'? <b>{status.toUpperCase()}</b> : status.toUpperCase()}</TableCell>
+                                        <TableCell>{status === 'failed'? <b>{date.toString().slice(0,10)}</b> : date.toString().slice(0,10)}</TableCell>
+                                    </TableRow>
+                                </TableBody>)
+                            })}
+                        </Table>
+                    </TableContainer>
                 </div>
                 :
                 <div>
-                    <p>You have no bookings scheduled.</p>
+                    <h2>You have no bookings scheduled.</h2>
                 </div>
             }
         </div>
@@ -33,13 +61,12 @@ function BookingsList({ bookings }) {
 }
 
 BookingsList.propTypes = {
-    bookings: PropTypes.arrayOf(PropTypes.shape(
-        {
-            id: PropTypes.string,
-            clientname: PropTypes.string,
-            status: PropTypes.string,
-            date: PropTypes.string,
-        }))
+    bookings: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        clientname: PropTypes.string,
+        status: PropTypes.string,
+        date: PropTypes.string,
+    }))
 }
 
 BookingsList.defaultProps = {

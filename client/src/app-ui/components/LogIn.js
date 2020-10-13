@@ -2,25 +2,39 @@ import React, { useRef } from 'react';
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Paper, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
-        color: "purple",
-        
+        width: '80%',
+        maxWidth: "700px",
+        margin: "0 auto",
+        marginTop: '50px',
+        padding: "2em 0em",
+        justifyContent: "center"
     },
-    form: {
-            
+    textField: {
+        lineHeight: "1.2em",
+        padding: '10px',
+        margin: '10px',
+        fontSize: "1.1em",
+        width: '50%',
+        border: "none",
+        backgroundColor: "none!important"
+    },
+    button: {
+        backgroundColor: '#be294f',
+        padding: "15px 25px",
+        boxShadow: 'none',
+        color: 'white',
+        margin: '15px',
     }
 })
 
 export function LogIn(props) {
-
     const classes = useStyles();
-
     const usernameRef = useRef();
     const passwordRef = useRef();
-
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
@@ -29,14 +43,14 @@ export function LogIn(props) {
             password: passwordRef.current.value
         })
     }
-
     return (
         props.isLoggedIn ? <Redirect to={{ pathname: "/", state: { from: props.location } }} /> :
-            <div>
-                <h2>Log In</h2>
+            <Paper className={classes.root}>
+                <h1>Log In</h1>
                 <form onSubmit={handleFormSubmit}>
                     <div>
                         <input
+                            className={classes.textField}
                             label="Username"
                             type="text"
                             name="password"
@@ -46,6 +60,7 @@ export function LogIn(props) {
                     </div>
                     <div>
                         <input
+                            className={classes.textField}
                             label="Password"
                             type="password"
                             name="password"
@@ -57,11 +72,10 @@ export function LogIn(props) {
                             className={classes.button}
                             type="submit"
                             variant="contained"
-                            style={{ margin: 8 }}
                         >Log In</Button>
                     </div>
                 </form>
-            </div >
+            </Paper >
     )
 }
 

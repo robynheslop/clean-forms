@@ -10,14 +10,11 @@ const selectActiveClinic = (state) => state?.clinicDomain?.activeClinic;
 
 const selectIsLoadBookingsPending = (state) => state?.clinicDomain?.isLoadBookingsPending;
 
-const selectBookings = (state) => state?.clinicDomain?.selectBookings;
-
 export default { 
     selectClinics, 
     selectIsLoadClinicsPending,
     selectIsAddClinicPending,
     selectIsAddBookingPending,
     selectIsLoadBookingsPending,
-    selectBookings,
     selectActiveClinic
 }

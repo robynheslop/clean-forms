@@ -41,19 +41,20 @@ export const addClinic = createAsyncThunk(
 
 export const loadBookings = createAsyncThunk(
     "clinic-domain/GET_BOOKINGS",
-    async ({clinicId}) => {
-        const response = await fetch(`/api/bookings/${clinicId}`, {
+    async (id) => {
+        console.log("id", id)
+        const response = await fetch(`/api/bookings/${id}`, {
             method: "GET"
         });
         const responseJson = await response.json();
-        console.log(responseJson)
         const bookings = responseJson.map(booking => {
             return {
                 id: booking._id,
                 clientname: booking.clientname,
                 email: booking.email,
                 phone: booking.phone,
-                status: booking.status
+                status: booking.status,
+                date: booking.date
             }
         });
         return bookings;
@@ -62,22 +63,21 @@ export const loadBookings = createAsyncThunk(
 
 export const addBooking = createAsyncThunk(
     "clinic-domain/ADD_BOOKINGS",
-    async(props) => {
+    async({clinic, name, email, phone, date}) => {  
         const params = new URLSearchParams();
-        params.append('clinic', 123123123);
-        params.append('clientname', props.name);
-        params.append('email', props.email);
-        params.append('phone', props.phone);
-        params.append('date', props.date);
-
-        const request = new Request("/api/new-booking", { method: "POST", body: {
-            params
-        } })
-        const response = await fetch(request)
+        params.append('clinic', clinic);
+        params.append('clientname', name);
+        params.append('email', email);
+        params.append('phone', phone);     
+        params.append('date', date);     
+        const response = await fetch("/api/new-booking", { 
+            method: "POST", 
+            body: params
+        })
         const responseJson = await response.json();
         // send email here
         console.log(responseJson)
-        return responseJson;
+        return response;
     }
 )
 
