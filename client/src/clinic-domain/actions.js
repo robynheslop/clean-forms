@@ -41,8 +41,9 @@ export const addClinic = createAsyncThunk(
 
 export const loadBookings = createAsyncThunk(
     "clinic-domain/GET_BOOKINGS",
-    async ({clinicId}) => {
-        const response = await fetch(`/api/bookings/${clinicId}`, {
+    async (id) => {
+        console.log("id", id)
+        const response = await fetch(`/api/bookings/${id}`, {
             method: "GET"
         });
         const responseJson = await response.json();

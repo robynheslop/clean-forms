@@ -5,7 +5,7 @@ import { selectors } from "../../clinic-domain";
 export const ConnectedBookingsList = connect(
     state => ({
         isLoadBookingsPending: selectors.selectIsLoadBookingsPending(state),
-        bookings: selectors.selectBookings(state)
+        activeClinic: selectors.selectActiveClinic(state)
     }))(BookingsList)
 
 export default ConnectedBookingsList;

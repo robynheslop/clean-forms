@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card, Typography } from '@material-ui/core';
 
-function BookingsList({ bookings }) {
+function BookingsList({ activeClinic }) {
+    const { bookings } = activeClinic;
     return (
         <div>
-            {bookings ?
-
+            {bookings.length > 0 ?
                 <div>
                     <h2>Your Bookings: </h2>
                     {bookings.map(({ id, clientname, status, date }) =>
@@ -18,14 +18,14 @@ function BookingsList({ bookings }) {
                                 COVID Booking Status: {status}
                             </Typography>
                             <Typography color="textSecondary">
-                                Booking Date: {}
+                                Booking Date: {date}
                             </Typography>
                         </Card>
                     )}
                 </div>
                 :
                 <div>
-                    <p>You have no bookings scheduled.</p>
+                    <h2>You have no bookings scheduled.</h2>
                 </div>
             }
         </div>
@@ -33,8 +33,7 @@ function BookingsList({ bookings }) {
 }
 
 BookingsList.propTypes = {
-    bookings: PropTypes.arrayOf(PropTypes.shape(
-        {
+    bookings: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.string,
             clientname: PropTypes.string,
             status: PropTypes.string,
