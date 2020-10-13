@@ -2,7 +2,7 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { reducer as appDomainReducer } from "./app-domain";
 import { reducer as clinicDomainReducer } from "./clinic-domain"
 import createSagaMiddleware from 'redux-saga';
-import { sagas, logOutSagas } from "./clinic-domain/sagas"
+import sagas from "./sagas";
 
 const sagaMiddleware = createSagaMiddleware()
 const reducer = {
@@ -15,6 +15,6 @@ const store = configureStore({
     middleware: [sagaMiddleware, ...getDefaultMiddleware()]
 })
 
-sagaMiddleware.run(logOutSagas);
+sagaMiddleware.run(...sagas);
 
 export default store;

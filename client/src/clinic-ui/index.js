@@ -1,5 +1,5 @@
-import * as components from "./components";
+import { ClinicDashboard } from "./components";
 
 export {
-    components
+    ClinicDashboard 
 }

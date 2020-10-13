@@ -67,4 +67,29 @@ router.post("/new-clinic", (request, response) => {
     })
 })
 
+router.post("/new-booking", (request, response) => {
+    console.log("body",request.body)
+    const booking = new db.Booking(request.body);
+    booking.save()
+    .then(booking => {
+        response.json(booking)
+    })
+    .catch(error => {
+        console.log(error.message)
+        response.status(500).json("Could not create booking");
+    })
+})
+
+router.get("/bookings/:clinic", (request, response) => {
+    db.Booking.find(
+        {clinic: request.params.clinic}, 
+        (error, bookings) => {
+        if (error) response.status(500).json("Could not find bookings");
+        if (!bookings) {
+            response.status(500).json("Could not find bookings");
+        } 
+        response.json(bookings);
+    })
+})
+
 module.exports = router;

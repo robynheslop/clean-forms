@@ -1,2 +1,7 @@
-export { logInSaga, notifiyClinic as sagas } from "./logInSaga";
-export { logOutSaga as logOutSagas } from "./logOutSaga"
+import logInSaga from "./logInSaga";
+import logOutSaga from "./logOutSaga";
+
+export default [
+    logInSaga,
+    logOutSaga
+]

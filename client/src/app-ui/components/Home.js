@@ -1,24 +1,10 @@
-import React from 'react';
-import { components } from "../../clinic-ui";
-
-const { ListClinics } = components;
+import React from "react";
+import { Redirect } from "react-router-dom";
 
 export function Home() {
-
     return(
-        <div>
-            <h1>Home Page</h1>
-            <div>
-                <ListClinics />
-            </div>
-            <div>
-                {/* Send Forms */}
-            </div>
-            <div>
-                {/* Review Data */}
-            </div>
-        </div>
+        <Redirect to="/clinic" />
     )
 }
 
-export default Home;
+export default Home

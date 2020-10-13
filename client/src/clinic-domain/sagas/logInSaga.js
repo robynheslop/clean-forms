@@ -1,11 +1,10 @@
-import { all, takeEvery } from 'redux-saga/effects';
-// import { events } from "../../app-domain"
+import { put, takeEvery } from 'redux-saga/effects';
+import actions from "../actions";
 
-export function * notifiyClinic() {
-   console.log("notifying clinic")
+function * notifiyClinicLogIn({payload: {userId}}) {
+   yield put(actions.loadClinics({owner:userId}))
 }
 
-export function * logInSaga() {
-   console.log("login");
-   yield takeEvery("app-domain/LOGGED_IN", notifiyClinic)
+export default function * logInSaga() {
+   yield takeEvery("app-domain/LOG_IN/fulfilled", notifiyClinicLogIn)
 }

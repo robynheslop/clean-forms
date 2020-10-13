@@ -1,5 +1,6 @@
 module.exports = {
     User: require("./User"),
-    Clinic: require("./Clinic")
+    Clinic: require("./Clinic"),
+    Booking: require("./Booking")
   };
   

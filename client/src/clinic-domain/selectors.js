@@ -1,11 +1,23 @@
-const selectClinics = (state) => state?.clinicDomain?.session?.clinics;
+const selectClinics = (state) => state?.clinicDomain?.clinics;
 
-const selectIsGettingClinicsPending = (state) => state?.clinicDomain?.session?.isGettingClinicsPending;
+const selectIsLoadClinicsPending = (state) => state?.clinicDomain?.isLoadClinicsPending;
 
-const selectIsAddingClinicPending = (state) => state?.clinicDomain?.session?.isAddingClinicPending;
+const selectIsAddClinicPending = (state) => state?.clinicDomain?.isAddClinicPending;
+
+const selectIsAddBookingPending = (state) => state?.clinicDomain?.isAddBookingPending;
+
+const selectActiveClinic = (state) => state?.clinicDomain?.activeClinic;
+
+const selectIsLoadBookingsPending = (state) => state?.clinicDomain?.isLoadBookingsPending;
+
+const selectBookings = (state) => state?.clinicDomain?.selectBookings;
 
 export default { 
     selectClinics, 
-    selectIsGettingClinicsPending,
-    selectIsAddingClinicPending
+    selectIsLoadClinicsPending,
+    selectIsAddClinicPending,
+    selectIsAddBookingPending,
+    selectIsLoadBookingsPending,
+    selectBookings,
+    selectActiveClinic
 }

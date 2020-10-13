@@ -15,7 +15,7 @@ export const PrivateRoute = ({ component : Component, isLoggedIn, ...rest}) => {
 }
 
 PrivateRoute.propTypes = {
-    component: PropTypes.func,
+    component: PropTypes.any,
     isLoggedIn: PropTypes.bool
 }
 

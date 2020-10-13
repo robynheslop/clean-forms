@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Button, TextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 export function SignUp({isLoggedIn, location, handleSignUp, isSignUpPending}) {
     const usernameRef = useRef();

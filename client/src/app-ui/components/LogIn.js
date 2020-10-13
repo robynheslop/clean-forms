@@ -1,10 +1,23 @@
 import React, { useRef } from 'react';
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Button, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 
+const useStyles = makeStyles({
+    root: {
+        color: "purple",
+        
+    },
+    form: {
+            
+    }
+})
 
 export function LogIn(props) {
+
+    const classes = useStyles();
+
     const usernameRef = useRef();
     const passwordRef = useRef();
 
@@ -41,10 +54,10 @@ export function LogIn(props) {
                     </div>
                     <div>
                         <Button
+                            className={classes.button}
                             type="submit"
                             variant="contained"
                             style={{ margin: 8 }}
-                            color="secondary"
                         >Log In</Button>
                     </div>
                 </form>
