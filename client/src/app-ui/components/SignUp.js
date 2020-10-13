@@ -9,6 +9,7 @@ const useStyles = makeStyles({
         width: '80%',
         maxWidth: "700px",
         margin: "0 auto",
+        marginTop: '50px',
         padding: "2em 0em",
         justifyContent: "center"
     },
@@ -25,7 +26,8 @@ const useStyles = makeStyles({
         backgroundColor: '#be294f',
         padding: "15px 25px",
         boxShadow: 'none',
-        color: 'white'
+        color: 'white',
+        margin: '15px',
     }
 })
 
@@ -71,7 +73,6 @@ export function SignUp({ isLoggedIn, location, handleSignUp, isSignUpPending }) 
                             className={classes.button}
                             type="submit"
                             variant="contained"
-                            style={{ margin: 8 }}
                         >Log In</Button>
                     </div>
                 </form>

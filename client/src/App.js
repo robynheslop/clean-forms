@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { appComponents } from "./app-ui";
 import { makeStyles } from '@material-ui/core/styles';
 const { Navigation } = appComponents;

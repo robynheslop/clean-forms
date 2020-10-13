@@ -12,7 +12,7 @@ const useStyles = makeStyles({
         color: 'white',
         height: 48,
         padding: '70px 30px',
-        minHeight: 'calc(100vh - 50px)'
+        minHeight: 'calc(100vh - 70px)'
     },
     link: {
         fontSize: '1.2em',
