@@ -1,17 +1,19 @@
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
 
-function AddBooking({ addBooking, clinicId }) {
+function AddBooking({ addBooking, activeClinic }) {
     const clientNameRef = useRef();
     const emailRef = useRef();
     const dateRef = useRef();
     const phoneRef = useRef();
 
+    const { id } = activeClinic;
+
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
         addBooking({
-            clinic: clinicId,
+            clinic: id,
             name: clientNameRef.current.value,
             phone: phoneRef.current.value,
             email: emailRef.current.value,

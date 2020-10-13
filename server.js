@@ -8,12 +8,13 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3001;
 const server = express();
 
-server.use(bodyParser.urlencoded({ extended: false}));
+server.use(bodyParser.urlencoded({ extended: true }));
+// server.use(bodyParser.json());
 server.use(passport.initialize());
 server.use("/api", router);
 
 mongoose.connect("mongodb://localhost:27017/passport", {
-    useNewUrlParser:true, 
+    useNewUrlParser: true,
     useCreateIndex: true
 });
 

@@ -3,15 +3,15 @@ import { connect } from "react-redux";
 import { actions, selectors } from "../../clinic-domain";
 
 const mapDispatchToProps = dispatch => {
-    const addBooking = (props) => {
-        dispatch(actions.addBooking(props))
+    const addBooking = (formData) => {
+        dispatch(actions.addBooking(formData))
     }
     return { addBooking }
 }
 
 export const ConnectedAddBooking = connect(
     state => ({
-        clinicId: selectors.selectActiveClinic(state),
+        activeClinic: selectors.selectActiveClinic(state),
         isAddBookingPending: selectors.selectIsAddBookingPending(state)
     }),
     mapDispatchToProps)(AddBooking)

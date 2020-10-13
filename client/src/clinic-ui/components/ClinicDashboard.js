@@ -10,7 +10,7 @@ export function ClinicDashboard() {
     let { path } = useRouteMatch();
     return (
         < Switch >
-            <Route exact path={`${path}/add-booking`} component={AddBooking} />
+            <Route exact path={`${path}/new-booking`} component={AddBooking} />
             <Route exact path={`${path}/view-bookings`} component={BookingsList} />
             <Route exact path={`${path}/add-clinic`} component={AddClinic} />
             <Route path={path} component={ViewClinics} />
