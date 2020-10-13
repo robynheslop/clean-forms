@@ -10,11 +10,15 @@ const useStyles = makeStyles({
         margin: '0 auto',
         marginTop: '50px',
         padding: '3em 0em',
-        height: '75%'
+        minHeight: '75%',
+        height: 'fit-content'
     },
     card: {
         textAlign: 'left',
         display: 'flex',
+        width: '83%',
+        margin: '0 auto',
+        marginBottom: '15px'
     },
     cardContent: {
         padding: '0px 1em'

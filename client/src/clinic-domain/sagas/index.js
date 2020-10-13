@@ -1,10 +1,11 @@
 import { all, takeEvery } from 'redux-saga/effects';
-import logInSaga from './logInSaga';
-import logOutSaga from './logOutSaga';
+import logInSaga from "./logInSaga";
+import logOutSaga from "./logOutSaga";
 
 export default [
+    logInSaga,
     logOutSaga,
-    logInSaga
+    
 ]
 
 // export default function* () {
