@@ -31,6 +31,7 @@ export function ClinicNavigation() {
             <AppBar position='static' className={classes.root}>
                 <Link className={classes.link} to='/clinic'>View Clinics</Link>
                 <Link className={classes.link} to='/clinic/add-clinic'>Add New Clinics</Link>
+                <Link className={classes.link} to='/clinic/questionnaire'>Manage Questionnaires</Link>
             </AppBar>
 
         </div>
