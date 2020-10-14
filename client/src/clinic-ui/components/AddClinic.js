@@ -42,12 +42,6 @@ function AddClinics({ addClinic, userId }) {
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
-        console.log({
-            owner: userId,
-            clinicname: clinicNameRef.current.value,
-            email: emailRef.current.value,
-            phone: phoneRef.current.value
-        })
         addClinic({
             owner: userId,
             clinicname: clinicNameRef.current.value,

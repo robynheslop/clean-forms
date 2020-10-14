@@ -1,17 +1,35 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Paper, TextField, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
         maxWidth: '83.333333%',
         margin: '0 auto',
+        marginTop: '50px',
+        padding: '3em 0em',
+        height: '75%'
     },
-    failed: {
-        backgroundColor: '#e58ca2'
+    form: {
+        maxWidth: '50%',
+        margin: '0 auto',
+        padding: '1em 0em',
     },
-    passed: {
-        backgroundColor: '#7bf0b2'
+    input: {
+        lineHeight: "1.2em",
+        padding: '10px',
+        margin: '10px',
+        fontSize: "1.1em",
+        width: '100%',
+        border: "none",
+        backgroundColor: "none!important"
+    },
+    button: {
+        backgroundColor: '#be294f',
+        padding: "15px 25px",
+        boxShadow: 'none',
+        color: 'white',
+        margin: '15px',
     },
     successErrorMessage: {
         color: '#be294f'
@@ -34,30 +52,57 @@ function AddBooking({ addBooking, activeClinic }) {
             phone: phoneRef.current.value,
             email: emailRef.current.value,
             date: dateRef.current.value,
-        })
+        });
+        clientNameRef.current.value = '';
+        phoneRef.current.value = '';
+        emailRef.current.value = '';
+        dateRef.current.value = '';
     }
     return (
-        <div className={classes.root}>
-            <h2>Add A New Booking</h2>
-            <form onSubmit={handleFormSubmit}>
+        <Paper className={classes.root}>
+            <h1>Add A New Booking</h1>
+            <form onSubmit={handleFormSubmit} className={classes.form}>
                 <div>
-                    <label>Client Name: </label>
-                    <input type='text' name='clientName' ref={clientNameRef} required />
+                    <TextField 
+                    label='Client Name'
+                    type='text' 
+                    className={classes.input}
+                    name='clientName' 
+                    inputRef={clientNameRef} 
+                    required />
                 </div>
                 <div>
-                    <label>Client Phone Number: </label>
-                    <input type='number' name='phone' ref={phoneRef} required />
+                    <TextField
+                    label='Contact Number'
+                    type='number' 
+                    className={classes.input}
+                    name='phone' 
+                    inputRef={phoneRef} 
+                    required />
                 </div>
                 <div>
-                    <label>Client Email: </label>
-                    <input type='email' name='clientEmail' ref={emailRef} required />
+                    <TextField
+                    label='Email'
+                    className={classes.input}
+                    type='email' 
+                    name='clientEmail' 
+                    inputRef={emailRef} 
+                    required />
                 </div>
                 <div>
-                    <label>Booking Date: </label>
-                    <input type='date' name='date' ref={dateRef} required />
+                    <TextField
+                    label='Booking Date'
+                    className={classes.input}
+                    type='date' 
+                    name='date' 
+                    inputRef={dateRef} 
+                    required />
                 </div>
                 <div>
-                    <input type='submit' value='Add Booking' />
+                    <Button
+                    type='submit' 
+                    className={classes.button}
+                    >Create Booking</Button>
                 </div>
             </form>
             {isAddingBookingSuccess ? 
@@ -66,7 +111,7 @@ function AddBooking({ addBooking, activeClinic }) {
             {isAddingBookingFailed ? 
             <p className={classes.successErrorMessage} >Booking Could Not Be Added At This Time</p> 
             : undefined}
-        </div>
+        </Paper>
     )
 }
 

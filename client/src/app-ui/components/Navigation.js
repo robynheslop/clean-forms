@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { AppBar, Tab, Tabs } from '@material-ui/core';
+import { AppBar, Tabs } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { ConnectedLogOut as LogOut } from './ConnectedLogOut'
 import { ConnectedSignUp as SignUp } from './ConnectedSignUp';
@@ -73,110 +73,3 @@ Navigation.defaultProps = {
 }
 
 export default Navigation;
-
-
-
-// import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
-// import { AppBar, Box, Tab, Tabs } from '@material-ui/core';
-// import { makeStyles } from '@material-ui/core/styles';
-// import { ConnectedLogOut as LogOut } from './ConnectedLogOut'
-// import { ConnectedSignUp as SignUp } from './ConnectedSignUp';
-// import { ConnectedLogIn as LogIn } from './ConnectedLogIn';
-// import { Body } from './Body';
-
-// function TabPanel({ children: Component, value, index, ...other }) {
-//     return (
-//         <div
-//             role='tabpanel'
-//             hidden={value !== index}
-//             id={`wrapped-tabpanel-${index}`}
-//             aria-labelledby={`wrapped-tab-${index}`}
-//             {...other}
-//         >
-//             {value === index && (
-//                 <Box p={3}>
-//                     <Component></Component>
-//                 </Box>
-//             )}
-//         </div>
-//     );
-// }
-
-// TabPanel.propTypes = {
-//     children: PropTypes.any,
-//     index: PropTypes.any.isRequired,
-//     value: PropTypes.any.isRequired,
-// };
-
-// function a11yProps(index) {
-//     return {
-//         id: `main-tabpanel-${index}`,
-//         'aria-controls': `wrapped-tabpanel-${index}`,
-//     };
-// }
-
-// export function Navigation({ isLoggedIn }) {
-//     const [value, setValue] = useState('Log In');
-
-//     const handleChange = (event, newValue) => {
-//         setValue(newValue);
-//     };
-//     return (
-//         <div>
-//             <AppBar position='static'>
-//                 <Tabs
-//                     value={value}
-//                     onChange={handleChange}
-//                     aria-label='main tabs'>
-//                     {isLoggedIn ?
-//                         <Tab
-//                             value='Home'
-//                             label='Home'
-//                             {...a11yProps('Home')} /> :
-//                         undefined}
-//                     {isLoggedIn ?
-//                         <Tab
-//                             value='Log Out'
-//                             label='Log Out'
-//                             {...a11yProps('Log Out')} /> :
-//                         undefined}
-//                     {!isLoggedIn ?
-//                         <Tab
-//                             value='Log In'
-//                             label='Log In'
-//                             {...a11yProps('Log In')} /> :
-//                         undefined}
-//                     {!isLoggedIn ?
-//                         <Tab
-//                             value='Sign Up'
-//                             label='Sign Up'
-//                             {...a11yProps('Sign Up')} /> :
-//                         undefined}
-//                 </Tabs>
-//             </AppBar>
-//             <TabPanel value={value} index={'Home'}>
-//                 {Body}
-//             </TabPanel>
-//             <TabPanel value={value} index={'Log Out'}>
-//                 {LogOut}
-//             </TabPanel>
-//             <TabPanel value={value} index={'Log In'}>
-//                 {LogIn}
-//             </TabPanel>
-//             <TabPanel value={value} index={'Sign Up'}>
-//                 {SignUp}
-//             </TabPanel>
-//         </div>
-//     )
-// }
-
-// Navigation.propTypes = {
-//     isLoggedIn: PropTypes.bool
-// }
-
-// Navigation.defaultProps = {
-//     isLoggedIn: false
-// }
-
-// export default Navigation;
