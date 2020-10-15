@@ -3,34 +3,23 @@ import actions from "./actions";
 import events from "./events";
 
 export default createReducer({
-    questionnaires =[],
+    questionnaires = [],
     errors: [],
-    // isCreateQuestionPending: false,
-    // isCreateQuestionSuccess: false,
-    // isCreateQuestionFailed: false,
     isLoadQuestionnairesPending: false,
     isLoadQuestionnairesSuccess: false,
     isLoadQuestionnairesFailed: false,
     isCreateQuestionnairePending: false,
     isCreateQuestionnaireSuccess: false,
     isCreateQuestionnaireFailed: false,
+    isUpdateQuestionnairePending: false,
+    isUpdateQuestionnaireSuccess: false,
+    isUpdateQuestionnaireFailed: false,
+    isDeleteQuestionnairePending: false,
+    isDeleteQuestionnaireSuccess: false,
+    isDeleteQuestionnaireFailed: false,
 },
     builder => {
         builder
-            // .addCase(actions.createQuestion.pending, (state) => {
-            //     state.errors = [];
-            //     state.isCreateQuestionPending = true;
-            // })
-            // .addCase(actions.createQuestion.fulfilled, (state, { payload: { _id: id } }) => {
-            //     state.questions.push(id);
-            //     state.isCreateQuestionPending = false;
-            //     state.isCreateQuestionSuccess = true;
-            // })
-            // .addCase(actions.createQuestion.rejected, (state, { error: { message } }) => {
-            //     state.errors.push(message);
-            //     state.isCreateQuestionPending = false;
-            //     state.isCreateQuestionFailed = true;
-            // })
             .addCase(actions.loadQuestionnaires.pending, (state) => {
                 state.errors = [];
                 state.isLoadQuestionnairesPending = true;
@@ -59,6 +48,34 @@ export default createReducer({
                 state.isCreateQuestionnairePending = false;
                 state.isCreateQuestionnaireFailed = true;
             })
+            .addCase(actions.updateQuestionnaire.pending, (state) => {
+                state.errors = [];
+                state.isUpdateQuestionnairePending = true;
+            })
+            .addCase(actions.updateQuestionnaire.fulfilled, (state, { payload: { questionnaire } }) => {
+                // overwrite q with same id in state
+                state.isUpdateQuestionnairePending = false;
+                state.isUpdateQuestionnaireSuccess = true;
+            })
+            .addCase(actions.updateQuestionnaire.rejected, (state, { error: { message } }) => {
+                state.errors.push(message);
+                state.isUpdateQuestionnairePending = false;
+                state.isUpdateQuestionnaireFailed = true;
+            })
+            .addCase(actions.deleteQuestionnaire.pending, (state) => {
+                state.errors = [];
+                state.isDeleteQuestionnairePending = true;
+            })
+            .addCase(actions.deleteQuestionnaire.fulfilled, (state, { payload: { _id: id } }) => {
+                // remove q with same id in state
+                state.isDeleteQuestionnaireSuccess = true,
+                state.isDeleteQuestionnairePending = false;
+            })
+            .addCase(actions.deleteQuestionnaire.rejected, (state, { error: { message } }) => {
+                state.errors.push(message);
+                state.isDeleteQuestionnairePending = false;
+                state.isDeleteQuestionnaireFailed = true;
+            })
             .addCase(events.reset, (state) => {
                 state = {
                     questionnaires =[],
@@ -69,6 +86,12 @@ export default createReducer({
                     isCreateQuestionnairePending: false,
                     isCreateQuestionnaireSuccess: false,
                     isCreateQuestionnaireFailed: false,
+                    isUpdateQuestionnairePending: false,
+                    isUpdateQuestionnaireSuccess: false,
+                    isUpdateQuestionnaireFailed: false,
+                    isDeleteQuestionnairePending: false,
+                    isDeleteQuestionnaireSuccess: false,
+                    isDeleteQuestionnaireFailed: false,
                 }
             })
     }

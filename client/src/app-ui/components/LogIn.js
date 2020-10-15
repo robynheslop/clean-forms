@@ -31,20 +31,20 @@ const useStyles = makeStyles({
     }
 })
 
-export function LogIn(props) {
+export function LogIn({ handleLogIn, location, isLoggedIn }) {
     const classes = useStyles();
     const usernameRef = useRef();
     const passwordRef = useRef();
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
-        props.handleLogIn({
+        handleLogIn({
             username: usernameRef.current.value,
             password: passwordRef.current.value
         })
     }
     return (
-        props.isLoggedIn ? <Redirect to={{ pathname: "/", state: { from: props.location } }} /> :
+        isLoggedIn ? <Redirect to={{ pathname: "/", state: { from: location } }} /> :
             <Paper className={classes.root}>
                 <h1>Log In</h1>
                 <form onSubmit={handleFormSubmit}>

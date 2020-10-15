@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { AppBar, Tabs } from '@material-ui/core';
+import { AppBar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { ConnectedLogOut as LogOut } from './ConnectedLogOut'
 import { ConnectedSignUp as SignUp } from './ConnectedSignUp';
@@ -16,15 +16,18 @@ const useStyles = makeStyles({
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         color: 'white',
-        height: 48,
         padding: '0px',
         margin: '0px',
         height: '70px'
     },
     tabs: {
         width: 'fit-content',
+        display: 'flex',
+        
     },
     link: {
+        justifyContent: 'space-between',
+        alignSelf: 'flex-end',
         fontSize: '1.2em',
         color: 'white',
         padding: '20px 2em',
@@ -38,7 +41,7 @@ export function Navigation({ isLoggedIn }) {
     return (
         <div >
             <AppBar className={classes.root} position='static'>
-                <Tabs className={classes.tabs}>
+                <div className={classes.tabs}>
                     {!isLoggedIn ?
                         <Link className={classes.link} to='/signup'>Sign Up</Link> :
                         undefined}
@@ -52,7 +55,7 @@ export function Navigation({ isLoggedIn }) {
                         <Link className={classes.link} to='/logout'>Log Out</Link> :
                         undefined}
 
-                </Tabs>
+                </div>
             </AppBar>
             <Switch>
                 <Route path='/signup' component={SignUp} />

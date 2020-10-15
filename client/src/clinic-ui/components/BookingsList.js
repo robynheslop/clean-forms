@@ -1,11 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Table, TableCell, TableHead, TableContainer, TableRow, TableBody } from '@material-ui/core';
+import { makeStyles, Paper, Table, TableCell, TableHead, TableContainer, TableRow, TableBody } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
         maxWidth: '83.333333%',
         margin: '0 auto',
+    },
+    paper: {
+        maxWidth: '83.333333%',
+        margin: '0 auto',
+        marginTop: '50px',
+        padding: '3em 0em',
+        height: '75%'
     },
     failed: {
         backgroundColor: '#e58ca2'
@@ -52,9 +59,9 @@ function BookingsList({ activeClinic }) {
                     </TableContainer>
                 </div>
                 :
-                <div>
-                    <h2>You have no bookings scheduled.</h2>
-                </div>
+                <Paper className={classes.paper}>
+                    <h1>You have no bookings scheduled.</h1>
+                </Paper>
             }
         </div>
     )

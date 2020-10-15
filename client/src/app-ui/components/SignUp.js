@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     }
 })
 
-export function SignUp({ isLoggedIn, location, handleSignUp, isSignUpPending }) {
+export function SignUp({ isLoggedIn, location, handleSignUp }) {
     const classes = useStyles();
     const usernameRef = useRef();
     const passwordRef = useRef();
