@@ -9,21 +9,21 @@ const mapDispatchToProps = dispatch => {
     const updateQuestionnaire = (formData) => {
         dispatch(actions.updateQuestionnaire(formData))
     }
-    return { createQuestionnaire, updateQuestionnaire, deleteQuestionnaire }
+    return { updateQuestionnaire, deleteQuestionnaire }
 }
-export const ConnectedCreateQuestionnaire = connect(
+export const ConnectedManageQuestionnaires = connect(
     state => ({
         questionnaires: selectors.selectQuestionnaires(state),
-        isDeleteQuestionnairePending: selectors.selectIsDeleteQuestionPending(state),
+        isDeleteQuestionnairePending: selectors.selectIsDeleteQuestionnairePending(state),
         isDeleteQuestionnaireSuccess: selectors.selectIsDeleteQuestionnaireSuccess(state),
         isDeleteQuestionnaireFailed: selectors.selectIsDeleteQuestionnaireFailed(state),
-        isUpdateQuestionnairePending: selectors.selectIsUpdateQuestionPending(state),
+        isUpdateQuestionnairePending: selectors.selectIsUpdateQuestionnairePending(state),
         isUpdateQuestionnaireSuccess: selectors.selectIsUpdateQuestionnaireSuccess(state),
         isUpdateQuestionnaireFailed: selectors.selectIsUpdateQuestionnaireFailed(state),
-        isLoadQuestionnairePending: selectors.selectIsLoadQuestionPending(state),
-        isLoadQuestionnaireSuccess: selectors.selectIsLoadQuestionnaireSuccess(state),
-        isLoadQuestionnaireFailed: selectors.selectIsLoadQuestionnaireFailed(state),
+        isLoadQuestionnairePending: selectors.selectIsLoadQuestionnairesPending(state),
+        isLoadQuestionnaireSuccess: selectors.selectIsLoadQuestionnairesSuccess(state),
+        isLoadQuestionnaireFailed: selectors.selectIsLoadQuestionnairesFailed(state),
     }),
     mapDispatchToProps)(ManageQuestionnaires)
 
-export default ManageQuestionnaires;
+export default ConnectedManageQuestionnaires;

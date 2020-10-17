@@ -65,7 +65,9 @@ export const addBooking = createAsyncThunk(
     "clinic-domain/ADD_BOOKINGS",
     async({clinic, clinicName, clinicPhone, clientName, email, phone, date, questionnaireId}) => {  
         
-        // create screening document and return ID
+        /*
+        create new screening
+        */
         const screeningParams = new URLSearchParams();
         screeningParams.append('questionnaireId', questionnaireId);
         const screeningResponse = await fetch("/api/new-screening", { 
@@ -74,7 +76,9 @@ export const addBooking = createAsyncThunk(
         });
         const { _id: screeningId } = screeningResponse;
 
-        // creating booking document
+        /*
+        creating new booking
+        */
         const bookingParams = new URLSearchParams();
         bookingParams.append('clinic', clinic);
         bookingParams.append('clientname', clientName);
@@ -88,7 +92,9 @@ export const addBooking = createAsyncThunk(
         })
         const bookingResponseJson = await bookingResponse.json();
 
-        // send email here
+       /*
+       dispatch email to client 
+        */
         const emailParams = new URLSearchParams();
         emailParams.append('clinicName', clinicName);
         emailParams.append('clinicPhone', clinicPhone);
@@ -100,7 +106,7 @@ export const addBooking = createAsyncThunk(
             body: emailParams
         })
 
-        console.log(bookingResponseJson);
+        return bookingResponseJson
     }
 )
 

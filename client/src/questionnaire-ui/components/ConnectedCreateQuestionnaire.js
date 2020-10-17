@@ -1,4 +1,4 @@
-import ManageQuestionnaires from './ManageQuestionnaires';
+import CreateQuestionnaire from './CreateQuestionnaire';
 import { connect } from 'react-redux';
 import { actions, selectors } from "../../questionnaire-domain";
 
@@ -15,6 +15,6 @@ export const ConnectedCreateQuestionnaire = connect(
         isCreateQuestionnaireSuccess: selectors.selectIsCreateQuestionnaireSuccess(state),
         isCreateQuestionnaireFailed: selectors.selectIsCreateQuestionnaireFailed(state),
     }),
-    mapDispatchToProps)(ManageQuestionnaires)
+    mapDispatchToProps)(CreateQuestionnaire)
 
-export default ManageQuestionnaires;
+export default ConnectedCreateQuestionnaire;

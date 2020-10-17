@@ -12,11 +12,11 @@ const selectIsCreateQuestionnaireSuccess = (state) => state?.questionnaireDomain
 
 const selectIsCreateQuestionnaireFailed = (state) => state?.questionnaireDomain?.isCreateQuestionnaireFailed;
 
-const selectIsUpdateQuestionnairesPending = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesPending;
+const selectIsUpdateQuestionnairePending = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesPending;
 
-const selectIsUpdateQuestionnairesSuccess = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesSuccess;
+const selectIsUpdateQuestionnaireSuccess = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesSuccess;
 
-const selectIsUpdateQuestionnairesFailed = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesFailed;
+const selectIsUpdateQuestionnaireFailed = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesFailed;
 
 const selectIsDeleteQuestionnairePending = (state) => state?.questionnaireDomain?.isDeleteQuestionnairePending;
 
@@ -32,9 +32,9 @@ export default {
     selectIsCreateQuestionnairePending,
     selectIsCreateQuestionnaireSuccess,
     selectIsCreateQuestionnaireFailed,
-    selectIsUpdateQuestionnairesSuccess,
-    selectIsUpdateQuestionnairesFailed,
-    selectIsUpdateQuestionnairesPending,
+    selectIsUpdateQuestionnaireSuccess,
+    selectIsUpdateQuestionnaireFailed,
+    selectIsUpdateQuestionnairePending,
     selectIsDeleteQuestionnairePending,
     selectIsDeleteQuestionnaireSuccess,
     selectIsDeleteQuestionnaireFailed,
