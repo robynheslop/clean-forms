@@ -1,11 +1,8 @@
-import CreateQuestionnaire from './CreateQuestionnaire';
+import ManageQuestionnaires from './ManageQuestionnaires';
 import { connect } from 'react-redux';
 import { actions, selectors } from "../../questionnaire-domain";
 
 const mapDispatchToProps = dispatch => {
-    const createQuestionnaire = (formData) => {
-        dispatch(actions.createQuestionnaire(formData))
-    }
     const deleteQuestionnaire = (_id) => {
         dispatch(actions.deleteQuestionnaire(_id))
     }
@@ -17,9 +14,6 @@ const mapDispatchToProps = dispatch => {
 export const ConnectedCreateQuestionnaire = connect(
     state => ({
         questionnaires: selectors.selectQuestionnaires(state),
-        isCreateQuestionnairePending: selectors.selectIsCreateQuestionPending(state),
-        isCreateQuestionnaireSuccess: selectors.selectIsCreateQuestionnaireSuccess(state),
-        isCreateQuestionnaireFailed: selectors.selectIsCreateQuestionnaireFailed(state),
         isDeleteQuestionnairePending: selectors.selectIsDeleteQuestionPending(state),
         isDeleteQuestionnaireSuccess: selectors.selectIsDeleteQuestionnaireSuccess(state),
         isDeleteQuestionnaireFailed: selectors.selectIsDeleteQuestionnaireFailed(state),
@@ -30,6 +24,6 @@ export const ConnectedCreateQuestionnaire = connect(
         isLoadQuestionnaireSuccess: selectors.selectIsLoadQuestionnaireSuccess(state),
         isLoadQuestionnaireFailed: selectors.selectIsLoadQuestionnaireFailed(state),
     }),
-    mapDispatchToProps)(CreateQuestionnaire)
+    mapDispatchToProps)(ManageQuestionnaires)
 
-export default CreateQuestionnaire;
+export default ManageQuestionnaires;

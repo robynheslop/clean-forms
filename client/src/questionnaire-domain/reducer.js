@@ -3,7 +3,7 @@ import actions from "./actions";
 import events from "./events";
 
 export default createReducer({
-    questionnaires = [],
+    questionnaires: [],
     errors: [],
     isLoadQuestionnairesPending: false,
     isLoadQuestionnairesSuccess: false,
@@ -25,7 +25,7 @@ export default createReducer({
                 state.isLoadQuestionnairesPending = true;
             })
             .addCase(actions.loadQuestionnaires.fulfilled, (state, { payload: { questionnaires } }) => {
-                state.questionnairess.push(questionnaires);
+                state.questionnaires.push(questionnaires);
                 state.isLoadQuestionnairesPending = false;
                 state.isLoadQuestionnairesSuccess = true;
             })
@@ -68,7 +68,7 @@ export default createReducer({
             })
             .addCase(actions.deleteQuestionnaire.fulfilled, (state, { payload: { _id: id } }) => {
                 // remove q with same id in state
-                state.isDeleteQuestionnaireSuccess = true,
+                state.isDeleteQuestionnaireSuccess = true;
                 state.isDeleteQuestionnairePending = false;
             })
             .addCase(actions.deleteQuestionnaire.rejected, (state, { error: { message } }) => {
@@ -78,7 +78,7 @@ export default createReducer({
             })
             .addCase(events.reset, (state) => {
                 state = {
-                    questionnaires =[],
+                    questionnaires: [],
                     errors: [],
                     isLoadQuestionnairesPending: false,
                     isLoadQuestionnairesSuccess: false,

@@ -6,6 +6,6 @@ function* notifyQuestionnaireLogOut() {
     yield put(events.reset());
 }
 
-export default function* logOutSaga() {
+export function* logOutSaga() {
     yield takeEvery('app-domain/LOGGED_OUT', notifyQuestionnaireLogOut)
 }

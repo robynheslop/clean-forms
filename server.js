@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3001;
 const server = express();
 
 server.use(bodyParser.urlencoded({ extended: true }));
-// server.use(bodyParser.json());
+server.use(express.json());
 server.use(passport.initialize());
 server.use("/api", router);
 

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Paper } from "@material-ui/core";
 
-export function CreateQuestionnaire() {
+export function ManageQuestionnaires() {
     return (
         <Paper>
             <button onClick={() => handleButtonClick}></button>
@@ -10,8 +10,7 @@ export function CreateQuestionnaire() {
     )
 }
 
-CreateQuestionnaire.propTypes = {
-    createQuestionnaire: PropTypes.func,
+ManageQuestionnaires.propTypes = {
     deleteQuestionnaire: PropTypes.func,
     updateQuestionnaire: PropTypes.func,
     questionnaires: PropTypes.arrayOf(PropTypes.shape({
@@ -20,9 +19,6 @@ CreateQuestionnaire.propTypes = {
         status: PropTypes.string,
         date: PropTypes.string,
     })),
-    isCreateQuestionnairePending: PropTypes.bool,
-    isCreateQuestionnaireSuccess: PropTypes.bool,
-    isCreateQuestionnaireFailed: PropTypes.bool,
     isDeleteQuestionnairePending: PropTypes.bool,
     isDeleteQuestionnaireSuccess: PropTypes.bool,
     isDeleteQuestionnaireFailed: PropTypes.bool,
@@ -34,14 +30,10 @@ CreateQuestionnaire.propTypes = {
     isLoadQuestionnaireFailed: PropTypes.bool,
 }
 
-CreateQuestionnaire.defaultProps = {
-    createQuestionnaire: ()=>{},
+ManageQuestionnaires.defaultProps = {
     deleteQuestionnaire: ()=>{},
     updateQuestionnaire: ()=>{},
     questionnaires: [],
-    isCreateQuestionnairePending: false,
-    isCreateQuestionnaireSuccess: false,
-    isCreateQuestionnaireFailed: false,
     isDeleteQuestionnairePending: false,
     isDeleteQuestionnaireSuccess: false,
     isDeleteQuestionnaireFailed: false,
@@ -53,4 +45,4 @@ CreateQuestionnaire.defaultProps = {
     isLoadQuestionnaireFailed: false,
 }
 
-export default CreateQuestionnaire;
+export default ManageQuestionnaires;

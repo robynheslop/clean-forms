@@ -1,8 +1,3 @@
-import logInSaga from "./logInSaga";
-import logOutSaga from "./logOutSaga";
+export {logInSaga as logInQuestionnaireSaga} from "./logInSaga";
+export {logOutSaga as logOutQuestionnaireSaga} from "./logOutSaga";
 
-export default [
-    logInSaga,
-    logOutSaga,
-    
-]

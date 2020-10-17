@@ -5,6 +5,6 @@ function * notifiyQuestionnaireLogIn({payload: {userId}}) {
    yield put(actions.loadQuestionnaires({owner: userId}))
 }
 
-export default function * logInSaga() {
+export function * logInSaga() {
    yield takeEvery("app-domain/LOG_IN/fulfilled", notifiyQuestionnaireLogIn)
 }

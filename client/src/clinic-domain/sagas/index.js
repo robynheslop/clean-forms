@@ -1,8 +1,2 @@
-import logInSaga from "./logInSaga";
-import logOutSaga from "./logOutSaga";
-
-export default [
-    logInSaga,
-    logOutSaga,
-    
-]
+export {logInSaga as logInClinicSaga} from "./logInSaga";
+export {logOutSaga as logOutClinicSaga} from "./logOutSaga";
