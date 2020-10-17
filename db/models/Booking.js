@@ -16,10 +16,6 @@ const bookingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    questionnaire: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
-    },
     screeningId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true

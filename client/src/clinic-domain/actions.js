@@ -63,19 +63,33 @@ export const loadBookings = createAsyncThunk(
 
 export const addBooking = createAsyncThunk(
     "clinic-domain/ADD_BOOKINGS",
-    async({clinic, name, email, phone, date}) => {  
-        const params = new URLSearchParams();
-        params.append('clinic', clinic);
-        params.append('clientname', name);
-        params.append('email', email);
-        params.append('phone', phone);     
-        params.append('date', date);     
+    async({clinic, name, email, phone, date, questionnaireId}) => {  
+        
+        // create screening document and return ID
+        const screeningParams = new URLSearchParams();
+        screeningParams.append('questionnaireId', questionnaireId);
+        const screeningResponse = await fetch("/api/new-screening", { 
+            method: "POST",
+            body: screeningParams
+        });
+        const { _id: screeningId } = screeningResponse;
+
+        // creating booking document
+        const bookingParams = new URLSearchParams();
+        bookingParams.append('clinic', clinic);
+        bookingParams.append('clientname', name);
+        bookingParams.append('email', email);
+        bookingParams.append('phone', phone);     
+        bookingParams.append('date', date);     
+        bookingParams.append('screeningId', screeningId);     
         const response = await fetch("/api/new-booking", { 
             method: "POST", 
-            body: params
+            body: bookingParams
         })
         const responseJson = await response.json();
+
         // send email here
+
         console.log(responseJson)
         return response;
     }

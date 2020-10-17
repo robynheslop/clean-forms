@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, FormControlLabel, RadioGroup, Button, Radio, TextField } from '@material-ui/core';
-
+import { Paper, Button, TextField } from '@material-ui/core';
+import CreateQuestion from "./CreateQuestions";
 
 const useStyles = makeStyles({
     root: {
@@ -10,6 +10,7 @@ const useStyles = makeStyles({
         margin: '0 auto',
         marginTop: '50px',
         padding: '3em 0em',
+        minHeight: 'fit-conent',
         height: '75%'
     },
     form: {
@@ -39,141 +40,65 @@ export function CreateQuestionnaire({ createQuestionnaire }) {
     const classes = useStyles();
     const titleRef = useRef();
     const preTextRef = useRef();
-    const questionRef = useRef();
-    const responseARef = useRef();
-    const responseBRef = useRef();
-    const responseCRef = useRef();
-    const responseDRef = useRef();
     const postTextRef = useRef();
 
-    const [radioValue, setRadioValue] = useState();
-
-    const handleChange = (event) => {
-        setRadioValue(event.target.value);
-    };
-
+    const question1 = useRef();
+    const question2 = useRef();
+    const question3 = useRef();
+    const question4 = useRef();
 
     const handleButtonClick = event => {
         event.preventDefault();
         event.stopPropagation();
-
-        const questions = [{
-            question: questionRef,
-            responses: {
-                a: responseARef.current.value === null ? undefined : responseARef.current.value,
-                b: responseBRef.current.value === null ? undefined : responseBRef.current.value,
-                c: responseCRef.current.value === null ? undefined : responseCRef.current.value,
-                d: responseDRef.current.value === null ? undefined : responseDRef.current.value
-            },
-            validResponse: radioValue
-        }]
-
         const formData = {
             title: titleRef.current.value,
             pretext: preTextRef.current.value,
             posttext: postTextRef.current.value,
-            questions: questions   
+            questions: [
+                question1, question2, question3, question4
+            ]
         }
         console.log(formData);
-        // createQuestionnaire()
+        // createQuestionnaire(formData);
     }
-
 
     return (
         <Paper className={classes.root}>
-            <form className={classes.form}> 
-            <TextField
-                label='Questionnaire Title'
-                className={classes.input}
-                type='text'
-                name='questionnaireTitle'
-                inputRef={titleRef}
-                required />
-
-            <TextField
-                label='Opening Text'
-                className={classes.input}
-                type='text'
-                name='questionnairePreText'
-                inputRef={preTextRef}
-                required />
-
-
-            {/* create multiple options with labels and select correct one */}
-            <RadioGroup 
-            name="question1"
-            onChange={handleChange}>
+            <form className={classes.form}>
                 <TextField
-                        label='Type out your question here and select the valid answer below'
-                        type="text"
-                        className={classes.input}
-                        inputRef={questionRef}
-                        name="question"
-                    />
-                <div>
-                    <FormControlLabel
-                        value="a"
-                        name="q1"
-                        control={<Radio />}
-                    />
-                    <TextField
-                        type="text"
-                        inputRef={responseARef}
-                        name="a"
-                    />
-                </div>
-                <div>
-                    <FormControlLabel
-                        value="b"
-                        name="q1"
-                        // disabled={(responseBRef.current.value === undefined) ? true : false}
-                        control={<Radio />}
-                    />
-                    <TextField
-                        type="text"
-                        inputRef={responseBRef}
-                        name="b"
-                    />
-                </div>
-                <div>
-                    <FormControlLabel
-                        value="c"
-                        name="q1"
-                        control={<Radio />}
-                    />
-                    <TextField
-                        type="text"
-                        inputRef={responseCRef}
-                        name="c"
-                    />
-                </div>
-                <div>
-                    <FormControlLabel
-                        value="d"
-                        name="q1"
-                        control={<Radio />}
-                    />
-                    <TextField
-                        type="text"
-                        inputRef={responseDRef}
-                        name="d"
-                    />
-                </div>
-            </RadioGroup>
+                    label='Questionnaire Title'
+                    className={classes.input}
+                    type='text'
+                    name='questionnaireTitle'
+                    inputRef={titleRef}
+                    required />
 
-            {/* create post text */}
-            <TextField
-                label='Closing Text'
-                className={classes.input}
-                type='text'
-                name='questionnaireClosingText'
-                inputRef={postTextRef}
-            />
+                <TextField
+                    label='Opening Text'
+                    className={classes.input}
+                    type='text'
+                    name='questionnairePreText'
+                    inputRef={preTextRef}
+                    required />
 
-            <Button
-                className={classes.button}
-                onClick={handleButtonClick}
-            >Create Questionnaire</Button>
+
+                <CreateQuestion required={true} />
+                <CreateQuestion required={false} />
+                <CreateQuestion required={false} />
+                <CreateQuestion required={false} />
+
+                <TextField
+                    label='Closing Text'
+                    className={classes.input}
+                    type='text'
+                    name='questionnaireClosingText'
+                    inputRef={postTextRef}
+                />
+
+                <Button
+                    className={classes.button}
+                    onClick={handleButtonClick}
+                >Create Questionnaire</Button>
             </form>
         </Paper>
     )
@@ -185,8 +110,9 @@ CreateQuestionnaire.propTypes = {
     isCreateQuestionnaireSuccess: PropTypes.bool,
     isCreateQuestionnaireFailed: PropTypes.bool,
 }
+
 CreateQuestionnaire.defaultProps = {
-    createQuestionnaire: () => {},
+    createQuestionnaire: () => { },
     isCreateQuestionnairePending: false,
     isCreateQuestionnaireSuccess: false,
     isCreateQuestionnaireFailed: false,

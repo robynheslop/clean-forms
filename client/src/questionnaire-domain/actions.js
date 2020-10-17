@@ -8,6 +8,8 @@ export const loadQuestionnaires = createAsyncThunk(
             method: "GET"
         });
         const responseJson = await response.json();
+        console.log('response.json', responseJson);
+        if (responseJson.length === 0) return []
         return responseJson;
     }
 )

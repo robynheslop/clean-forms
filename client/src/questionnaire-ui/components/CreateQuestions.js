@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
-import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
-import { RadioGroup, Button, Radio, TextField } from '@material-ui/core';
+import { RadioGroup, FormControlLabel, Button, Radio, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles({
     input: {
@@ -22,105 +21,93 @@ const useStyles = makeStyles({
     }
 })
 
-export function CreateQuestionnaire() {
+export function CreateQuestion() {
     const classes = useStyles();
     const questionRef = useRef();
     const responseARef = useRef();
     const responseBRef = useRef();
     const responseCRef = useRef();
     const responseDRef = useRef();
-
     const [validResponse, setValidResponse] = useState();
-
-    const handleChange = (event) => {
-        setRadioValue(event.target.value);
+    const handleRadioChange = (event) => {
+        setValidResponse(event.target.value);
     };
 
-    const questionDetails = {
+    const questionData = {
         question: questionRef,
         responses: {
-            a: responseARef.current.value === null ? undefined : responseARef.current.value,
-            b: responseBRef.current.value === null ? undefined : responseBRef.current.value,
-            c: responseCRef.current.value === null ? undefined : responseCRef.current.value,
-            d: responseDRef.current.value === null ? undefined : responseDRef.current.value
+            a: responseARef.current?.value ? responseARef.current.value : undefined,
+            b: responseBRef.current?.value ? responseBRef.current.value : undefined,
+            c: responseCRef.current?.value ? responseCRef.current.value : undefined,
+            d: responseDRef.current?.value ? responseDRef.current.value : undefined
         },
         validResponse: validResponse
     }
+    // need to get question data back to add questionnaire!!! 
 
     return (
-        <RadioGroup
-            name="question1"
-            onChange={handleChange}>
-            <TextField
-                label='Type out your question here and select the valid answer below'
-                type="text"
-                className={classes.input}
-                inputRef={questionRef}
-                name="question"
-            />
-            <div>
-                <FormControlLabel
-                    value="a"
-                    name="q1"
-                    control={<Radio />}
-                />
+        <div>
+            <RadioGroup 
+                name="question1"
+                onChange={handleRadioChange}>
                 <TextField
+                    label='Type out your question here and select the valid answer below'
                     type="text"
-                    inputRef={responseARef}
-                    name="a"
+                    className={classes.input}
+                    inputRef={questionRef}
+                    name="question"
                 />
-            </div>
-            <div>
-                <FormControlLabel
-                    value="b"
-                    name="q1"
-                    control={<Radio />}
-                />
-                <TextField
-                    type="text"
-                    inputRef={responseBRef}
-                    name="b"
-                />
-            </div>
-            <div>
-                <FormControlLabel
-                    value="c"
-                    name="q1"
-                    control={<Radio />}
-                />
-                <TextField
-                    type="text"
-                    inputRef={responseCRef}
-                    name="c"
-                />
-            </div>
-            <div>
-                <FormControlLabel
-                    value="d"
-                    name="q1"
-                    control={<Radio />}
-                />
-                <TextField
-                    type="text"
-                    inputRef={responseDRef}
-                    name="d"
-                />
-            </div>
-        </RadioGroup>
+                <div>
+                    <FormControlLabel
+                        value="a"
+                        name="q1"
+                        control={<Radio />}
+                    />
+                    <TextField
+                        type="text"
+                        inputRef={responseARef}
+                        name="a"
+                    />
+                </div>
+                <div>
+                    <FormControlLabel
+                        value="b"
+                        name="q1"
+                        control={<Radio />}
+                    />
+                    <TextField
+                        type="text"
+                        inputRef={responseBRef}
+                        name="b"
+                    />
+                </div>
+                <div>
+                    <FormControlLabel
+                        value="c"
+                        name="q1"
+                        control={<Radio />}
+                    />
+                    <TextField
+                        type="text"
+                        inputRef={responseCRef}
+                        name="c"
+                    />
+                </div>
+                <div>
+                    <FormControlLabel
+                        value="d"
+                        name="q1"
+                        control={<Radio />}
+                    />
+                    <TextField
+                        type="text"
+                        inputRef={responseDRef}
+                        name="d"
+                    />
+                </div>
+            </RadioGroup>
+        </div>
     )
 }
 
-CreateQuestionnaire.propTypes = {
-    createQuestionnaire: PropTypes.func,
-    isCreateQuestionnairePending: PropTypes.bool,
-    isCreateQuestionnaireSuccess: PropTypes.bool,
-    isCreateQuestionnaireFailed: PropTypes.bool,
-}
-CreateQuestionnaire.defaultProps = {
-    createQuestionnaire: () => { },
-    isCreateQuestionnairePending: false,
-    isCreateQuestionnaireSuccess: false,
-    isCreateQuestionnaireFailed: false,
-}
-
-export default CreateQuestionnaire;
+export default CreateQuestion;

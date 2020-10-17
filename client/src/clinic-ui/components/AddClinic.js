@@ -89,7 +89,7 @@ function AddClinics({ addClinic, userId }) {
                     <Button
                         className={classes.button}
                         type='submit'
-                        >Add Clinic</Button>
+                    >Add Clinic</Button>
                 </div>
             </form>
         </Paper>
