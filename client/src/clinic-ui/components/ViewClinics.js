@@ -68,7 +68,7 @@ function ViewClinics({ handleViewBookings, handleMakeBooking, clinics }) {
                                     <Button
                                         onClick={() => {
                                             history.push(`/clinic/new-booking`)
-                                            handleMakeBooking(id)
+                                            handleMakeBooking(id, clinicname, phone)
                                         }}>
                                         Add New Booking
                                 </Button>

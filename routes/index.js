@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const db = require("../db/models")
+require("dotenv").config();
 
 const router = express.Router();
 
@@ -141,6 +142,46 @@ router.delete('/questionnaire/:id', async (request, response) => {
     catch (error) {
         response.status(500).json.error;
     }
+})
+
+
+router.post('/screening-request', (request, response) => {
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.mail.yahoo.com',
+        port: 587,
+        secure: false,
+        auth: {
+            user: 'cleanforms@yahoo.com',
+            // save in env variables !!! 
+            pass: process.env.EMAILPASSWORD,
+        }
+    });
+
+    transporter.use("compile", hbs({
+        viewEngine: { 
+            layoutsDir: "./views",
+            defaultLayout: 'emailTemplate'
+        },
+        viewPath: "./views"
+    }))
+
+    const mailOptions = {
+        from: '"Clean Forms" <cleanforms@gmail.com>',
+        to: request.body.email,
+        subject: `COVID Declaration for your apppointment at ${request.body.clinicname}`,
+        context: {
+            clientName: request.body.clientName,
+            clinicName: request.body.clinicName,
+            clinicPhone: request.body.clinicPhone,
+            clinicEmail: request.body.clinicEmail,
+            link: `www.cleanforms.com/${request.body.screeningId}`, 
+        }
+    }
+    
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) return console.log(error);
+        console.log("Message sent: " + info.messageId);
+    })
 })
 
 module.exports = router;
