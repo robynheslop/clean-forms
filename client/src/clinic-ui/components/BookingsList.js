@@ -33,7 +33,7 @@ function BookingsList({ activeClinic }) {
         <div className={classes.root}>
             {bookings.length > 0 ?
                 <div>
-                    <h1>Your Bookings: </h1>
+                    <h1>Bookings</h1>
                     <TableContainer>
                         <Table>
                             <TableHead>

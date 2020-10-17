@@ -63,9 +63,11 @@ export const loadBookings = createAsyncThunk(
 
 export const addBooking = createAsyncThunk(
     "clinic-domain/ADD_BOOKINGS",
-    async({clinic, name, email, phone, date, questionnaireId}) => {  
+    async({clinic, clinicName, clinicPhone, clientName, email, phone, date, questionnaireId}) => {  
         
-        // create screening document and return ID
+        /*
+        create new screening
+        */
         const screeningParams = new URLSearchParams();
         screeningParams.append('questionnaireId', questionnaireId);
         const screeningResponse = await fetch("/api/new-screening", { 
@@ -74,24 +76,37 @@ export const addBooking = createAsyncThunk(
         });
         const { _id: screeningId } = screeningResponse;
 
-        // creating booking document
+        /*
+        creating new booking
+        */
         const bookingParams = new URLSearchParams();
         bookingParams.append('clinic', clinic);
-        bookingParams.append('clientname', name);
+        bookingParams.append('clientname', clientName);
         bookingParams.append('email', email);
         bookingParams.append('phone', phone);     
         bookingParams.append('date', date);     
         bookingParams.append('screeningId', screeningId);     
-        const response = await fetch("/api/new-booking", { 
+        const bookingResponse = await fetch("/api/new-booking", { 
             method: "POST", 
             body: bookingParams
         })
-        const responseJson = await response.json();
+        const bookingResponseJson = await bookingResponse.json();
 
-        // send email here
+       /*
+       dispatch email to client 
+        */
+        const emailParams = new URLSearchParams();
+        emailParams.append('clinicName', clinicName);
+        emailParams.append('clinicPhone', clinicPhone);
+        emailParams.append('clientName', clientName);
+        emailParams.append('email', email);     
+        emailParams.append('screeningId', screeningId);     
+        const emailResponse = await fetch("/api/screening-request", { 
+            method: "POST", 
+            body: emailParams
+        })
 
-        console.log(responseJson)
-        return response;
+        return bookingResponseJson
     }
 )
 

@@ -2,7 +2,6 @@ import { put, takeEvery } from 'redux-saga/effects';
 import events from '../events';
 
 function* notifyClinicLogOut() {
-    console.log('saga triggered')
     yield put(events.reset());
 }
 

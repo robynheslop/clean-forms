@@ -1,5 +1,6 @@
-import { CreateQuestion } from "./components";
+import { CreateQuestionnaire, ManageQuestionnaires } from "./components";
 
 export {
-    CreateQuestion
+    CreateQuestionnaire,
+    ManageQuestionnaires
 }

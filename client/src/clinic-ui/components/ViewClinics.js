@@ -45,7 +45,7 @@ function ViewClinics({ handleViewBookings, handleMakeBooking, clinics }) {
         <Paper className={classes.root}>
             {!(clinics.length === 0) ?
                 <div>
-                    <h1>Your Clinics: </h1>
+                    <h1>Clinics</h1>
                     {clinics.map(({ id, clinicname, email, phone }) =>
                         <Card key={id} className={classes.card}>
 
@@ -68,7 +68,7 @@ function ViewClinics({ handleViewBookings, handleMakeBooking, clinics }) {
                                     <Button
                                         onClick={() => {
                                             history.push(`/clinic/new-booking`)
-                                            handleMakeBooking(id)
+                                            handleMakeBooking(id, clinicname, phone)
                                         }}>
                                         Add New Booking
                                 </Button>

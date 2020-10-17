@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 export const loadQuestionnaires = createAsyncThunk(
     'questionnaire-domain/LOAD_QUESTIONNAIRES',
     async ({owner}) => {
-        const response = await fetch(`/api/questionnaire/${owner}`, {
+        const response = await fetch(`/api/questionnaires/${owner}`, {
             method: "GET"
         });
         const responseJson = await response.json();

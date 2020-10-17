@@ -7,6 +7,8 @@ export default createReducer({
     owner: undefined,
     activeClinic: {
         id: undefined,
+        clinicname: undefined,
+        phone: undefined,
         isLoadBookingsPending: false,
         isAddBookingPending: false,
         isAddingBookingSuccess: false,
@@ -91,8 +93,10 @@ export default createReducer({
                 state.activeClinic.isAddBookingPending = false;
                 state.activeClinic.isAddingBookingSuccess = true;
             })
-            .addCase(events.activeClinicSelected, (state, { payload: clinicId }) => {
-                state.activeClinic.id = clinicId;
+            .addCase(events.activeClinicSelected, (state, { payload: id, clinicname, phone }) => {
+                state.activeClinic.id = id;
+                state.activeClinic.clinicname = clinicname;
+                state.activeClinic.phone = phone;
             })
             .addCase(events.activeClinicDeselected, (state) => {
                 state.activeClinic.id = undefined;
