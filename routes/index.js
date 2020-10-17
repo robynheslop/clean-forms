@@ -68,6 +68,7 @@ router.post("/new-clinic", (request, response) => {
         })
 })
 
+// creat new booking
 router.post("/new-booking", (request, response) => {
     console.log("request body", request.body)
     const booking = new db.Booking(request.body);
@@ -81,6 +82,7 @@ router.post("/new-booking", (request, response) => {
         })
 })
 
+// get all bookings made by a clinic
 router.get("/bookings/:clinic", (request, response) => {
     console.log(request.params.clinic)
     db.Booking.find(
@@ -95,7 +97,7 @@ router.get("/bookings/:clinic", (request, response) => {
 })
 
 // get all questionnaires belonging to a user
-router.get("/questionnaire/:owner", async (request, response) => {
+router.get("/questionnaires/:owner", async (request, response) => {
     try {
         const questionnaire = await db.Questionnaire.find(
             { owner: request.params.owner })
@@ -108,9 +110,9 @@ router.get("/questionnaire/:owner", async (request, response) => {
 
 // create a new questionnaire
 router.post('/questionnaire', async (request, response) => {
+    console.log(request.body);
     try {
         const createQuestionnaire = await db.Questionnaire.create(
-            { owner: request.params.owner },
             { ...request.body.formData })
         response.json(createQuestionnaire);
     }
@@ -119,7 +121,7 @@ router.post('/questionnaire', async (request, response) => {
     }
 })
 
-// create a new questionnaire
+// update questionnaire -- second release
 router.put('/questionnaire/:id', async (request, response) => {
     try {
         const update = await db.Questionnaire.updateOne(
@@ -132,7 +134,7 @@ router.put('/questionnaire/:id', async (request, response) => {
     }
 })
 
-// create a new questionnaire
+// delete questionnaire -- second release
 router.delete('/questionnaire/:id', async (request, response) => {
     try {
         const deleteQuestionnaire = await db.Questionnaire.findByIdAndDelete(
@@ -144,44 +146,76 @@ router.delete('/questionnaire/:id', async (request, response) => {
     }
 })
 
-
-router.post('/screening-request', (request, response) => {
-    let transporter = nodemailer.createTransport({
-        host: 'smtp.mail.yahoo.com',
-        port: 587,
-        secure: false,
-        auth: {
-            user: 'cleanforms@yahoo.com',
-            // save in env variables !!! 
-            pass: process.env.EMAILPASSWORD,
-        }
-    });
-
-    transporter.use("compile", hbs({
-        viewEngine: { 
-            layoutsDir: "./views",
-            defaultLayout: 'emailTemplate'
-        },
-        viewPath: "./views"
-    }))
-
-    const mailOptions = {
-        from: '"Clean Forms" <cleanforms@gmail.com>',
-        to: request.body.email,
-        subject: `COVID Declaration for your apppointment at ${request.body.clinicname}`,
-        context: {
-            clientName: request.body.clientName,
-            clinicName: request.body.clinicName,
-            clinicPhone: request.body.clinicPhone,
-            clinicEmail: request.body.clinicEmail,
-            link: `www.cleanforms.com/${request.body.screeningId}`, 
-        }
+// get questionnaire by id to display form for client
+router.get("/questionnaires/:id", async (request, response) => {
+    try {
+        const questionnaire = await db.Questionnaire.find(
+            { _id: request.params.id })
+        response.json(questionnaire);
     }
-    
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) return console.log(error);
-        console.log("Message sent: " + info.messageId);
-    })
+    catch (error) {
+        response.status(500).json(error);
+    }
 })
+
+// get screening by ID -- to then get questionnaire for client to complete
+router.get('/screening/:id', async (request, response) => {
+    try {
+        const screening = await db.Screening.find(
+            { _id: request.params.id })
+        response.json(screening);
+    }
+    catch (error) {
+        response.status(500).json(error);
+    }
+});
+
+// dispatch email to client
+router.post('/screening-request', async (request, response) => {
+    console.log(request.body)
+    try {
+        let transporter = nodemailer.createTransport({
+            host: 'smtp.mail.yahoo.com',
+            port: 587,
+            secure: false,
+            auth: {
+                user: 'cleanforms@yahoo.com',
+                pass: process.env.EMAILPASSWORD
+            }
+        });
+
+        transporter.use("compile", hbs({
+            viewEngine: {
+                layoutsDir: "./views",
+                defaultLayout: 'emailTemplate'
+            },
+            viewPath: "./views"
+        }))
+
+        const mailOptions = {
+            from: '"Clean Forms" <cleanforms@gmail.com>',
+            to: request.body.email,
+            subject: `COVID Declaration for your apppointment at ${request.body.clinicname}`,
+            context: {
+                clientName: request.body.clientName,
+                clinicName: request.body.clinicName,
+                clinicPhone: request.body.clinicPhone,
+                clinicEmail: request.body.clinicEmail,
+                link: `www.cleanforms.com/${request.body.screeningId}`,
+            }
+        }
+
+        await transporter.sendMail(mailOptions, (error, info) => {
+            if (error) return console.log(error);
+            console.log("Message sent: " + info.messageId);
+        })
+
+        response.status(200)
+    }
+    catch (error) {
+        response.status(500).json.error;
+    }
+});
+
 
 module.exports = router;
