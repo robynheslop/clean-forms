@@ -1,11 +1,11 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import events from '../events';
 
-function* clinicLogOut() {
+function* notifyQuestionnaireLogOut() {
     console.log('saga triggered')
     yield put(events.reset());
 }
 
-export default function* logOutSaga() {
-    yield takeEvery('app-domain/LOGGED_OUT', clinicLogOut)
+export function* logOutSaga() {
+    yield takeEvery('app-domain/LOGGED_OUT', notifyQuestionnaireLogOut)
 }

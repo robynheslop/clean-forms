@@ -12,7 +12,9 @@ const questionnaireSchema = new mongoose.Schema({
     pretext: {
         type: String
     },
-    questions: [ questionSchema ], 
+    questions: {
+        type: Array
+    }, 
     postText: {
         type: String
     }, 

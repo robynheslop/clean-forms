@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema({
     clinic: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true,
     },
     clientname: {
@@ -14,10 +14,6 @@ const bookingSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
-    },
-    questionnaire: {
-        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     screeningId: {

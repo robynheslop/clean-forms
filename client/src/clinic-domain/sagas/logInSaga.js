@@ -5,6 +5,6 @@ function * notifiyClinicLogIn({payload: {userId}}) {
    yield put(actions.loadClinics({owner:userId}))
 }
 
-export default function * logInSaga() {
+export function * logInSaga() {
    yield takeEvery("app-domain/LOG_IN/fulfilled", notifiyClinicLogIn)
 }

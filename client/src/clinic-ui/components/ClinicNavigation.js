@@ -32,6 +32,7 @@ export function ClinicNavigation() {
                 <Link className={classes.link} to='/clinic'>View Clinics</Link>
                 <Link className={classes.link} to='/clinic/add-clinic'>Add New Clinics</Link>
                 <Link className={classes.link} to='/clinic/questionnaire'>Manage Questionnaires</Link>
+                <Link className={classes.link} to='/clinic/questionnaires/add-questionnaire'>Create New Questionnaire</Link>
             </AppBar>
 
         </div>

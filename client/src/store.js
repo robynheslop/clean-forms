@@ -1,13 +1,15 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { reducer as appDomainReducer } from './app-domain';
-import { reducer as clinicDomainReducer } from './clinic-domain'
+import { reducer as clinicDomainReducer } from './clinic-domain';
+import { reducer as questionnaireDomainReducer } from './questionnaire-domain';
 import createSagaMiddleware from 'redux-saga';
-import sagas from './sagas';
+import rootSagas from './sagas';
 
 const sagaMiddleware = createSagaMiddleware()
 const reducer = {
     appDomain: appDomainReducer,
-    clinicDomain: clinicDomainReducer
+    clinicDomain: clinicDomainReducer,
+    questionnaireDomain: questionnaireDomainReducer
 }
 
 const store = configureStore({
@@ -15,6 +17,6 @@ const store = configureStore({
     middleware: [sagaMiddleware, ...getDefaultMiddleware()]
 })
 
-sagaMiddleware.run(...sagas);
+sagaMiddleware.run(rootSagas);
 
 export default store;

@@ -1,12 +1,4 @@
-// const selectQuestions = (state) => state?.questionnaireDomain?.questions;
-
 const selectQuestionnaires = (state) => state?.questionnaireDomain?.questionnaires
-
-// const selectIsCreateQuestionPending = (state) => state?.questionnaireDomain?.isCreateQuestionPending;
-
-// const selectIsCreateQuestionSuccess = (state) => state?.questionnaireDomain?.isCreateQuestionSuccess;
-
-// const selectIsCreateQuestionFailed = (state) => state?.questionnaireDomain?.isCreateQuestionFailed;
 
 const selectIsLoadQuestionnairesPending = (state) => state?.questionnaireDomain?.isLoadQuestionnairesPending;
 
@@ -20,16 +12,30 @@ const selectIsCreateQuestionnaireSuccess = (state) => state?.questionnaireDomain
 
 const selectIsCreateQuestionnaireFailed = (state) => state?.questionnaireDomain?.isCreateQuestionnaireFailed;
 
+const selectIsUpdateQuestionnairesPending = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesPending;
+
+const selectIsUpdateQuestionnairesSuccess = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesSuccess;
+
+const selectIsUpdateQuestionnairesFailed = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesFailed;
+
+const selectIsDeleteQuestionnairePending = (state) => state?.questionnaireDomain?.isDeleteQuestionnairePending;
+
+const selectIsDeleteQuestionnaireSuccess = (state) => state?.questionnaireDomain?.isDeleteQuestionnaireSuccess;
+
+const selectIsDeleteQuestionnaireFailed = (state) => state?.questionnaireDomain?.isDeleteQuestionnaireFailed;
+
 export default { 
-    // selectQuestions,
-    // selectIsCreateQuestionFailed,
-    // selectIsCreateQuestionSuccess,
-    // selectIsCreateQuestionPending,
     selectQuestionnaires,
     selectIsLoadQuestionnairesSuccess,
     selectIsLoadQuestionnairesFailed,
     selectIsLoadQuestionnairesPending,
     selectIsCreateQuestionnairePending,
     selectIsCreateQuestionnaireSuccess,
-    selectIsCreateQuestionnaireFailed
+    selectIsCreateQuestionnaireFailed,
+    selectIsUpdateQuestionnairesSuccess,
+    selectIsUpdateQuestionnairesFailed,
+    selectIsUpdateQuestionnairesPending,
+    selectIsDeleteQuestionnairePending,
+    selectIsDeleteQuestionnaireSuccess,
+    selectIsDeleteQuestionnaireFailed,
 }
