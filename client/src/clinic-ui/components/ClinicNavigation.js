@@ -9,7 +9,6 @@ const useStyles = makeStyles({
         border: 0,
         color: 'white',
         height: 48,
-        position: '-webkit -sticky',
         position: 'sticky',
         top: 70,
         padding: '70px 30px',

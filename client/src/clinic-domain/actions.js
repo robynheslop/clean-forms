@@ -90,7 +90,7 @@ export const addBooking = createAsyncThunk(
          */
 
         console.log('email params', { clientName, clinicName, clinicPhone, email, screeningId })
-        const emailResponse = await fetch("/api/screening-request", {
+        await fetch("/api/screening-request", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

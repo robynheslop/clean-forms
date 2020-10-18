@@ -125,7 +125,7 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
                         {questionnaires[0] === undefined ?
                             undefined :
                             questionnaires.map(questionnaire => {
-                                return <option id={questionnaire._id} value={questionnaire._id}>{questionnaire.title}</option>
+                                return <option key={questionnaire._id} id={questionnaire._id} value={questionnaire._id}>{questionnaire.title}</option>
                             })
                         }
                     </Select>

@@ -1,17 +1,8 @@
-const selectIsUserLoggedIn = (state) => state?.appDomain?.session?.isLoggedIn
+const selectQuestionaire = (state) => state?.bookingDomain?.questionnaire
 
-const selectIsLogInPending = (state) => state?.appDomain?.session?.isLogInPending
-
-const selectIsSignUpPending = state => state?.appDomain?.session?.isSignUpPending
-
-const selectToken = (state) => state?.appDomain?.session?.token
-
-const selectUserId = (state) => state?.appDomain?.session?.userId
+const selectIsQuestionnaireLoading = (state) => state?.bookingDomain?.isQuestionnaireLoading
 
 export default { 
-    selectToken, 
-    selectIsUserLoggedIn, 
-    selectIsLogInPending, 
-    selectIsSignUpPending, 
-    selectUserId 
+    selectQuestionaire,
+    selectIsQuestionnaireLoading
 };

@@ -1,54 +1,63 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from "prop-types";
-import queryString from 'query-string';
-import { Paper, FormGroup, FormControlLabel, FormLabel, Button, FormControl, Checkbox } from '@material-ui/core';
+import { findIndex, propEq } from "ramda";
+import { Paper, FormGroup, FormLabel, Button, FormControl } from '@material-ui/core';
+import Responses from './Response';
 
-export function Screening({location, onLoad, onSave, screeningId, questionnaire}) {
+export function Screening({ location, onLoad, handleSaveQuestionnaire, screeningId, questionnaire }) {
+
+    const [responsesState, setResponsesState] = useState([]);
 
     useEffect(() => {
-        const {pathname} = (location);
+        const { pathname } = (location);
         const id = (pathname.split('/'))[2];
         onLoad(id);
+
     }, [])
 
-    const handleChange = () => {
-
+    const handleSaveResponse = (id, checkedState) => {
+        console.log('responsesState', responsesState)
+        setResponsesState([...responsesState, { [id]: checkedState }])
     }
 
-    const handleSave = () => {
-        onSave(screeningId)
+    const handleSubmit = event => {
+        event.preventDefault();
+        event.stopPropagation();
+        handleSaveQuestionnaire(responsesState)
     }
 
     return (
         <Paper>
-            {questionnaire ? 
-            
-            <form >
-                <h3>{questionnaire.preText ? questionnaire.preText : undefined}</h3>
+            {(questionnaire?.id !== undefined) ?
+                <form >
+                    <h1>{questionnaire.title}</h1>
+                    <h3>{questionnaire.preText ? questionnaire.preText : undefined}</h3>
 
-                {questionnaire.questions.map(({ queryText, id, respones }) => {
-                    return <FormControl >
-                        <FormLabel >{queryText}</FormLabel>
-                        <FormGroup>
-                            {respones.map(({ id, responseText }) => {
-                                return <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={id}
-                                            onChange={handleChange}
-                                            name={responseText} />}
-                                    label={responseText}
-                                />
-                            })}
-                        </FormGroup>
-                    </FormControl>
-                })
-                }
-                <h3>{questionnaire.postText ? questionnaire.postText : undefined}</h3>
-                <Button
-                    onClick={handleSave}
-                >Submit</Button>
-            </form>
+                    {questionnaire.questions.map(({ queryText, id, responses }) => {
+                        return <div>
+                            <FormControl key={id}>
+                                <FormLabel >{queryText}</FormLabel>
+                                <FormGroup>
+
+                                    <Responses
+                                        handleSaveResponse={(checkedState) => handleSaveResponse(id, checkedState)}
+                                        {...{ responses }}
+                                    ></Responses>
+                                </FormGroup>
+                            </FormControl>
+                            <br></br>
+                            <br></br>
+                        </div>
+
+                    })
+                    }
+                    <h3>{questionnaire.postText ? questionnaire.postText : undefined}</h3>
+                    <Button
+                        // className={classes.button}
+                        type="submit"
+                        onClick={handleSubmit}
+                    >Submit</Button>
+                </form>
 
                 : <p>Broken Still</p>
             }
@@ -59,10 +68,10 @@ export function Screening({location, onLoad, onSave, screeningId, questionnaire}
 Screening.propTypes = {
     screeningId: PropTypes.string,
     questionnaire: PropTypes.object,
-    onSave: PropTypes.func,
+    handleSaveResponse: PropTypes.func,
+    handleSaveQuestionnaire: PropTypes.func,
     onLoad: PropTypes.func,
 }
-
 
 Screening.defaultProps = {
 

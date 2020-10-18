@@ -53,6 +53,7 @@ router.get("/clinics/:owner", (request, response) => {
 })
 
 router.post("/new-clinic", (request, response) => {
+    console.log(request.body)
     const clinic = new db.Clinic({
         owner: request.body.owner,
         clinicname: request.body.clinicname,
@@ -76,6 +77,7 @@ router.post("/new-booking", (request, response) => {
             response.json(booking)
         })
         .catch(error => {
+            console.log(error)
             response.status(500).json("Could not create booking");
         })
 })
@@ -162,7 +164,7 @@ router.post('/screening-request', async (request, response) => {
         secure: false,
         auth: {
             user: 'cleanforms@yahoo.com',
-            pass: 'lcwzkcktgeitcgsr'
+            pass: process.env.EMAILPASSWORD
         }
     });
 
@@ -208,15 +210,17 @@ router.get('/screening/:id', async (request, response) => {
 });
 
 // get questionnaire by id to display in screening for client
-router.get("/questionnaires/:id", async (request, response) => {
-    try {
-        const questionnaire = await db.Questionnaire.find(
-            { _id: request.params.id })
-        response.json(questionnaire);
-    }
-    catch (error) {
-        response.status(500).json(error);
-    }
+router.get("/screening/questionnaire/:id", async (request, response) => {
+    db.Questionnaire.findOne(
+        { _id: request.params.id },
+        function (error, questionnaire) {
+            if (error) return response.status(500).json("Could not find questionnaire");
+            if (!questionnaire) {
+                
+                response.status(500).json("Could not find questionnaire in store");
+            }
+            return response.json(questionnaire);
+        });
 })
 
 // update screening with responses and status

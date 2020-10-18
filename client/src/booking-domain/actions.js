@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import events from "./events";
+import events from './events';
 
 export const createScreening = createAsyncThunk(
     "booking-domain/CREATE_SCREENING",
@@ -47,16 +47,17 @@ export const getScreening = createAsyncThunk(
 
 export const getQuestionnaire = createAsyncThunk(
     "booking-domain/GET_QUESTIONNAIRE",
-    async (questionnaireId) => {
-        const questionnaireResponse = await fetch("/api/questionnaires/" + questionnaireId, {
+    async (id) => {
+        const questionnaireResponse = await fetch("/api/screening/questionnaire/" + id, {
             method: "GET",
         });
-        const { questionnaire } = questionnaireResponse.json();
+
+        const questionnaire = await questionnaireResponse.json();
         return questionnaire;
     }
 )
 
-export const completeScreening = createAsyncThunk(
+export const submitScreening = createAsyncThunk(
     "booking-domain/COMPLETE_SCREENING",
     async ({ screeningId, responses }) => {
 
@@ -74,12 +75,21 @@ export const completeScreening = createAsyncThunk(
     }
 )
 
+export const storeScreening = (responsesState) => (dispatch) => {
+    dispatch(events.storedScreening(responsesState));
+}
+
+// export function storeScreening(responsesState) {
+//     console.log('responsesState', responsesState)
+// }
+
 export const actions = {
     createScreening,
     requestScreening,
     getScreening,
     getQuestionnaire,
-    completeScreening
+    submitScreening,
+    storeScreening
 }
 
 export default actions;

@@ -1,1 +1,1 @@
-export {loadScreeningSaga as loadScreeningSaga} from "./loadScreeningSaga";
+export { loadScreeningSaga } from "./loadScreeningSaga";

@@ -1,5 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import actions from "./actions";
+import events from './events';
 
 export default createReducer({
     errors: [],
@@ -8,7 +9,8 @@ export default createReducer({
         questionnaireId: undefined
     },
     questionnaire: {},
-    responses: {}
+    responses: [],
+    isQuestionnaireLoading: true
 },
     builder => {
         builder
@@ -31,9 +33,15 @@ export default createReducer({
             })
             .addCase(actions.getQuestionnaire.fulfilled, (state, { payload }) => {
                 state.questionnaire = payload;
+                state.isQuestionnaireLoading = false;
             })
             .addCase(actions.getQuestionnaire.rejected, (state, { error: { message } }) => {
-                state.errors.push(message)
+                state.errors.push(message);
+                state.isQuestionnaireLoading = false;
+            })
+            .addCase(events.storedScreening, (state, {payload}) => {
+                console.log('payload', payload)
+                state.responses.push(payload)
             })
     }
 )
