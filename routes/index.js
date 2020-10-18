@@ -113,7 +113,7 @@ router.post('/questionnaire', async (request, response) => {
     console.log(request.body);
     try {
         const createQuestionnaire = await db.Questionnaire.create(
-            { ...request.body.formData })
+            { ...request.body })
         response.json(createQuestionnaire);
     }
     catch (error) {
@@ -123,15 +123,41 @@ router.post('/questionnaire', async (request, response) => {
 
 // update questionnaire -- second release
 router.put('/questionnaire/:id', async (request, response) => {
-    try {
-        const update = await db.Questionnaire.updateOne(
-            { owner: request.params.owner },
-            { ...request.body.formData })
-        response.json(update)
-    }
-    catch (error) {
-        response.status(500).json.error;
-    }
+
+    // const questionnaire = new db.Questionnaire(request.body)
+    // console.log('questionnaire', questionnaire)
+    // questionnaire.save()
+    //     .then(questionnaire => {
+    //         response.json(questionnaire)
+    //     })
+    //     .catch(error => {
+    //         console.log(error.message)
+    //         response.status(500).json("Could not create questionnaire");
+    //     })
+
+
+    db.Questionnaire.findOneAndUpdate(
+        { id: request.params.id },
+        request.body,
+        { upsert: true },
+        function (error, questionnaire) {
+            if (error) return response.status(500).json("Could not create questionnaire");
+            return response.json(questionnaire);
+        });
+
+
+    // console.log(questionnaire)
+    // db.Questionnaire.updateOne(
+    //     { id: request.params.id },
+    //     { questionnaire }, 
+    //     { upsert: true },
+    //     (error, updatedQuestionnaire) => {
+    //         if (error) return response.status(500).json(error);
+    //         if (!updatedQuestionnaire) {
+    //             return response.status(500).json("Could not save questionnaire");
+    //         }
+    //         return response.json(updatedQuestionnaire);
+    //     })
 })
 
 // delete questionnaire -- second release
@@ -146,31 +172,19 @@ router.delete('/questionnaire/:id', async (request, response) => {
     }
 })
 
-// get questionnaire by id to display form for client
-router.get("/questionnaires/:id", async (request, response) => {
+// create a new screening document
+router.post('/new-screening', async (request, response) => {
     try {
-        const questionnaire = await db.Questionnaire.find(
-            { _id: request.params.id })
-        response.json(questionnaire);
+        const createScreening = await db.Screening.create(
+            { questionnaireId: request.body.questionnaireId })
+        response.json(createScreening);
     }
     catch (error) {
-        response.status(500).json(error);
+        response.status(500).json(error)
     }
 })
 
-// get screening by ID -- to then get questionnaire for client to complete
-router.get('/screening/:id', async (request, response) => {
-    try {
-        const screening = await db.Screening.find(
-            { _id: request.params.id })
-        response.json(screening);
-    }
-    catch (error) {
-        response.status(500).json(error);
-    }
-});
-
-// dispatch email to client
+// dispatch screening request email to client
 router.post('/screening-request', async (request, response) => {
     console.log(request.body)
     try {
@@ -194,7 +208,7 @@ router.post('/screening-request', async (request, response) => {
 
         const mailOptions = {
             from: '"Clean Forms" <cleanforms@gmail.com>',
-            to: request.body.email,
+            to: request.body.clientEmail,
             subject: `COVID Declaration for your apppointment at ${request.body.clinicname}`,
             context: {
                 clientName: request.body.clientName,
@@ -217,5 +231,45 @@ router.post('/screening-request', async (request, response) => {
     }
 });
 
+// get screening by ID -- to then get questionnaire for client to complete
+router.get('/screening/:id', async (request, response) => {
+    try {
+        const screening = await db.Screening.find(
+            { _id: request.params.id })
+        response.json(screening);
+    }
+    catch (error) {
+        response.status(500).json(error);
+    }
+
+});
+
+// get questionnaire by id to display in screening for client
+router.get("/questionnaires/:id", async (request, response) => {
+    try {
+        const questionnaire = await db.Questionnaire.find(
+            { _id: request.params.id })
+        response.json(questionnaire);
+    }
+    catch (error) {
+        response.status(500).json(error);
+    }
+})
+
+// update screening with responses and status
+router.put('/screening/:id', async (request, response) => {
+    try {
+        const updateScreening = await db.Screening.findOneAndUpdate(
+            { _id: request.params.id },
+            {
+                responses: request.body.responses,
+                status: request.body.status
+            })
+        response.json(updateScreening);
+    }
+    catch (error) {
+        response.status(500).json(error);
+    }
+});
 
 module.exports = router;

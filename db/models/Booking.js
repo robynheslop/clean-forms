@@ -17,7 +17,7 @@ const bookingSchema = new mongoose.Schema({
         required: true
     },
     screeningId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true
     },
     date: {

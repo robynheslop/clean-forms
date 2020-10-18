@@ -61,6 +61,7 @@ export function Navigation({ isLoggedIn }) {
                 <Route path='/signup' component={SignUp} />
                 <Route path='/logout' component={LogOut} />
                 <Route path='/login' component={LogIn} />
+                {/* <Route path='/screening/:id' component={Screening} /> */}
                 <PrivateRoute path='/' component={Body} />
             </Switch>
         </div>

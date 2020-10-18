@@ -8,12 +8,9 @@ export default createReducer({
     isLoadQuestionnairesPending: false,
     isLoadQuestionnairesSuccess: false,
     isLoadQuestionnairesFailed: false,
-    isCreateQuestionnairePending: false,
-    isCreateQuestionnaireSuccess: false,
-    isCreateQuestionnaireFailed: false,
-    isUpdateQuestionnairePending: false,
-    isUpdateQuestionnaireSuccess: false,
-    isUpdateQuestionnaireFailed: false,
+    isSaveQuestionnairePending: false,
+    isSaveQuestionnaireSuccess: false,
+    isSaveQuestionnaireFailed: false,
     isDeleteQuestionnairePending: false,
     isDeleteQuestionnaireSuccess: false,
     isDeleteQuestionnaireFailed: false,
@@ -24,8 +21,8 @@ export default createReducer({
                 state.errors = [];
                 state.isLoadQuestionnairesPending = true;
             })
-            .addCase(actions.loadQuestionnaires.fulfilled, (state, { payload: { questionnaires } }) => {
-                state.questionnaires.push(questionnaires);
+            .addCase(actions.loadQuestionnaires.fulfilled, (state, {payload: questionnaires}) => {
+                state.questionnaires.push(...questionnaires);
                 state.isLoadQuestionnairesPending = false;
                 state.isLoadQuestionnairesSuccess = true;
             })
@@ -34,33 +31,19 @@ export default createReducer({
                 state.isLoadQuestionnairesPending = false;
                 state.isLoadQuestionnairesFailed = true;
             })
-            .addCase(actions.createQuestionnaire.pending, (state) => {
+            .addCase(actions.saveQuestionnaire.pending, (state) => {
                 state.errors = [];
-                state.isCreateQuestionnairePending = true;
+                state.isSaveQuestionnairePending = true;
             })
-            .addCase(actions.createQuestionnaire.fulfilled, (state, { payload: { _id: id } }) => {
+            .addCase(actions.saveQuestionnaire.fulfilled, (state, { payload: { _id: id } }) => {
                 state.questionnaires.push(id);
-                state.isCreateQuestionnairePending = false;
-                state.isCreateQuestionnaireSuccess = true;
+                state.isSaveQuestionnairePending = false;
+                state.isSaveQuestionnaireSuccess = true;
             })
-            .addCase(actions.createQuestionnaire.rejected, (state, { error: { message } }) => {
+            .addCase(actions.saveQuestionnaire.rejected, (state, { error: { message } }) => {
                 state.errors.push(message);
-                state.isCreateQuestionnairePending = false;
-                state.isCreateQuestionnaireFailed = true;
-            })
-            .addCase(actions.updateQuestionnaire.pending, (state) => {
-                state.errors = [];
-                state.isUpdateQuestionnairePending = true;
-            })
-            .addCase(actions.updateQuestionnaire.fulfilled, (state, { payload: { questionnaire } }) => {
-                // overwrite q with same id in state
-                state.isUpdateQuestionnairePending = false;
-                state.isUpdateQuestionnaireSuccess = true;
-            })
-            .addCase(actions.updateQuestionnaire.rejected, (state, { error: { message } }) => {
-                state.errors.push(message);
-                state.isUpdateQuestionnairePending = false;
-                state.isUpdateQuestionnaireFailed = true;
+                state.isSaveQuestionnairePending = false;
+                state.isSaveQuestionnaireFailed = true;
             })
             .addCase(actions.deleteQuestionnaire.pending, (state) => {
                 state.errors = [];
@@ -83,12 +66,9 @@ export default createReducer({
                     isLoadQuestionnairesPending: false,
                     isLoadQuestionnairesSuccess: false,
                     isLoadQuestionnairesFailed: false,
-                    isCreateQuestionnairePending: false,
-                    isCreateQuestionnaireSuccess: false,
-                    isCreateQuestionnaireFailed: false,
-                    isUpdateQuestionnairePending: false,
-                    isUpdateQuestionnaireSuccess: false,
-                    isUpdateQuestionnaireFailed: false,
+                    isSaveQuestionnairePending: false,
+                    isSaveQuestionnaireSuccess: false,
+                    isSaveQuestionnaireFailed: false,
                     isDeleteQuestionnairePending: false,
                     isDeleteQuestionnaireSuccess: false,
                     isDeleteQuestionnaireFailed: false,

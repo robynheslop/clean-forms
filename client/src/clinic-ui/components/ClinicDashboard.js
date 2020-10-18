@@ -7,7 +7,7 @@ import { ConnectedBookingsList as BookingsList } from './ConnectedBookingsList';
 import { ConnectedAddClinic as AddClinic } from './ConnectedAddClinic';
 import { Grid } from '@material-ui/core';
 import ClinicNavigation from './ClinicNavigation';
-import { CreateQuestionnaire, ManageQuestionnaires } from "../../questionnaire-ui"
+import { Questionnaire, QuestionnairesList } from "../../questionnaire-ui"
 
 const useStyles = makeStyles({
     root: {
@@ -32,8 +32,8 @@ export function ClinicDashboard() {
                 <Route exact path={`${path}/new-booking`} component={AddBooking} />
                 <Route exact path={`${path}/view-bookings`} component={BookingsList} />
                 <Route exact path={`${path}/add-clinic`} component={AddClinic} />
-                <Route exact path={`${path}/questionnaires`} component={ManageQuestionnaires} />
-                <Route exact path={`${path}/questionnaires/add-questionnaire`} component={CreateQuestionnaire} />
+                <Route exact path={`${path}/questionnaires`} component={QuestionnairesList} />
+                <Route exact path={`${path}/questionnaires/add-questionnaire`} component={Questionnaire} />
                 <Route path={path} component={ViewClinics} />
             </ Switch >
             </Grid>
