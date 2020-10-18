@@ -46,7 +46,7 @@ export const loadBookings = createAsyncThunk(
         const bookings = responseJson.map(booking => {
             return {
                 id: booking._id,
-                clientname: booking.clientname,
+                clientName: booking.clientName,
                 email: booking.email,
                 phone: booking.phone,
                 status: booking.status,
