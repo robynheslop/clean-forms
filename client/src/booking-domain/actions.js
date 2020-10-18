@@ -17,21 +17,21 @@ export const createScreening = createAsyncThunk(
     }
 )
 
-export const requestScreening = createAsyncThunk(
-    "booking-domain/REQUEST_SCREENING",
-    async ({ screeningId, clientEmail, clientName, clinicEmail, clinicPhone }) => {
+// export const requestScreening = createAsyncThunk(
+//     "booking-domain/REQUEST_SCREENING",
+//     async ({ screeningId, clientEmail, clientName, clinicEmail, clinicPhone }) => {
 
-        const screeningResponse = await fetch("/api/screening-request", {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ screeningId, clientEmail, clientName, clinicEmail, clinicPhone })
-        });
-        const { screening } = screeningResponse.json();
-        return screening;
-    }
-)
+//         const screeningResponse = await fetch("/api/screening-request", {
+//             method: "GET",
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({ screeningId, clientEmail, clientName, clinicEmail, clinicPhone })
+//         });
+//         const { screening } = screeningResponse.json();
+//         return screening;
+//     }
+// )
 
 export const getScreening = createAsyncThunk(
     "booking-domain/GET_SCREENING",
@@ -56,18 +56,16 @@ export const getQuestionnaire = createAsyncThunk(
     }
 )
 
-export const submitScreening = createAsyncThunk(
+export const completeScreening = createAsyncThunk(
     "booking-domain/COMPLETE_SCREENING",
-    async ({ screeningId, responses }) => {
-
-        // calculate pass/fail
-
-        const update = await fetch("/api/questionnaires/" + screeningId, {
-            method: "PUT",
+    async ({ id, responses, status }) => {
+        console.log('id',id)
+        const update = await fetch("/api/screening/" + id, {
+            method: "PATCH",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ screeningId, responses })
+            body: JSON.stringify({ responses, status })
         });
         const updateJson = update.json();
         return updateJson;
@@ -75,18 +73,23 @@ export const submitScreening = createAsyncThunk(
 )
 
 export const saveScreening = (responsesState) => {
-    return { type: "booking-domain/SAVE_SCREENING", payload: {responsesState}}
+    return { type: "booking-domain/SAVE_SCREENING", payload: { responsesState } }
+}
+
+export const setScreeningStatus = ({ status }) => {
+    return { type: "booking-domain/SET_STATUS", payload: { status } }
 }
 
 
 
 export const actions = {
     createScreening,
-    requestScreening,
+    // requestScreening,
     getScreening,
     getQuestionnaire,
-    submitScreening,
-    saveScreening
+    completeScreening,
+    saveScreening,
+    setScreeningStatus
 }
 
 export default actions;

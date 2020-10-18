@@ -6,11 +6,14 @@ export default createReducer({
     errors: [],
     screening: {
         id: undefined,
-        questionnaireId: undefined
+        questionnaireId: undefined,
+        status: undefined,
+        responses: [],
     },
     questionnaire: {},
-    responses: [],
-    isQuestionnaireLoading: true
+    isQuestionnaireLoading: true,
+    isCompleteScreeningPending: false,
+    isCompleteScreeningFulfilled: false
 },
     builder => {
         builder
@@ -39,9 +42,17 @@ export default createReducer({
                 state.errors.push(message);
                 state.isQuestionnaireLoading = false;
             })
-            .addCase('booking-domain/SAVE_SCREENING', (state, { payload: {responsesState}}) => {
-                console.log('responsesState',responsesState)
-                state.responses.push(responsesState)
+            .addCase('booking-domain/SAVE_SCREENING', (state, { payload: { responsesState } }) => {
+                state.screening.responses.push(responsesState)
+            })
+            .addCase('booking-domain/SET_STATUS', (state, { payload: { status } }) => {
+                state.screening.status = status
+            })
+            .addCase(actions.completeScreening.pending, (state) => {
+                state.isCompleteScreeningPending = true;
+            })
+            .addCase(actions.completeScreening.fulfilled, (state) => {
+                state.isCompleteScreeningFulfilled = true;
             })
     }
 )

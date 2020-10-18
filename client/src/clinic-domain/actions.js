@@ -102,6 +102,22 @@ export const addBooking = createAsyncThunk(
     }
 )
 
+export const completeScreening = createAsyncThunk(
+    "booking-domain/COMPLETE_SCREENING",
+    async ({ id, responses, status }) => {
+        console.log('id',id)
+        const update = await fetch("/api/screening/" + id, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ responses, status })
+        });
+        const updateJson = update.json();
+        return updateJson;
+    }
+)
+
 export const selectActiveClinic = (id, clinicname, phone) => (dispatch) => {
     dispatch(events.activeClinicSelected({id, clinicname, phone}));
 }

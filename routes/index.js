@@ -216,7 +216,7 @@ router.get("/screening/questionnaire/:id", async (request, response) => {
         function (error, questionnaire) {
             if (error) return response.status(500).json("Could not find questionnaire");
             if (!questionnaire) {
-                
+
                 response.status(500).json("Could not find questionnaire in store");
             }
             return response.json(questionnaire);
@@ -224,19 +224,21 @@ router.get("/screening/questionnaire/:id", async (request, response) => {
 })
 
 // update screening with responses and status
-router.put('/screening/:id', async (request, response) => {
-    try {
-        const updateScreening = await db.Screening.findOneAndUpdate(
-            { _id: request.params.id },
-            {
-                responses: request.body.responses,
-                status: request.body.status
-            })
-        response.json(updateScreening);
-    }
-    catch (error) {
-        response.status(500).json(error);
-    }
+router.patch('/screening/:id', async (request, response) => {
+    db.Screening.findOneAndUpdate(
+        { _id: request.params.id },
+        { ...request.body },
+        function (error, questionnaire) {
+            if (error) {
+                console.log(error)
+                return response.status(500).json("Could not find questionnaire")};
+            if (!questionnaire) {
+
+                response.status(500).json("Could not find questionnaire in store");
+            }
+            console.log('questionnaire',questionnaire)
+            return response.json(questionnaire);
+        });
 });
 
 module.exports = router;
