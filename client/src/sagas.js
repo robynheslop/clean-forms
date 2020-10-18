@@ -1,4 +1,5 @@
 import { fork } from 'redux-saga/effects'; 
+import { loadScreeningSaga } from './booking-domain/sagas'
 import { logInClinicSaga, logOutClinicSaga } from './clinic-domain/sagas';
 import { logInQuestionnaireSaga, logOutQuestionnaireSaga} from "./questionnaire-domain/sagas"
 
@@ -7,4 +8,5 @@ export default function* rootSagas() {
     yield fork (logOutClinicSaga)  
     yield fork (logInQuestionnaireSaga)
     yield fork (logOutQuestionnaireSaga)  
+    yield fork (loadScreeningSaga)  
 } 

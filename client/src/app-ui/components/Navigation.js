@@ -7,7 +7,8 @@ import { ConnectedLogOut as LogOut } from './ConnectedLogOut'
 import { ConnectedSignUp as SignUp } from './ConnectedSignUp';
 import { ConnectedLogIn as LogIn } from './ConnectedLogIn';
 import { Body } from './Body';
-import { ConnectedPrivateRoute as PrivateRoute } from './ConnectedPrivateRoute'
+import { ConnectedPrivateRoute as PrivateRoute } from './ConnectedPrivateRoute';
+import { ConnectedScreening } from '../../booking-ui/components/ConnectedScreening'
 
 const useStyles = makeStyles({
     root: {
@@ -60,8 +61,8 @@ export function Navigation({ isLoggedIn }) {
             <Switch>
                 <Route path='/signup' component={SignUp} />
                 <Route path='/logout' component={LogOut} />
+                <Route path='/screening/:id' component={ConnectedScreening} />
                 <Route path='/login' component={LogIn} />
-                {/* <Route path='/screening/:id' component={Screening} /> */}
                 <PrivateRoute path='/' component={Body} />
             </Switch>
         </div>

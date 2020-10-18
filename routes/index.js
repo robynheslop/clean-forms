@@ -143,6 +143,7 @@ router.delete('/questionnaire/:id', async (request, response) => {
 
 // create a new screening document
 router.post('/new-screening', async (request, response) => {
+
     try {
         const createScreening = await db.Screening.create(
             { questionnaire: request.body.questionnaire })
@@ -197,14 +198,12 @@ router.post('/screening-request', async (request, response) => {
 
 // get screening by ID -- to then get questionnaire for client to complete
 router.get('/screening/:id', async (request, response) => {
-    try {
-        const screening = await db.Screening.find(
-            { _id: request.params.id })
-        response.json(screening);
-    }
-    catch (error) {
-        response.status(500).json(error);
-    }
+    db.Screening.findOne(
+        { _id: request.params.id },
+        function (error, screening) {
+            if (error) return response.status(500).json("Could not find screening");
+            return response.json(screening);
+        });
 
 });
 

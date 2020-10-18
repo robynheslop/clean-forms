@@ -1,0 +1,1 @@
+export { ConnectedScreening as Screening } from './ConnectedScreening';

@@ -48,7 +48,7 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
     const phoneRef = useRef();
     const questionnaireRef = useRef();
     const { id, clinicname, phone, isAddingBookingSuccess, isAddingBookingFailed } = activeClinic;
-    console.log('active clinic', id, clinicname, phone, )
+
 
     const handleFormSubmit = event => {
         event.preventDefault();

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import events from "./events";
 
 export const createScreening = createAsyncThunk(
-    "screening-domain/CREATE_SCREENING",
+    "booking-domain/CREATE_SCREENING",
     async ({ questionnaireId }) => {
 
         const screeningResponse = await fetch("/api/new-screening", {
@@ -19,8 +19,9 @@ export const createScreening = createAsyncThunk(
 )
 
 export const requestScreening = createAsyncThunk(
-    "screening-domain/REQUEST_SCREENING",
+    "booking-domain/REQUEST_SCREENING",
     async ({ screeningId, clientEmail, clientName, clinicEmail, clinicPhone }) => {
+
         const screeningResponse = await fetch("/api/screening-request", {
             method: "GET",
             headers: {
@@ -34,29 +35,29 @@ export const requestScreening = createAsyncThunk(
 )
 
 export const getScreening = createAsyncThunk(
-    "screening-domain/GET_SCREENING",
-    async ({ screeningId }) => {
-        const screeningResponse = await fetch("/api/screening/" + screeningId, {
+    "booking-domain/GET_SCREENING",
+    async (id) => {
+        const screeningResponse = await fetch("/api/screening/" + id, {
             method: "GET",
         });
-        const { screening } = screeningResponse.json();
-        return screening;
+        const screeningJson = screeningResponse.json();
+        return screeningJson;
     }
 )
 
 export const getQuestionnaire = createAsyncThunk(
-    "screening-domain/GET_QUESTIONNAIRE",
-    async ({ questionnaireId }) => {
-        const questionnaire = await fetch("/api/questionnaires/" + questionnaireId, {
+    "booking-domain/GET_QUESTIONNAIRE",
+    async (questionnaireId) => {
+        const questionnaireResponse = await fetch("/api/questionnaires/" + questionnaireId, {
             method: "GET",
         });
-        const { questionnaireJson } = questionnaire.json();
-        return questionnaireJson;
+        const { questionnaire } = questionnaireResponse.json();
+        return questionnaire;
     }
 )
 
 export const completeScreening = createAsyncThunk(
-    "screening-domain/COMPLETE_SCREENING",
+    "booking-domain/COMPLETE_SCREENING",
     async ({ screeningId, responses }) => {
 
         // calculate pass/fail
@@ -73,7 +74,7 @@ export const completeScreening = createAsyncThunk(
     }
 )
 
-const actions = {
+export const actions = {
     createScreening,
     requestScreening,
     getScreening,
