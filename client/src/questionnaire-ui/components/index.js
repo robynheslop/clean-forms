@@ -1,2 +1,2 @@
-export { ConnectedCreateQuestionnaire as CreateQuestionnaire } from "./ConnectedCreateQuestionnaire";
-export { ConnectedManageQuestionnaires as ManageQuestionnaires } from "./ConnectedManageQuestionnaires"
+export { ConnectedQuestionnaire as Questionnaire } from "./ConnectedQuestionnaire";
+export { ConnectedQuestionnairesList as QuestionnairesList } from "./ConnectedQuestionnairesList"

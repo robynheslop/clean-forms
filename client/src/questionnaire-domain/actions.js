@@ -3,49 +3,24 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const loadQuestionnaires = createAsyncThunk(
     'questionnaire-domain/LOAD_QUESTIONNAIRES',
-    async ({owner}) => {
+    async ({ owner }) => {
         const response = await fetch(`/api/questionnaires/${owner}`, {
             method: "GET"
         });
         const responseJson = await response.json();
-        console.log('response.json', responseJson);
-        if (responseJson.length === 0) return []
         return responseJson;
     }
 )
 
-export const createQuestionnaire = createAsyncThunk(
+export const saveQuestionnaire = createAsyncThunk(
     'questionnaire-domain/CREATE_QUESTIONNAIRE',
-    async ({owner, title, preText, questions, postText}) => {
-        const params = new URLSearchParams();
-        // format questionnaire data
-        // params.append('owner', owner);
-        // params.append('title', title);
-        // params.append('preText', preText);
-        // params.append('questions', questions);
-        // params.append('postText', postText);
-        const response = await fetch(`/api/questionnaire/`, {
-            method: "POST",
-            body: params
-        });
-        const { questionnaire } = await response.json();
-        return { questionnaire };
-    }
-)
-
-export const updateQuestionnaire = createAsyncThunk(
-    'questionnaire-domain/UPDATE_QUESTIONNAIRE',
-    async ({ _id, owner, title, preText, questions, postText }) => {
-        const params = new URLSearchParams();
-        // format questionnaire data
-        // params.append('owner', owner);
-        // params.append('title', title);
-        // params.append('preText', preText);
-        // params.append('questions', questions);
-        // params.append('postText', postText);
-        const response = await fetch(`/api/questionnaire/${_id}`, {
+    async ({ owner, id, title, preText, questions, postText }) => {
+        const response = await fetch(`/api/questionnaire/${id}`, {
             method: "PUT",
-            body: params
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ owner, id, title, preText, questions, postText })
         });
         const { questionnaire } = await response.json();
         return { questionnaire };
@@ -65,8 +40,7 @@ export const deleteQuestionnaire = createAsyncThunk(
 
 const actions = {
     loadQuestionnaires,
-    createQuestionnaire,
-    updateQuestionnaire,
+    saveQuestionnaire,
     deleteQuestionnaire
 }
 

@@ -1,4 +1,12 @@
-const selectQuestionnaires = (state) => state?.questionnaireDomain?.questionnaires
+import {find, propEq} from 'ramda';
+
+const selectQuestionnaires = (state) => state?.questionnaireDomain?.questionnaires;
+
+const selectQuestionnaire = (state, id) => {
+    const questionnaires = selectQuestionnaires(state) || [];
+    console.log('questionnaires, id', questionnaires, id)
+    return find(propEq('id', id))(questionnaires || null);
+}
 
 const selectIsLoadQuestionnairesPending = (state) => state?.questionnaireDomain?.isLoadQuestionnairesPending;
 
@@ -6,17 +14,11 @@ const selectIsLoadQuestionnairesSuccess = (state) => state?.questionnaireDomain?
 
 const selectIsLoadQuestionnairesFailed = (state) => state?.questionnaireDomain?.isLoadQuestionnairesFailed;
 
-const selectIsCreateQuestionnairePending = (state) => state?.questionnaireDomain?.isCreateQuestionnairePending;
+const selectIsSaveQuestionnairePending = (state) => state?.questionnaireDomain?.isSaveQuestionnairePending;
 
-const selectIsCreateQuestionnaireSuccess = (state) => state?.questionnaireDomain?.isCreateQuestionnaireSuccess;
+const selectIsSaveQuestionnaireSuccess = (state) => state?.questionnaireDomain?.isSaveQuestionnaireSuccess;
 
-const selectIsCreateQuestionnaireFailed = (state) => state?.questionnaireDomain?.isCreateQuestionnaireFailed;
-
-const selectIsUpdateQuestionnairePending = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesPending;
-
-const selectIsUpdateQuestionnaireSuccess = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesSuccess;
-
-const selectIsUpdateQuestionnaireFailed = (state) => state?.questionnaireDomain?.isUpdateQuestionnairesFailed;
+const selectIsSaveQuestionnaireFailed = (state) => state?.questionnaireDomain?.isSaveQuestionnaireFailed;
 
 const selectIsDeleteQuestionnairePending = (state) => state?.questionnaireDomain?.isDeleteQuestionnairePending;
 
@@ -26,15 +28,13 @@ const selectIsDeleteQuestionnaireFailed = (state) => state?.questionnaireDomain?
 
 export default { 
     selectQuestionnaires,
+    selectQuestionnaire,
     selectIsLoadQuestionnairesSuccess,
     selectIsLoadQuestionnairesFailed,
     selectIsLoadQuestionnairesPending,
-    selectIsCreateQuestionnairePending,
-    selectIsCreateQuestionnaireSuccess,
-    selectIsCreateQuestionnaireFailed,
-    selectIsUpdateQuestionnaireSuccess,
-    selectIsUpdateQuestionnaireFailed,
-    selectIsUpdateQuestionnairePending,
+    selectIsSaveQuestionnairePending,
+    selectIsSaveQuestionnaireSuccess,
+    selectIsSaveQuestionnaireFailed,
     selectIsDeleteQuestionnairePending,
     selectIsDeleteQuestionnaireSuccess,
     selectIsDeleteQuestionnaireFailed,

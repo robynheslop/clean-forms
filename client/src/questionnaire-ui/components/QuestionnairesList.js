@@ -36,21 +36,21 @@ const useStyles = makeStyles({
     }
 });
 
-export function ManageQuestionnaires({ questionnaires }) {
-    console.log(questionnaires[0] === null)
+export function QuestionnairesList({ questionnaires }) {
     const classes = useStyles();
     return (
         <Paper className={classes.root}>
-            {questionnaires[0] === null ?
+            {!(questionnaires[0] === null) ?
                 <div>
                     <h1>Questionnaires</h1>
-                    {questionnaires.map(({ id, questionnaireTitle }) =>
-                        <Card key={id} className={classes.card}>
+                    {questionnaires.map(({ id, title }) =>
 
+                        <Card key={id} className={classes.card}>
+                            {console.log({id, title})}
                             <Grid item xs={9}>
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant='h5' component='h2'>
-                                        Questionnaire Title: {questionnaireTitle}
+                                        Questionnaire Title: <b>{title}</b>
                                     </Typography>
                                 </CardContent>
                             </Grid>
@@ -80,39 +80,28 @@ export function ManageQuestionnaires({ questionnaires }) {
     )
 }
 
-ManageQuestionnaires.propTypes = {
+QuestionnairesList.propTypes = {
     deleteQuestionnaire: PropTypes.func,
     updateQuestionnaire: PropTypes.func,
-    questionnaires: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
-        clientname: PropTypes.string,
-        status: PropTypes.string,
-        date: PropTypes.string,
-    })),
+    questionnaires: PropTypes.array,
     isDeleteQuestionnairePending: PropTypes.bool,
     isDeleteQuestionnaireSuccess: PropTypes.bool,
     isDeleteQuestionnaireFailed: PropTypes.bool,
-    isUpdateQuestionnairePending: PropTypes.bool,
-    isUpdateQuestionnaireSuccess: PropTypes.bool,
-    isUpdateQuestionnaireFailed: PropTypes.bool,
     isLoadQuestionnairePending: PropTypes.bool,
     isLoadQuestionnaireSuccess: PropTypes.bool,
     isLoadQuestionnaireFailed: PropTypes.bool,
 }
 
-ManageQuestionnaires.defaultProps = {
+QuestionnairesList.defaultProps = {
     deleteQuestionnaire: () => { },
     updateQuestionnaire: () => { },
     questionnaires: [],
     isDeleteQuestionnairePending: false,
     isDeleteQuestionnaireSuccess: false,
     isDeleteQuestionnaireFailed: false,
-    isUpdateQuestionnairePending: false,
-    isUpdateQuestionnaireSuccess: false,
-    isUpdateQuestionnaireFailed: false,
     isLoadQuestionnairePending: false,
     isLoadQuestionnaireSuccess: false,
     isLoadQuestionnaireFailed: false,
 }
 
-export default ManageQuestionnaires;
+export default QuestionnairesList;
