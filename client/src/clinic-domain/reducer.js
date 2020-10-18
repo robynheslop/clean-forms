@@ -93,7 +93,8 @@ export default createReducer({
                 state.activeClinic.isAddBookingPending = false;
                 state.activeClinic.isAddingBookingSuccess = true;
             })
-            .addCase(events.activeClinicSelected, (state, { payload: id, clinicname, phone }) => {
+            .addCase(events.activeClinicSelected, (state, { payload: {id, clinicname, phone} }) => {
+                console.log('id, clinicname, phone', id, clinicname, phone)
                 state.activeClinic.id = id;
                 state.activeClinic.clinicname = clinicname;
                 state.activeClinic.phone = phone;

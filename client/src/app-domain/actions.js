@@ -4,12 +4,12 @@ import events from "./events";
 export const logIn = createAsyncThunk(
     'app-domain/LOG_IN',
     async ({username, password}) => {
-        const params = new URLSearchParams();
-        params.append('username', username);
-        params.append('password', password);
         const response = await fetch("/api/login", {
             method: "POST",
-            body: params
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
         })
         const responseJson = await response.json();
         const { token, userId } = responseJson;
@@ -20,12 +20,12 @@ export const logIn = createAsyncThunk(
 export const signUp = createAsyncThunk(
     "app-domain/SIGN_UP",
     async ({username, password}) => {
-        const params = new URLSearchParams();
-        params.append('username', username);
-        params.append('password', password);
         const response = await fetch("/api/signup", {
             method: "POST",
-            body: params
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
         })
         const responseJson = await response.json();
         const { token, userId } = responseJson;

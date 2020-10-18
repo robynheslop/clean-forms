@@ -48,15 +48,17 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
     const phoneRef = useRef();
     const questionnaireRef = useRef();
     const { id, clinicname, phone, isAddingBookingSuccess, isAddingBookingFailed } = activeClinic;
-    
+    console.log('active clinic', id, clinicname, phone, )
+
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
+        
         addBooking({
             clinic: id,
             clinicName: clinicname,
             clinicPhone: phone,
-            name: clientNameRef.current.value,
+            clientName: clientNameRef.current.value,
             phone: phoneRef.current.value,
             email: emailRef.current.value,
             date: dateRef.current.value,

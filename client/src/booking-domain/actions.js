@@ -21,7 +21,6 @@ export const createScreening = createAsyncThunk(
 export const requestScreening = createAsyncThunk(
     "screening-domain/REQUEST_SCREENING",
     async ({ screeningId, clientEmail, clientName, clinicEmail, clinicPhone }) => {
-
         const screeningResponse = await fetch("/api/screening-request", {
             method: "GET",
             headers: {
