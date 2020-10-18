@@ -124,9 +124,10 @@ router.put('/questionnaire/:id', async (request, response) => {
     db.Questionnaire.findOneAndUpdate(
         { id: request.params.id },
         request.body,
-        { upsert: true },
+        { new: true, upsert: true },
         function (error, questionnaire) {
             if (error) return response.status(500).json("Could not create questionnaire");
+            if (!questionnaire) return response.status(500).json("Could not create questionnaire");
             return response.json(questionnaire);
         });
 })
@@ -231,13 +232,27 @@ router.patch('/screening/:id', async (request, response) => {
         function (error, questionnaire) {
             if (error) {
                 console.log(error)
-                return response.status(500).json("Could not find questionnaire")};
+                return response.status(500).json("Could not update questionnaire")
+            };
             if (!questionnaire) {
-
-                response.status(500).json("Could not find questionnaire in store");
+                return response.status(500).json("Could not update questionnaire in store");
             }
-            console.log('questionnaire',questionnaire)
             return response.json(questionnaire);
+        });
+});
+
+// update screening with responses and status
+router.patch('/booking', async (request, response) => {
+    console.log('id', request.body._id)
+    db.Booking.findOneAndUpdate(
+        { screeningId: request.body._id },
+        { status: request.body.status },
+        function (error, booking) {
+            if (error) return response.status(500).json("Could not update booking");
+            if (!booking) {
+                return response.status(500).json("Could not update booking in store");
+            }
+            return response.json(booking);
         });
 });
 

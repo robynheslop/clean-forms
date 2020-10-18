@@ -102,16 +102,16 @@ export const addBooking = createAsyncThunk(
     }
 )
 
-export const completeScreening = createAsyncThunk(
-    "booking-domain/COMPLETE_SCREENING",
-    async ({ id, responses, status }) => {
-        console.log('id',id)
-        const update = await fetch("/api/screening/" + id, {
+export const updateBookingStatus = createAsyncThunk(
+    "clinc-domain/UPDATE_BOOKING",
+    async (props) => {
+        console.log(props)
+        const update = await fetch("/api/booking", {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ responses, status })
+            body: JSON.stringify(props)
         });
         const updateJson = update.json();
         return updateJson;
@@ -133,6 +133,7 @@ const actions = {
     addClinic,
     loadBookings,
     addBooking,
+    updateBookingStatus,
     selectActiveClinic,
     deselectActiveClinic
 }

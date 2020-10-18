@@ -1,6 +1,6 @@
 import { fork } from 'redux-saga/effects'; 
 import { loadScreeningSaga, gradeScreeningSaga, updateScreeningSaga } from './booking-domain/sagas'
-import { logInClinicSaga, logOutClinicSaga } from './clinic-domain/sagas';
+import { logInClinicSaga, logOutClinicSaga, updateBookingSaga } from './clinic-domain/sagas';
 import { logInQuestionnaireSaga, logOutQuestionnaireSaga} from "./questionnaire-domain/sagas"
 
 export default function* rootSagas() {

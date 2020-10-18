@@ -35,8 +35,8 @@ export default createReducer({
                 state.errors = [];
                 state.isSaveQuestionnairePending = true;
             })
-            .addCase(actions.saveQuestionnaire.fulfilled, (state, { payload: { _id: id } }) => {
-                state.questionnaires.push(id);
+            .addCase(actions.saveQuestionnaire.fulfilled, (state, { payload }) => {
+                state.questionnaires.push(payload);
                 state.isSaveQuestionnairePending = false;
                 state.isSaveQuestionnaireSuccess = true;
             })
