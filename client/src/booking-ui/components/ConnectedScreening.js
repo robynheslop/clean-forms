@@ -4,7 +4,7 @@ import { actions, selectors } from "../../booking-domain";
 
 const mapDispatchToProps = dispatch => {
     const handleSaveQuestionnaire = (responsesState) => {
-        dispatch(actions.storeScreening(responsesState))
+        dispatch(actions.saveScreening(responsesState))
     }
     const onLoad = (id) => {
         dispatch(actions.getScreening(id))

@@ -1,5 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import events from './events';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 
 export const createScreening = createAsyncThunk(
     "booking-domain/CREATE_SCREENING",
@@ -75,13 +74,11 @@ export const submitScreening = createAsyncThunk(
     }
 )
 
-export const storeScreening = (responsesState) => (dispatch) => {
-    dispatch(events.storedScreening(responsesState));
+export const saveScreening = (responsesState) => {
+    return { type: "booking-domain/SAVE_SCREENING", payload: {responsesState}}
 }
 
-// export function storeScreening(responsesState) {
-//     console.log('responsesState', responsesState)
-// }
+
 
 export const actions = {
     createScreening,
@@ -89,7 +86,7 @@ export const actions = {
     getScreening,
     getQuestionnaire,
     submitScreening,
-    storeScreening
+    saveScreening
 }
 
 export default actions;

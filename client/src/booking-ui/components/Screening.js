@@ -33,6 +33,10 @@ export function Screening({ location, onLoad, handleSaveQuestionnaire, screening
                     <h1>{questionnaire.title}</h1>
                     <h3>{questionnaire.preText ? questionnaire.preText : undefined}</h3>
 
+                    <br></br>
+                    <h4>Please select your answer to each queston, click the red tick button to confirm. 
+                        Once all questions are confirmed, then you can submit.</h4>
+=
                     {questionnaire.questions.map(({ queryText, id, responses }) => {
                         return <div>
                             <FormControl key={id}>

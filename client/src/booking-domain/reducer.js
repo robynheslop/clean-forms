@@ -39,9 +39,9 @@ export default createReducer({
                 state.errors.push(message);
                 state.isQuestionnaireLoading = false;
             })
-            .addCase(events.storedScreening, (state, {payload}) => {
-                console.log('payload', payload)
-                state.responses.push(payload)
+            .addCase('booking-domain/SAVE_SCREENING', (state, { payload: {responsesState}}) => {
+                console.log('responsesState',responsesState)
+                state.responses.push(responsesState)
             })
     }
 )
