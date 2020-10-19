@@ -192,7 +192,7 @@ router.post('/screening-request', async (request, response) => {
     }
 
     await transporter.sendMail(mailOptions, (error, info) => {
-        if (error) return response.status(500).json('Could not send email');
+        if (error) return response.status(500).json(error);
         response.status(200).json("Message sent: " + info.messageId);
     })
 
