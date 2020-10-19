@@ -205,7 +205,7 @@ router.get('/screening/:id', async (request, response) => {
         { _id: request.params.id },
         function (error, screening) {
             if (error) return response.status(500).json("Could not find screening");
-            return response.json(screening);
+            return response.status(200).json(screening);
         });
 
 });

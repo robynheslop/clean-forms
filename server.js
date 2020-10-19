@@ -8,11 +8,14 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3001;
 const server = express();
 
-
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 server.use(passport.initialize());
 server.use("/api", router);
+
+server.use(express.static(__dirname + '/public'))
+
+
 
 mongoose.connect(
     process.env.MONGODB_URI || process.env.DATABASE_INFO,
@@ -24,9 +27,16 @@ mongoose.connect(
     }
 );
 
+
+
 if (process.env.NODE_ENV = 'production') {
-    server.use(express.static('client/build'))
+    server.use(express.static('client/build'));
+    server.get('*', function (request, response){
+        response.sendFile('client/build/index.html')
+    })
 }
+
+
 
 server.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`);
