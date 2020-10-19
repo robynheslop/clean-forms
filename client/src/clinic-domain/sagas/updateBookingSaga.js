@@ -1,4 +1,4 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, select, takeEvery } from 'redux-saga/effects';
 import actions from "../actions";
 import { selectors as bookingSelectors } from "../../booking-domain";
 
