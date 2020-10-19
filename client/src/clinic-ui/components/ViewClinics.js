@@ -13,6 +13,11 @@ const useStyles = makeStyles({
         minHeight: '75%',
         height: 'fit-content'
     },
+    h1: {
+        fontFamily: 'Poiret One',
+        fontSize: '50px',
+        padding: '30px'
+    },
     card: {
         textAlign: 'left',
         display: 'flex',
@@ -45,7 +50,7 @@ function ViewClinics({ handleViewBookings, handleMakeBooking, clinics }) {
         <Paper className={classes.root}>
             {!(clinics.length === 0) ?
                 <div>
-                    <h1>Clinics</h1>
+                    <h1 className={classes.h1}>CLINICS</h1>
                     {clinics.map(({ id, clinicname, email, phone }) =>
                         <Card key={id} className={classes.card}>
 
@@ -86,7 +91,7 @@ function ViewClinics({ handleViewBookings, handleMakeBooking, clinics }) {
                 </div>
                 :
                 <div>
-                    <h1>You Have No Listed Clinics: </h1>
+                    <h1 className={classes.h1}>YOU HAVE NO LISTED CLINICS</h1>
                     <h3><Link className={classes.link} to={`/clinic/add-clinic`}>Add some today</Link></h3>
                 </div>
             }

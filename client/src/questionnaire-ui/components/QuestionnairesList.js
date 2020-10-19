@@ -23,6 +23,11 @@ const useStyles = makeStyles({
     cardContent: {
         padding: '0px 1em'
     },
+    h1: {
+        fontFamily: 'Poiret One',
+        fontSize: '50px',
+        padding: '30px'
+    },
     cardActions: {
         display: 'flex',
         flexDirection: 'column',
@@ -42,7 +47,7 @@ export function QuestionnairesList({ questionnaires }) {
         <Paper className={classes.root}>
             {!(questionnaires[0] === null) ?
                 <div>
-                    <h1>Questionnaires</h1>
+                    <h className={classes.h1}>QUESTIONNAIRES</h>
                     {questionnaires.map(({ id, title }) =>
 
                         <Card key={id} className={classes.card}>

@@ -13,14 +13,19 @@ const useStyles = makeStyles({
         padding: "2em 0em",
         justifyContent: "center"
     },
+    h1: {
+        fontFamily: 'Poiret One',
+        fontSize: '75px',
+        padding: '30px'
+    },
     textField: {
         lineHeight: "1.2em",
         padding: '10px',
         margin: '10px',
+        backgroundColor: '#edeaea',
         fontSize: "1.1em",
         width: '50%',
-        border: "none",
-        backgroundColor: "none!important"
+        border: "none"
     },
     button: {
         backgroundColor: '#be294f',
@@ -47,7 +52,8 @@ export function SignUp({ isLoggedIn, location, handleSignUp }) {
     return (
         isLoggedIn ? <Redirect to={{ pathname: "/", state: { from: location } }} /> :
             <Paper className={classes.root}>
-                <h1>Sign Up</h1>
+                <h1 className={classes.h1}>CLEAN FORMS</h1>
+                <h2>Sign Up</h2>
                 <form onSubmit={handleFormSubmit}>
                     <div>
                         <input

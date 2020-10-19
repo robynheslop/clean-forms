@@ -24,6 +24,11 @@ const useStyles = makeStyles({
         border: "none",
         backgroundColor: "none!important"
     },
+    h1: {
+        fontFamily: 'Poiret One',
+        fontSize: '50px',
+        padding: '30px'
+    },
     button: {
         backgroundColor: '#be294f',
         padding: "15px 25px",
@@ -81,7 +86,7 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
     }
     return (
         <Paper className={classes.root}>
-            <h1>Add A New Booking</h1>
+            <h1 className={classes.h1}>ADD A NEW BOOKING</h1>
             <form onSubmit={handleFormSubmit} className={classes.form}>
                 <div>
                     <TextField
@@ -121,7 +126,7 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
                 </div>
                 <div>
                     <InputLabel>Select A Questionnaire To Send</InputLabel>
-                    
+
                     <Select
                         label='Select A Questionnaire To Send'
                         type='date'
@@ -138,11 +143,11 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
                             })
                         }
                     </Select>
-                    {questionnaires[0] === undefined ? 
-                     <FormHelperText
-                     className={classes.successErrorMessage}
-                     >You have no questionnaires to send. Please create one and try again.</FormHelperText>
-                      : undefined}
+                    {questionnaires[0] === undefined ?
+                        <FormHelperText
+                            className={classes.successErrorMessage}
+                        >You have no questionnaires to send. Please create one and try again.</FormHelperText>
+                        : undefined}
                 </div>
                 <div>
                     <Button

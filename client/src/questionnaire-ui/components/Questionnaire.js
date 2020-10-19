@@ -37,6 +37,11 @@ const useStyles = makeStyles({
         color: 'white',
         margin: '15px',
     },
+    h1: {
+        fontFamily: 'Poiret One',
+        fontSize: '50px',
+        padding: '30px'
+    },
     successErrorMessage: {
         color: '#be294f',
         textAlign: 'center'
@@ -91,6 +96,7 @@ export function Questionnaire({ isSaveQuestionnaireFailed, isSaveQuestionnaireSu
 
     return (
         <Paper className={classes.root}>
+            <h1 className={classes.h1}>ADD A NEW QUESTIONNAIRE</h1>
             <form className={classes.form}>
                 <TextField
                     label='Questionnaire Title'

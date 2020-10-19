@@ -16,6 +16,11 @@ const useStyles = makeStyles({
         margin: '0 auto',
         padding: '1em 0em',
     },
+    h1: {
+        fontFamily: 'Poiret One',
+        fontSize: '50px',
+        padding: '30px'
+    },
     input: {
         lineHeight: "1.2em",
         padding: '10px',
@@ -55,7 +60,7 @@ function AddClinics({ isAddingClinicSuccess, isAddingClinicFailed, addClinic, us
 
     return (
         <Paper className={classes.root}>
-            <h1>Add A New Clinic</h1>
+            <h1 className={classes.h1}>ADD A NEW CLINIC</h1>
             <form onSubmit={handleFormSubmit} className={classes.form}>
                 <div>
                     <TextField

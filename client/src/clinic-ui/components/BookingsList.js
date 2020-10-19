@@ -14,6 +14,11 @@ const useStyles = makeStyles({
         padding: '3em 0em',
         height: '75%'
     },
+    h1: {
+        fontFamily: 'Poiret One',
+        fontSize: '50px',
+        padding: '30px'
+    },
     failed: {
         backgroundColor: '#e58ca2'
     },
@@ -33,7 +38,7 @@ function BookingsList({ activeClinic }) {
         <div className={classes.root}>
             {bookings.length > 0 ?
                 <div>
-                    <h1>Bookings</h1>
+                    <h1 className={classes.h1}>BOOKINGS</h1>
                     <TableContainer>
                         <Table>
                             <TableHead>
@@ -62,7 +67,7 @@ function BookingsList({ activeClinic }) {
                 </div>
                 :
                 <Paper className={classes.paper}>
-                    <h1>You have no bookings scheduled.</h1>
+                    <h1 className={classes.h1}>YOU HAVE NO SCHEDULED BOOKINGS.</h1>
                 </Paper>
             }
         </div>
