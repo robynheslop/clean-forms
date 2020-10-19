@@ -9,7 +9,6 @@ const useStyles = makeStyles({
         border: 0,
         color: 'white',
         height: 48,
-        position: '-webkit -sticky',
         position: 'sticky',
         top: 70,
         padding: '70px 30px',
@@ -32,8 +31,8 @@ export function ClinicNavigation() {
             <AppBar className={classes.root}>
                 <Link className={classes.link} to='/clinic'>View Clinics</Link>
                 <Link className={classes.link} to='/clinic/add-clinic'>Add New Clinics</Link>
-                <Link className={classes.link} to='/clinic/questionnaires'>Manage Questionnaires</Link>
-                <Link className={classes.link} to='/clinic/questionnaires/add-questionnaire'>Create New Questionnaire</Link>
+                <Link className={classes.link} to='/clinic/questionnaires'>View Questionnaires</Link>
+                <Link className={classes.link} to='/clinic/questionnaires/add-questionnaire'>Add New Questionnaire</Link>
             </AppBar>
 
         </div>

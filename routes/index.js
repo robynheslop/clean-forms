@@ -1,7 +1,9 @@
 const express = require("express");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const db = require("../db/models")
+const db = require("../db/models");
+const nodemailer = require("nodemailer");
+const hbs = require("nodemailer-express-handlebars")
 require("dotenv").config();
 
 const router = express.Router();
@@ -17,7 +19,6 @@ router.post("/signup", (request, response) => {
             response.json({ token })
         })
         .catch(error => {
-            console.log(error.message)
             response.status(500).json("Could not create user");
         })
 });
@@ -52,6 +53,7 @@ router.get("/clinics/:owner", (request, response) => {
 })
 
 router.post("/new-clinic", (request, response) => {
+    console.log(request.body)
     const clinic = new db.Clinic({
         owner: request.body.owner,
         clinicname: request.body.clinicname,
@@ -63,28 +65,25 @@ router.post("/new-clinic", (request, response) => {
             response.json(clinic)
         })
         .catch(error => {
-            console.log(error.message)
             response.status(500).json("Could not create clinic");
         })
 })
 
 // creat new booking
 router.post("/new-booking", (request, response) => {
-    console.log("request body", request.body)
     const booking = new db.Booking(request.body);
     booking.save()
         .then(booking => {
             response.json(booking)
         })
         .catch(error => {
-            console.log(error.message)
+            console.log(error)
             response.status(500).json("Could not create booking");
         })
 })
 
 // get all bookings made by a clinic
 router.get("/bookings/:clinic", (request, response) => {
-    console.log(request.params.clinic)
     db.Booking.find(
         { clinic: request.params.clinic },
         (error, bookings) => {
@@ -110,7 +109,6 @@ router.get("/questionnaires/:owner", async (request, response) => {
 
 // create a new questionnaire
 router.post('/questionnaire', async (request, response) => {
-    console.log(request.body);
     try {
         const createQuestionnaire = await db.Questionnaire.create(
             { ...request.body })
@@ -123,41 +121,15 @@ router.post('/questionnaire', async (request, response) => {
 
 // update questionnaire -- second release
 router.put('/questionnaire/:id', async (request, response) => {
-
-    // const questionnaire = new db.Questionnaire(request.body)
-    // console.log('questionnaire', questionnaire)
-    // questionnaire.save()
-    //     .then(questionnaire => {
-    //         response.json(questionnaire)
-    //     })
-    //     .catch(error => {
-    //         console.log(error.message)
-    //         response.status(500).json("Could not create questionnaire");
-    //     })
-
-
     db.Questionnaire.findOneAndUpdate(
         { id: request.params.id },
         request.body,
-        { upsert: true },
+        { new: true, upsert: true },
         function (error, questionnaire) {
             if (error) return response.status(500).json("Could not create questionnaire");
+            if (!questionnaire) return response.status(500).json("Could not create questionnaire");
             return response.json(questionnaire);
         });
-
-
-    // console.log(questionnaire)
-    // db.Questionnaire.updateOne(
-    //     { id: request.params.id },
-    //     { questionnaire }, 
-    //     { upsert: true },
-    //     (error, updatedQuestionnaire) => {
-    //         if (error) return response.status(500).json(error);
-    //         if (!updatedQuestionnaire) {
-    //             return response.status(500).json("Could not save questionnaire");
-    //         }
-    //         return response.json(updatedQuestionnaire);
-    //     })
 })
 
 // delete questionnaire -- second release
@@ -174,9 +146,10 @@ router.delete('/questionnaire/:id', async (request, response) => {
 
 // create a new screening document
 router.post('/new-screening', async (request, response) => {
+
     try {
         const createScreening = await db.Screening.create(
-            { questionnaireId: request.body.questionnaireId })
+            { questionnaire: request.body.questionnaire })
         response.json(createScreening);
     }
     catch (error) {
@@ -186,90 +159,101 @@ router.post('/new-screening', async (request, response) => {
 
 // dispatch screening request email to client
 router.post('/screening-request', async (request, response) => {
-    console.log(request.body)
-    try {
-        let transporter = nodemailer.createTransport({
-            host: 'smtp.mail.yahoo.com',
-            port: 587,
-            secure: false,
-            auth: {
-                user: 'cleanforms@yahoo.com',
-                pass: process.env.EMAILPASSWORD
-            }
-        });
-
-        transporter.use("compile", hbs({
-            viewEngine: {
-                layoutsDir: "./views",
-                defaultLayout: 'emailTemplate'
-            },
-            viewPath: "./views"
-        }))
-
-        const mailOptions = {
-            from: '"Clean Forms" <cleanforms@gmail.com>',
-            to: request.body.clientEmail,
-            subject: `COVID Declaration for your apppointment at ${request.body.clinicname}`,
-            context: {
-                clientName: request.body.clientName,
-                clinicName: request.body.clinicName,
-                clinicPhone: request.body.clinicPhone,
-                clinicEmail: request.body.clinicEmail,
-                link: `www.cleanforms.com/${request.body.screeningId}`,
-            }
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.mail.yahoo.com',
+        port: 587,
+        secure: false,
+        auth: {
+            user: 'cleanforms@yahoo.com',
+            pass: process.env.EMAILPASSWORD
         }
+    });
 
-        await transporter.sendMail(mailOptions, (error, info) => {
-            if (error) return console.log(error);
-            console.log("Message sent: " + info.messageId);
-        })
+    transporter.use("compile", hbs({
+        viewEngine: {
+            layoutsDir: "./views",
+            defaultLayout: false
+        },
+        viewPath: "./views"
+    }))
 
-        response.status(200)
+    const mailOptions = {
+        from: '"Clean Forms" <cleanforms@yahoo.com>',
+        to: request.body.email,
+        subject: `COVID Declaration for your apppointment at ${request.body.clinicName}`,
+        template: "emailTemplate",
+        context: {
+            clientName: request.body.clientName,
+            clinicName: request.body.clinicName,
+            clinicPhone: request.body.clinicPhone,
+            screeningId: request.body.screeningId,
+            link: `www.cleanforms.com/${request.body.screeningId}`,
+        }
     }
-    catch (error) {
-        response.status(500).json.error;
-    }
+
+    await transporter.sendMail(mailOptions, (error, info) => {
+        if (error) return response.status(500).json('Could not send email');
+        response.status(200).json("Message sent: " + info.messageId);
+    })
+
+
 });
 
 // get screening by ID -- to then get questionnaire for client to complete
 router.get('/screening/:id', async (request, response) => {
-    try {
-        const screening = await db.Screening.find(
-            { _id: request.params.id })
-        response.json(screening);
-    }
-    catch (error) {
-        response.status(500).json(error);
-    }
+    db.Screening.findOne(
+        { _id: request.params.id },
+        function (error, screening) {
+            if (error) return response.status(500).json("Could not find screening");
+            return response.json(screening);
+        });
 
 });
 
 // get questionnaire by id to display in screening for client
-router.get("/questionnaires/:id", async (request, response) => {
-    try {
-        const questionnaire = await db.Questionnaire.find(
-            { _id: request.params.id })
-        response.json(questionnaire);
-    }
-    catch (error) {
-        response.status(500).json(error);
-    }
+router.get("/screening/questionnaire/:id", async (request, response) => {
+    db.Questionnaire.findOne(
+        { _id: request.params.id },
+        function (error, questionnaire) {
+            if (error) return response.status(500).json("Could not find questionnaire");
+            if (!questionnaire) {
+
+                response.status(500).json("Could not find questionnaire in store");
+            }
+            return response.json(questionnaire);
+        });
 })
 
 // update screening with responses and status
-router.put('/screening/:id', async (request, response) => {
-    try {
-        const updateScreening = await db.Screening.findOneAndUpdate(
-            { _id: request.params.id },
-            {
-                responses: request.body.responses,
-                status: request.body.status
-            })
-        response.json(updateScreening);
-    }
-    catch (error) {
-        response.status(500).json(error);
-    }
+router.patch('/screening/:id', async (request, response) => {
+    db.Screening.findOneAndUpdate(
+        { _id: request.params.id },
+        { ...request.body },
+        function (error, screening) {
+            if (error) {
+                console.log(error)
+                return response.status(500).json("Could not update screening")
+            };
+            if (!screening) {
+                return response.status(500).json("Could not update screening in store");
+            }
+            return response.json(screening);
+        });
+});
+
+// update screening with responses and status
+router.patch('/booking', async (request, response) => {
+    console.log('id', request.body._id)
+    db.Booking.findOneAndUpdate(
+        { screeningId: request.body._id },
+        { status: request.body.status },
+        function (error, booking) {
+            if (error) return response.status(500).json("Could not update booking");
+            if (!booking) {
+                return response.status(500).json("Could not update booking in store");
+            }
+            return response.json(booking);
+        });
 });
 
 module.exports = router;

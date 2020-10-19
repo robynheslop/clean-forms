@@ -13,11 +13,15 @@ server.use(express.json());
 server.use(passport.initialize());
 server.use("/api", router);
 
-mongoose.connect("mongodb://localhost:27017/passport", {
-    useNewUrlParser: true,
-    useCreateIndex: true
-});
-
+mongoose.connect(
+    process.env.MONGODB_URI || 'mongodb://localhost/cleanforms',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    }
+  );
 server.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`);
 })

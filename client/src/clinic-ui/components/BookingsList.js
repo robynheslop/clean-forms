@@ -40,16 +40,18 @@ function BookingsList({ activeClinic }) {
                                 <TableRow>
                                     <TableCell>Client Name</TableCell>
                                     <TableCell>Email</TableCell>
+                                    <TableCell>Contact Number</TableCell>
                                     <TableCell>Screening Status</TableCell>
                                     <TableCell>Appointment Date</TableCell>
                                 </TableRow>
                             </TableHead>
-                            {bookings.map(({ id, clientname, status, date, email }) => {
+                            {bookings.map(({ id, clientName, status, phone, date, email }) => {
                                 return (
                                 <TableBody key={id}>
                                     <TableRow className={classes[status.toLowerCase()]}>
-                                        <TableCell>{status === 'failed'? <b>{clientname}</b> : clientname}</TableCell>
+                                        <TableCell>{status === 'failed'? <b>{clientName}</b> : clientName}</TableCell>
                                         <TableCell>{status === 'failed'? <b>{email}</b> : email}</TableCell>
+                                        <TableCell>{status === 'failed'? <b>{phone}</b> : phone}</TableCell>
                                         <TableCell>{status === 'failed'? <b>{status.toUpperCase()}</b> : status.toUpperCase()}</TableCell>
                                         <TableCell>{status === 'failed'? <b>{date.toString().slice(0,10)}</b> : date.toString().slice(0,10)}</TableCell>
                                     </TableRow>

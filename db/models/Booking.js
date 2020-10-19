@@ -5,7 +5,7 @@ const bookingSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    clientname: {
+    clientName: {
         type: String,
         index: true,
         minlength: 2,
@@ -14,6 +14,10 @@ const bookingSchema = new mongoose.Schema({
     },
     email: {
         type: String,
+        required: true
+    },
+    phone: {
+        type: Number,
         required: true
     },
     screeningId: {

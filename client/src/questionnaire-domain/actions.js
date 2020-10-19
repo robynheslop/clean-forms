@@ -22,8 +22,8 @@ export const saveQuestionnaire = createAsyncThunk(
             },
             body: JSON.stringify({ owner, id, title, preText, questions, postText })
         });
-        const { questionnaire } = await response.json();
-        return { questionnaire };
+        const returnedQuestionnaire = await response.json();
+        return returnedQuestionnaire;
     }
 )
 

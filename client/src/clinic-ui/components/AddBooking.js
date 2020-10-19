@@ -48,15 +48,17 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
     const phoneRef = useRef();
     const questionnaireRef = useRef();
     const { id, clinicname, phone, isAddingBookingSuccess, isAddingBookingFailed } = activeClinic;
-    
+
+
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
+        
         addBooking({
             clinic: id,
             clinicName: clinicname,
             clinicPhone: phone,
-            name: clientNameRef.current.value,
+            clientName: clientNameRef.current.value,
             phone: phoneRef.current.value,
             email: emailRef.current.value,
             date: dateRef.current.value,
@@ -123,7 +125,7 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
                         {questionnaires[0] === undefined ?
                             undefined :
                             questionnaires.map(questionnaire => {
-                                return <option id={questionnaire._id} value={questionnaire._id}>{questionnaire.title}</option>
+                                return <option key={questionnaire._id} id={questionnaire._id} value={questionnaire._id}>{questionnaire.title}</option>
                             })
                         }
                     </Select>

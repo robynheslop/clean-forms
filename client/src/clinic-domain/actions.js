@@ -3,7 +3,7 @@ import events from "./events";
 
 export const loadClinics = createAsyncThunk(
     "clinic-domain/LOAD_CLINICS",
-    async ({owner}) => {
+    async ({ owner }) => {
         const response = await fetch(`/api/clinics/${owner}`, {
             method: "GET"
         });
@@ -23,16 +23,13 @@ export const loadClinics = createAsyncThunk(
 
 export const addClinic = createAsyncThunk(
     "clinic-domain/ADD_CLINIC",
-    async({owner, clinicname, email, phone}) => {
-        const params = new URLSearchParams();
-        params.append('owner', owner);
-        params.append('clinicname', clinicname);
-        params.append('email', email);
-        params.append('phone', phone);
-
+    async ({ owner, clinicname, email, phone }) => {
         const response = await fetch("/api/new-clinic", {
             method: "POST",
-            body: params
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ owner, clinicname, email, phone })
         })
         const responseJson = await response.json();
         return responseJson;
@@ -49,7 +46,7 @@ export const loadBookings = createAsyncThunk(
         const bookings = responseJson.map(booking => {
             return {
                 id: booking._id,
-                clientname: booking.clientname,
+                clientName: booking.clientName,
                 email: booking.email,
                 phone: booking.phone,
                 status: booking.status,
@@ -62,66 +59,81 @@ export const loadBookings = createAsyncThunk(
 
 export const addBooking = createAsyncThunk(
     "clinic-domain/ADD_BOOKINGS",
-    async({clinic, clinicName, clinicPhone, clientName, email, phone, date, questionnaireId}) => {  
-        
+    async ({ clinic, clinicName, clinicPhone, clientName, email, phone, date, questionnaireId }) => {
+        console.log('props', { clinic, clinicName, clinicPhone, clientName, email, phone, date, questionnaireId })
         /*
         create new screening
         */
-        const screeningParams = new URLSearchParams();
-        screeningParams.append('questionnaireId', questionnaireId);
-        const screeningResponse = await fetch("/api/new-screening", { 
+        const screeningResponse = await fetch("/api/new-screening", {
             method: "POST",
-            body: screeningParams
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ questionnaire: questionnaireId })
         });
-        const { _id: screeningId } = screeningResponse.json();
+        const { _id: screeningId } = await screeningResponse.json();
 
         /*
         creating new booking
         */
-        const bookingParams = new URLSearchParams();
-        bookingParams.append('clinic', clinic);
-        bookingParams.append('clientname', clientName);
-        bookingParams.append('email', email);
-        bookingParams.append('phone', phone);     
-        bookingParams.append('date', date);     
-        bookingParams.append('screeningId', screeningId);     
-        const bookingResponse = await fetch("/api/new-booking", { 
-            method: "POST", 
-            body: bookingParams
+        const bookingResponse = await fetch("/api/new-booking", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ clinic, clientName, email, phone, date, screeningId })
         })
         const bookingResponseJson = await bookingResponse.json();
 
-       /*
-       dispatch email to client 
-        */
-        const emailParams = new URLSearchParams();
-        emailParams.append('clinicName', clinicName);
-        emailParams.append('clinicPhone', clinicPhone);
-        emailParams.append('clientName', clientName);
-        emailParams.append('email', email);     
-        emailParams.append('screeningId', screeningId);     
-        const emailResponse = await fetch("/api/screening-request", { 
-            method: "POST", 
-            body: emailParams
+        /*
+        dispatch email to client 
+         */
+
+        console.log('email params', { clientName, clinicName, clinicPhone, email, screeningId })
+        await fetch("/api/screening-request", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ clientName, clinicName, clinicPhone, email, screeningId })
         })
 
         return bookingResponseJson
     }
 )
 
-export const selectActiveClinic = (clinicId) => (dispatch) => {
-    dispatch(events.activeClinicSelected(clinicId));
+export const updateBookingStatus = createAsyncThunk(
+    "clinc-domain/UPDATE_BOOKING",
+    async (props) => {
+        console.log(props)
+        const update = await fetch("/api/booking", {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(props)
+        });
+        const updateJson = update.json();
+        return updateJson;
+    }
+)
+
+export const selectActiveClinic = (id, clinicname, phone) => (dispatch) => {
+    dispatch(events.activeClinicSelected({id, clinicname, phone}));
 }
 
 export const deselectActiveClinic = () => (dispatch) => {
     dispatch(events.activeClinicDeselected());
 }
 
+
+
 const actions = {
     loadClinics,
     addClinic,
     loadBookings,
     addBooking,
+    updateBookingStatus,
     selectActiveClinic,
     deselectActiveClinic
 }

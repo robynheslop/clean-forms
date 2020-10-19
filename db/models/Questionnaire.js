@@ -13,7 +13,7 @@ const questionnaireSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    pretext: {
+    preText: {
         type: String
     },
     questions: {

@@ -34,7 +34,7 @@ const useStyles = makeStyles({
     }
 })
 
-function AddClinics({ addClinic, userId }) {
+function AddClinics({ isAddingClinicSuccess, isAddingClinicFailed, addClinic, userId }) {
     const classes = useStyles()
     const clinicNameRef = useRef();
     const emailRef = useRef();
@@ -92,6 +92,13 @@ function AddClinics({ addClinic, userId }) {
                     >Add Clinic</Button>
                 </div>
             </form>
+
+            {isAddingClinicSuccess ?
+                <p className={classes.successErrorMessage} >Questionnaire Successfully Added</p>
+                : undefined}
+            {isAddingClinicFailed ?
+                <p className={classes.successErrorMessage} >Questionnaire Could Not Be Added At This Time</p>
+                : undefined}
         </Paper>
     )
 }
@@ -99,6 +106,8 @@ function AddClinics({ addClinic, userId }) {
 AddClinics.propTypes = {
     addClinic: PropTypes.func,
     isAddingClinicPending: PropTypes.bool,
+    isAddingClinicFailed: PropTypes.bool,
+    isAddingClinicSuccess: PropTypes.bool,
     userId: PropTypes.string
 }
 
