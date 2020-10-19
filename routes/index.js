@@ -229,15 +229,15 @@ router.patch('/screening/:id', async (request, response) => {
     db.Screening.findOneAndUpdate(
         { _id: request.params.id },
         { ...request.body },
-        function (error, questionnaire) {
+        function (error, screening) {
             if (error) {
                 console.log(error)
-                return response.status(500).json("Could not update questionnaire")
+                return response.status(500).json("Could not update screening")
             };
-            if (!questionnaire) {
-                return response.status(500).json("Could not update questionnaire in store");
+            if (!screening) {
+                return response.status(500).json("Could not update screening in store");
             }
-            return response.json(questionnaire);
+            return response.json(screening);
         });
 });
 
