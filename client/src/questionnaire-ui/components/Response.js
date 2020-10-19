@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types'
-import { Button, Checkbox, TextField } from '@material-ui/core';
+import { Button, Fab, Checkbox, TextField } from '@material-ui/core';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
     const [checked, setChecked] = useState(isValidResponse);
     const [responseTextState, setResponseTextState] = useState(responseText)
+    const [isSavedState, setIsSavedState] = useState(false)
 
     const handleChecked = (event) => {
         console.log('event.target.checked', event.target.checked)
@@ -14,7 +16,7 @@ function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
     const handleCancel = () => {
 
     }
-
+    
     const isValid = () => {
         return responseTextState?.length && responseTextState.length > 0
     }
@@ -28,16 +30,25 @@ function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
             <TextField
                 label='Response'
                 type="text"
-                onChange={({target: {value}}) => setResponseTextState(value)}
+                onChange={({ target: { value } }) => setResponseTextState(value)}
                 name="response"
             />
-            {isValid() ? <Button
-
-                onClick={() => handleSave(responseTextState, checked)}
-            >Save</Button>
+            {isValid() ?
+                <Fab
+                    color="secondary"
+                    size="small"
+                    onClick={() => {
+                        setIsSavedState(false)
+                        handleSave(responseTextState, checked)
+                    }}
+                ><CheckCircleOutlineIcon />
+                
+                </Fab>
                 : undefined}
-            <Button onClick={handleCancel}>Cancel</Button>
-            <Button onClick={handleDelete}>Delete</Button>
+
+
+            {/* <Button onClick={handleCancel}>Cancel</Button>
+            <Button onClick={handleDelete}>Delete</Button> */}
         </div>
     )
 }

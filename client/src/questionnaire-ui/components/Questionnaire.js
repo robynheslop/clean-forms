@@ -107,12 +107,14 @@ export function Questionnaire({ isSaveQuestionnaireFailed, isSaveQuestionnaireSu
                     name='questionnairePreText'
                     inputRef={preTextRef}
                     required />
-
+                    <br></br>
                 <Fab
-                    color="primary"
+                    size="medium"
+                    variant="extended"
+                    color="secondary"
                     aria-label="add"
                     onClick={handleAddQuestion}>
-                    <AddIcon />
+                    Add A Question<AddIcon />
                 </Fab>
 
                 {questionsState.map(question => {

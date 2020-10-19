@@ -68,7 +68,7 @@ export function Question({ onSave, onCancel, responses }) {
                 inputRef={queryRef}
                 name="question"
             />
-
+<br></br>
             <Fab
                 color="secondary"
                 aria-label="add-response"
@@ -85,9 +85,10 @@ export function Question({ onSave, onCancel, responses }) {
                     {...response}
                 />
             })}
+            <br></br>
             <div>
-                <Button onClick={handleSave}>Save</Button>
-                <Button onClick={onCancel}>Cancel</Button>
+                <Button onClick={handleSave}>Save Question</Button>
+                <Button onClick={onCancel}>Cancel Question</Button>
             </div>
         </div>
     )
