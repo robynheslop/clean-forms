@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     },
 })
 
-export function Screening({ location, onLoad, handleSaveQuestionnaire, screeningId, questionnaire }) {
+export function Screening({ location, onLoad, isCompleteScreeningFulfilled, handleSaveQuestionnaire, screeningId, questionnaire }) {
     const classes = useStyles()
     const [responsesState, setResponsesState] = useState([]);
     useEffect(() => {
@@ -45,42 +45,60 @@ export function Screening({ location, onLoad, handleSaveQuestionnaire, screening
     return (
         <Paper className={classes.root}>
             <h1 className={classes.h1}>CLEAN FORMS</h1>
-            {(questionnaire?.id !== undefined) ?
-                <form >
-                    <h2>{questionnaire.title}</h2>
-                    <h3>{questionnaire.preText ? questionnaire.preText : undefined}</h3>
 
-                    <br></br>
-                    <h4>Please select your answer to each queston, click the red tick button to confirm.
+            {isCompleteScreeningFulfilled ?
+
+                <div>
+                    <h2>Thank You.</h2>
+
+                    <p>Your questionnaire has been submitted for review.</p>
+                    <p>If there are any issues with your responses, the clinic will be in touch with you regarding further steps.</p>
+                </div>
+
+                :
+                
+                (questionnaire?.id !== undefined) ?
+                    <form >
+                        <h2>{questionnaire.title}</h2>
+                        <h3>{questionnaire.preText ? questionnaire.preText : undefined}</h3>
+
+                        <br></br>
+                        <h4>Please select your answer to each queston, click the red tick button to confirm.
                         Once all questions are confirmed, then you can submit.</h4>
 =
                     {questionnaire.questions.map(({ queryText, id, responses }) => {
-                        return <div>
-                            <FormControl key={id}>
-                                <FormLabel >{queryText}</FormLabel>
-                                <FormGroup>
+                            return <div>
+                                <FormControl key={id}>
+                                    <FormLabel >{queryText}</FormLabel>
+                                    <FormGroup>
 
-                                    <Responses
-                                        handleSaveResponse={(checkedState) => handleSaveResponse(id, checkedState)}
-                                        {...{ responses }}
-                                    ></Responses>
-                                </FormGroup>
-                            </FormControl>
-                            <br></br>
-                            <br></br>
-                        </div>
+                                        <Responses
+                                            handleSaveResponse={(checkedState) => handleSaveResponse(id, checkedState)}
+                                            {...{ responses }}
+                                        ></Responses>
+                                    </FormGroup>
+                                </FormControl>
+                                <br></br>
+                                <br></br>
+                            </div>
 
-                    })
-                    }
-                    <h3>{questionnaire.postText ? questionnaire.postText : undefined}</h3>
-                    <Button
-                        // className={classes.button}
-                        type="submit"
-                        onClick={handleSubmit}
-                    >Submit</Button>
-                </form>
+                        })
+                        }
+                        <h3>{questionnaire.postText ? questionnaire.postText : undefined}</h3>
+                        <Button
+                            // className={classes.button}
+                            type="submit"
+                            onClick={handleSubmit}
+                        >Submit</Button>
+                    </form>
 
-                : <p>Broken Still</p>
+                    :
+                    <div>
+                        <h2>ERROR</h2>
+                        <p>We are unable to access your questionnaire right now. Please contact the clinic for further help.</p>
+                    </div>
+
+
             }
         </Paper >
     )
@@ -92,10 +110,11 @@ Screening.propTypes = {
     handleSaveResponse: PropTypes.func,
     handleSaveQuestionnaire: PropTypes.func,
     onLoad: PropTypes.func,
+    isCompleteScreeningFulfilled: PropTypes.bool
 }
 
 Screening.defaultProps = {
-
+    isCompleteScreeningFulfilled: false
 }
 
 export default Screening

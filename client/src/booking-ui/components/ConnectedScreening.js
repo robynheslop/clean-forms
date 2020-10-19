@@ -15,7 +15,8 @@ const mapDispatchToProps = dispatch => {
 export const ConnectedScreening = connect(
     state => ({
         questionnaire: selectors.selectQuestionaire(state),
-        isQuestionnaireLoading: selectors.selectIsQuestionnaireLoading(state)
+        isQuestionnaireLoading: selectors.selectIsQuestionnaireLoading(state),
+        isCompleteScreeningFulfilled: selectors.selectIsCompleteScreeningFulfilled(state)
     }),
     mapDispatchToProps)(Screening)
 
