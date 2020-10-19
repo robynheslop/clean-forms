@@ -252,6 +252,7 @@ router.patch('/booking', async (request, response) => {
             if (!booking) {
                 return response.status(500).json("Could not update booking in store");
             }
+            console.log('booking',booking)
             return response.json(booking);
         });
 });
