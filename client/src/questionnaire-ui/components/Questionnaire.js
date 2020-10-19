@@ -36,10 +36,14 @@ const useStyles = makeStyles({
         boxShadow: 'none',
         color: 'white',
         margin: '15px',
-    }
+    },
+    successErrorMessage: {
+        color: '#be294f',
+        textAlign: 'center'
+    },
 })
 
-export function Questionnaire({ onSave, onDelete, onCancel, questions, owner, preText, postText, title, }) {
+export function Questionnaire({ isSaveQuestionnaireFailed, isSaveQuestionnaireSuccess, onSave, onDelete, onCancel, questions, owner, preText, postText, title, }) {
     const classes = useStyles();
     const [questionsState, setQuestionsState] = useState(questions)
     const titleRef = useRef();
@@ -79,6 +83,10 @@ export function Questionnaire({ onSave, onDelete, onCancel, questions, owner, pr
             questions: questionsState
         }
         onSave(onSaveQuestions);
+        titleRef.current.value = '';
+        preTextRef.current.value = '';
+        postTextRef.current.value = '';
+        setQuestionsState([])
     }
 
     return (
@@ -139,6 +147,14 @@ export function Questionnaire({ onSave, onDelete, onCancel, questions, owner, pr
                     onClick={onCancel}
                 >Cancel</Button>
             </form>
+
+            {isSaveQuestionnaireSuccess ?
+                <p className={classes.successErrorMessage} >Questionnaire Successfully Added</p>
+                : undefined}
+            {isSaveQuestionnaireFailed ?
+                <p className={classes.successErrorMessage} >Questionnaire Could Not Be Added At This Time</p>
+                : undefined}
+
         </Paper>
     )
 }
@@ -159,7 +175,9 @@ Questionnaire.propTypes = {
     postext: PropTypes.string,
     onSave: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    isSaveQuestionnaireSuccess: PropTypes.bool,
+    isSaveQuestionnaireFailed: PropTypes.bool
 }
 
 Questionnaire.defaultProps = {
