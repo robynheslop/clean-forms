@@ -53,7 +53,16 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
-        
+        console.log('addboking', {
+            clinic: id,
+            clinicName: clinicname,
+            clinicPhone: phone,
+            clientName: clientNameRef.current.value,
+            phone: phoneRef.current.value,
+            email: emailRef.current.value,
+            date: dateRef.current.value,
+            questionnaireId: questionnaireRef.current.value
+        })
         addBooking({
             clinic: id,
             clinicName: clinicname,

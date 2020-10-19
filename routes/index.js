@@ -165,7 +165,7 @@ router.post('/screening-request', async (request, response) => {
         secure: false,
         auth: {
             user: 'cleanforms@yahoo.com',
-            pass: process.env.EMAILPASSWORD
+            pass: process.env.NODE_MAILER || process.env.EMAILPASSWORD
         }
     });
 
@@ -192,7 +192,7 @@ router.post('/screening-request', async (request, response) => {
     }
 
     await transporter.sendMail(mailOptions, (error, info) => {
-        if (error) return response.status(500).json(error);
+        if (error) return response.status(500).json(error, info);
         response.status(200).json("Message sent: " + info.messageId);
     })
 
