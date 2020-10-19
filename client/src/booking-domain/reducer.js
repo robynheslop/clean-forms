@@ -46,6 +46,7 @@ export default createReducer({
                 state.screening.responses.push(responsesState)
             })
             .addCase('booking-domain/SET_STATUS', (state, { payload: { status } }) => {
+                console.log('status',status)
                 state.screening.status = status
             })
             .addCase(actions.completeScreening.pending, (state) => {

@@ -19,6 +19,7 @@ export default createReducer({
     errors: [],
     isLoadClinicsPending: false,
     isAddClinicPending: false,
+    isUpdatingBookingFulfilled: false
 },
     builder => {
         builder
@@ -101,6 +102,9 @@ export default createReducer({
             })
             .addCase(events.activeClinicDeselected, (state) => {
                 state.activeClinic.id = undefined;
+            })
+            .addCase(actions.updateBookingStatus.fulfilled, (state) => {
+                state.isUpdatingBookingFulfilled = true;
             })
 
     }
