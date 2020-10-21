@@ -19,6 +19,8 @@ export default createReducer({
     errors: [],
     isLoadClinicsPending: false,
     isAddClinicPending: false,
+    isAddClinicFulfilled: false,
+    isAddClinicRejected: false,
     isUpdatingBookingFulfilled: false
 },
     builder => {
@@ -36,18 +38,23 @@ export default createReducer({
                 state.errors = [];
                 state.clinics = [];
                 state.isGettingClinicsPending = true;
+                
             })
             .addCase(actions.addClinic.fulfilled, (state, { payload }) => {
                 state.isAddClinicPending = false;
+                state.isAddClinicFulfilled = true;
                 state.clinics.push(payload)
             })
             .addCase(actions.addClinic.rejected, (state, { error: { message } }) => {
                 state.errors.push(message);
+                state.isAddClinicRejected = true;
                 state.isAddClinicPending = false;
             })
             .addCase(actions.addClinic.pending, (state) => {
                 state.errors = [];
                 state.isAddClinicPending = true;
+                state.isAddClinicRejected = false;
+                state.isAddClinicFulfilled = false;
             })
             .addCase(events.reset, (state) => {
                 state = {

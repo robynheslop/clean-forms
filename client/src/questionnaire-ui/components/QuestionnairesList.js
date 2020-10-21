@@ -47,7 +47,7 @@ export function QuestionnairesList({ questionnaires }) {
         <Paper className={classes.root}>
             {!(questionnaires[0] === null) ?
                 <div>
-                    <h className={classes.h1}>QUESTIONNAIRES</h>
+                    <h1 className={classes.h1}>QUESTIONNAIRES</h1>
                     {questionnaires.map(({ id, title }) =>
 
                         <Card key={id} className={classes.card}>

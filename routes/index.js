@@ -52,21 +52,22 @@ router.get("/clinics/:owner", (request, response) => {
         })
 })
 
-router.post("/new-clinic", (request, response) => {
-    console.log(request.body)
-    const clinic = new db.Clinic({
-        owner: request.body.owner,
-        clinicname: request.body.clinicname,
-        email: request.body.email,
-        phone: request.body.phone
-    });
-    clinic.save()
-        .then(clinic => {
-            response.json(clinic)
-        })
-        .catch(error => {
-            response.status(500).json("Could not create clinic");
-        })
+router.post("/new-clinic", async (request, response) => {
+    try {
+        
+        const clinic = new db.Clinic({
+            owner: request.body.owner,
+            clinicname: request.body.clinicname,
+            email: request.body.email,
+            phone: request.body.phone
+        });
+        const newClinic = await clinic.save()
+        
+        response.json(newClinic);
+    } catch (error) {
+        
+        response.status(500).json(error);
+    }
 })
 
 // creat new booking

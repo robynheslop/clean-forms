@@ -36,15 +36,21 @@ const useStyles = makeStyles({
         boxShadow: 'none',
         color: 'white',
         margin: '15px',
-    }
+    },
+    successErrorMessage: {
+        color: '#be294f',
+        textAlign: 'center'
+    },
 })
 
-function AddClinics({ isAddingClinicSuccess, isAddingClinicFailed, addClinic, userId }) {
+function AddClinics({ isAddClinicRejected, isAddClinicPending, isAddClinicFulfilled, addClinic, userId }) {
     const classes = useStyles()
     const clinicNameRef = useRef();
     const emailRef = useRef();
     const phoneRef = useRef();
+    console.log('userId',userId)
     const handleFormSubmit = event => {
+        console.log('userId',userId)
         event.preventDefault();
         event.stopPropagation();
         addClinic({
@@ -85,7 +91,7 @@ function AddClinics({ isAddingClinicSuccess, isAddingClinicFailed, addClinic, us
                     <TextField
                         label='Office Number'
                         className={classes.input}
-                        type='phone'
+                        type='tel'
                         name='phone'
                         inputRef={phoneRef}
                         required />
@@ -98,11 +104,11 @@ function AddClinics({ isAddingClinicSuccess, isAddingClinicFailed, addClinic, us
                 </div>
             </form>
 
-            {isAddingClinicSuccess ?
-                <p className={classes.successErrorMessage} >Questionnaire Successfully Added</p>
+            {isAddClinicFulfilled ?
+                <p className={classes.successErrorMessage} >Clinic Successfully Added</p>
                 : undefined}
-            {isAddingClinicFailed ?
-                <p className={classes.successErrorMessage} >Questionnaire Could Not Be Added At This Time</p>
+            {isAddClinicRejected ?
+                <p className={classes.successErrorMessage} >Clinic Could Not Be Added At This Time</p>
                 : undefined}
         </Paper>
     )
@@ -111,14 +117,16 @@ function AddClinics({ isAddingClinicSuccess, isAddingClinicFailed, addClinic, us
 AddClinics.propTypes = {
     addClinic: PropTypes.func,
     isAddingClinicPending: PropTypes.bool,
-    isAddingClinicFailed: PropTypes.bool,
-    isAddingClinicSuccess: PropTypes.bool,
+    isAddClinicRejected: PropTypes.bool,
+    isAddClinicFulfilled: PropTypes.bool,
     userId: PropTypes.string
 }
 
 AddClinics.defaultProps = {
     addClinic: () => { },
     isAddingClinicPending: false,
+    isAddClinicRejected: false,
+    isAddClinicFulfilled: false,
     userId: undefined
 }
 

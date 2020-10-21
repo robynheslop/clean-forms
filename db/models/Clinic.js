@@ -7,8 +7,6 @@ const clinicSchema = new mongoose.Schema({
     },
     clinicname: {
         type: String,
-        index: true,
-        unique: true,
         minlength: 2,
         maxlength: 20,
         required: true,

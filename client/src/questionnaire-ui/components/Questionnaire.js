@@ -37,11 +37,6 @@ const useStyles = makeStyles({
         color: 'white',
         margin: '15px',
     },
-    h1: {
-        fontFamily: 'Poiret One',
-        fontSize: '50px',
-        padding: '30px'
-    },
     successErrorMessage: {
         color: '#be294f',
         textAlign: 'center'

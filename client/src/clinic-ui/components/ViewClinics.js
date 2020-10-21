@@ -53,7 +53,6 @@ function ViewClinics({ handleViewBookings, handleMakeBooking, clinics }) {
                     <h1 className={classes.h1}>CLINICS</h1>
                     {clinics.map(({ id, clinicname, email, phone }) =>
                         <Card key={id} className={classes.card}>
-
                             <Grid item xs={9}>
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant='h5' component='h2'>

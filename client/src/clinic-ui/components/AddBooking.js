@@ -100,7 +100,7 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
                 <div>
                     <TextField
                         label='Contact Number'
-                        type='number'
+                        type='tel'
                         className={classes.input}
                         name='phone'
                         inputRef={phoneRef}

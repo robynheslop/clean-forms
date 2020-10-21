@@ -4,26 +4,32 @@ import events from "./events";
 export const loadClinics = createAsyncThunk(
     "clinic-domain/LOAD_CLINICS",
     async ({ owner }) => {
-        const response = await fetch(`/api/clinics/${owner}`, {
-            method: "GET"
-        });
-        const responseJson = await response.json();
-        const clinics = responseJson.map(clinic => {
-            return {
-                id: clinic._id,
-                owner: clinic.owner,
-                clinicname: clinic.clinicname,
-                email: clinic.email,
-                phone: clinic.phone
-            }
-        });
-        return { clinics, owner };
+        try {
+            const response = await fetch(`/api/clinics/${owner}`, {
+                method: "GET"
+            });
+            const responseJson = await response.json();
+            const clinics = responseJson.map(clinic => {
+                return {
+                    id: clinic._id,
+                    owner: clinic.owner,
+                    clinicname: clinic.clinicname,
+                    email: clinic.email,
+                    phone: clinic.phone
+                }
+            });
+            return { clinics, owner };
+        } catch (error) {
+            return error;
+        }
+
     }
 )
 
 export const addClinic = createAsyncThunk(
     "clinic-domain/ADD_CLINIC",
-    async ({ owner, clinicname, email, phone }) => {
+    async ({ owner, clinicname, email, phone }, { rejectWithValue}) => {
+       
         const response = await fetch("/api/new-clinic", {
             method: "POST",
             headers: {
@@ -31,8 +37,15 @@ export const addClinic = createAsyncThunk(
             },
             body: JSON.stringify({ owner, clinicname, email, phone })
         })
+
         const responseJson = await response.json();
+        console.log('responseJson',responseJson)
+        if (responseJson.errors || responseJson.code) {
+            console.log('error found in response.json')
+            return rejectWithValue(responseJson.error)
+        }
         return responseJson;
+
     }
 )
 
@@ -119,7 +132,7 @@ export const updateBookingStatus = createAsyncThunk(
 )
 
 export const selectActiveClinic = (id, clinicname, phone) => (dispatch) => {
-    dispatch(events.activeClinicSelected({id, clinicname, phone}));
+    dispatch(events.activeClinicSelected({ id, clinicname, phone }));
 }
 
 export const deselectActiveClinic = () => (dispatch) => {
