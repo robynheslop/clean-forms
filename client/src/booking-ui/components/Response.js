@@ -4,14 +4,13 @@ import PropTypes from 'prop-types'
 import { Fab, Checkbox, FormControlLabel } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
-function Response({ responses, handleSaveResponse }) {
+
+function Response({ responses, handleDeleteResponse, handleSaveResponse }) {
     const [checkedState, setCheckedState] = useState(
         responses.map(({ id: responseId }) => {
             return { id: responseId, checked: false }
         })
     );
-
-    const [fabButtonState, setFabButtonState] = useState(true)
 
     const handleChecked = (event) => {
         const checked = event.target.checked;
@@ -38,18 +37,15 @@ function Response({ responses, handleSaveResponse }) {
                             onChange={handleChecked}
                             name={responseText} />}
                     label={responseText}
+
+                    
                 />
             })}
-            <Fab
-                disabled={(fabButtonState === false) ? true : false }
-                size="small"
-                color="secondary"
-                aria-label="edit"
-                onClick={() => {
-                    setFabButtonState(false)
-                    handleSaveResponse(checkedState)
-                }}
-            >
+            <Fab 
+                color="secondary" 
+                aria-label="save"
+                onClick={() => handleSaveResponse(checkedState)}
+                >
                 <CheckCircleOutlineIcon />
             </Fab>
         </div>
@@ -59,10 +55,14 @@ function Response({ responses, handleSaveResponse }) {
 Response.propTypes = {
     responses: PropTypes.arrayOf(PropTypes.object),
     handleSaveResponse: PropTypes.func,
+    handleDeleteResponse: PropTypes.func,
+
 }
 
 Response.defaultProps = {
-    handleSaveResponse: () => { }
+    responses: {},
+    handleSaveResponse: () => {},
+    handleDeleteResponse: () => {}
 }
 
 export default Response;

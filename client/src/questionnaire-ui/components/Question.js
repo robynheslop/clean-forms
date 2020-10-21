@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         padding: '10px',
         margin: '10px',
         fontSize: "1.1em",
-        width: '100%',
+        width: '80%',
         border: "none",
         backgroundColor: "none!important"
     },
@@ -23,6 +23,9 @@ const useStyles = makeStyles({
         boxShadow: 'none',
         color: 'white',
         margin: '15px',
+    },
+    responseInstructions: {
+        display: 'inline-block'
     }
 })
 
@@ -56,26 +59,30 @@ export function Question({ onSave, onCancel, responses }) {
     }
 
     const handleAddResponse = () => {
-        setResponsesState([{id: uuidv4()}, ...responsesState])
+        setResponsesState([{ id: uuidv4() }, ...responsesState])
     }
 
     return (
         <div>
             <TextField
-                label='Type out your question here and select the valid answer below'
+                label='Type out your question here'
                 type="text"
                 className={classes.input}
                 inputRef={queryRef}
                 name="question"
             />
-<br></br>
-            <Fab
-                color="secondary"
-                aria-label="add-response"
-                onClick={handleAddResponse}
-            >
-                <AddIcon />
-            </Fab>
+            <br></br>
+            <div className={classes.responseInstructions}>
+                <p>Please click the button and add each possible response to your question below.</p>
+                <Fab
+                    color="secondary"
+                    size='small'
+                    aria-label="add-response"
+                    onClick={handleAddResponse}
+                >
+                    <AddIcon />
+                </Fab>
+            </div>
 
             {responsesState.map(response => {
                 return <Response

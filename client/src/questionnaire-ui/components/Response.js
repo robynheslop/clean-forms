@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types'
-import { Button, Fab, Checkbox, TextField } from '@material-ui/core';
+import { makeStyles, Button, Fab, Checkbox, TextField } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
     const [checked, setChecked] = useState(isValidResponse);
@@ -16,7 +17,7 @@ function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
     const handleCancel = () => {
 
     }
-    
+
     const isValid = () => {
         return responseTextState?.length && responseTextState.length > 0
     }
@@ -34,16 +35,27 @@ function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
                 name="response"
             />
             {isValid() ?
-                <Fab
-                    color="secondary"
-                    size="small"
-                    onClick={() => {
-                        setIsSavedState(false)
-                        handleSave(responseTextState, checked)
-                    }}
-                ><CheckCircleOutlineIcon />
-                
-                </Fab>
+                <div>
+                    <Fab
+                        color="secondary"
+                        size="small"
+                        onClick={() => {
+                            setIsSavedState(false)
+                            handleSave(responseTextState, checked)
+                        }}
+                    >
+                        <CheckCircleOutlineIcon />
+
+                    </Fab>
+
+                    {/* <Fab
+                        color="secondary"
+                        size="small"
+                        onClick={() => handleDelete()}
+                    >
+                        <DeleteForeverIcon />
+                    </Fab> */}
+                </div>
                 : undefined}
 
 

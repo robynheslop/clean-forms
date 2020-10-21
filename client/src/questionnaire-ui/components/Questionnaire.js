@@ -41,6 +41,15 @@ const useStyles = makeStyles({
         color: '#be294f',
         textAlign: 'center'
     },
+    fabButton: {
+        margin: '25px 0px',
+    },
+    questionDiv: {
+        width: '80%',
+        margin: '25px 10%',
+        backgroundColor: '#ededed',
+        padding: '25px',
+    },
 })
 
 export function Questionnaire({ isSaveQuestionnaireFailed, isSaveQuestionnaireSuccess, onSave, onDelete, onCancel, questions, owner, preText, postText, title, }) {
@@ -108,23 +117,26 @@ export function Questionnaire({ isSaveQuestionnaireFailed, isSaveQuestionnaireSu
                     name='questionnairePreText'
                     inputRef={preTextRef}
                     required />
-                    <br></br>
-                <Fab
+                <br></br>
+                <Fab 
                     size="medium"
                     variant="extended"
+                    className={classes.fabButton}
                     color="secondary"
                     aria-label="add"
                     onClick={handleAddQuestion}>
                     Add A Question<AddIcon />
                 </Fab>
-
+                <br></br>
                 {questionsState.map(question => {
-                    return <Question
-                        key={question.id}
-                        onSave={(queryText, responses) => handleSaveQuestion(question.id, queryText, responses)}
-                        onDelete={() => { handleDeleteQuestion(question.id) }}
-                        {...question}
-                    />
+                    return <div key={question.id} className={classes.questionDiv}>
+                        <Question
+                            
+                            onSave={(queryText, responses) => handleSaveQuestion(question.id, queryText, responses)}
+                            onDelete={() => { handleDeleteQuestion(question.id) }}
+                            {...question}
+                        />
+                    </div>
                 })}
 
 
