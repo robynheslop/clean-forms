@@ -54,7 +54,6 @@ router.get("/clinics/:owner", (request, response) => {
 
 router.post("/new-clinic", async (request, response) => {
     try {
-        
         const clinic = new db.Clinic({
             owner: request.body.owner,
             clinicname: request.body.clinicname,
@@ -62,10 +61,8 @@ router.post("/new-clinic", async (request, response) => {
             phone: request.body.phone
         });
         const newClinic = await clinic.save()
-        
         response.json(newClinic);
     } catch (error) {
-        
         response.status(500).json(error);
     }
 })
