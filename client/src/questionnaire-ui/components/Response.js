@@ -17,25 +17,25 @@ function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
     const handleCancel = () => {
 
     }
-
+    
     const isValid = () => {
         return responseTextState?.length && responseTextState.length > 0
     }
-
+    
     return (
         <div>
-            <Checkbox
-                checked={checked}
-                onChange={handleChecked}
-            />
-            <TextField
-                label='Response'
-                type="text"
-                onChange={({ target: { value } }) => setResponseTextState(value)}
-                name="response"
-            />
-            {isValid() ?
-                <div>
+            <div>
+                <Checkbox
+                    checked={checked}
+                    onChange={handleChecked}
+                />
+                <TextField
+                    label='Response'
+                    type="text"
+                    onChange={({ target: { value } }) => setResponseTextState(value)}
+                    name="response"
+                />
+                {isValid() ?
                     <Fab
                         color="secondary"
                         size="small"
@@ -43,24 +43,12 @@ function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
                             setIsSavedState(false)
                             handleSave(responseTextState, checked)
                         }}
-                    >
-                        <CheckCircleOutlineIcon />
+                    ><CheckCircleOutlineIcon />
 
                     </Fab>
+                    : undefined}
 
-                    {/* <Fab
-                        color="secondary"
-                        size="small"
-                        onClick={() => handleDelete()}
-                    >
-                        <DeleteForeverIcon />
-                    </Fab> */}
-                </div>
-                : undefined}
-
-
-            {/* <Button onClick={handleCancel}>Cancel</Button>
-            <Button onClick={handleDelete}>Delete</Button> */}
+            </div>
         </div>
     )
 }
