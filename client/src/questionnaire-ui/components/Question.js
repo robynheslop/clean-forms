@@ -63,16 +63,12 @@ export function Question({ onSave, onDelete, responses }) {
         onSave(queryRef.current.value, responsesState)
     }
 
-    const handleRemove = () => {
-        onDelete()
-    }
-
     const handleDelete = () => {
         onDelete()
     }
 
     const isValid = () => {
-        console.log(responsesState.some(object => Object.values(object).some(element => element.isValidReponse === "true")))
+        // console.log(responsesState.some(object => Object.values(object).some(element => element.isValidReponse === "true")))
         return responsesState && responsesState.length > 0 && queryRef.current.value
     }
 
