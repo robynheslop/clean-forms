@@ -24,18 +24,23 @@ const useStyles = makeStyles({
         color: 'white',
         margin: '15px',
     },
-    responseInstructions: {
-        display: 'inline-block'
+    fabButton: {
+        float: 'right',
+        display : 'flex',
+        alignSelf : 'flex-end',
     }
 })
 
 
 
-export function Question({ onSave, onCancel, responses }) {
+export function Question({ onSave, onDelete, responses }) {
     const classes = useStyles();
     const [responsesState, setResponsesState] = useState(responses);
     const queryRef = useRef();
 
+    const handleAddResponse = () => {
+        setResponsesState([{ id: uuidv4() }, ...responsesState])
+    }
 
     const handleSaveResponse = (id, responseText, isValidReponse) => {
         const index = findIndex(propEq("id", id))(responsesState);
@@ -58,8 +63,13 @@ export function Question({ onSave, onCancel, responses }) {
         onSave(queryRef.current.value, responsesState)
     }
 
-    const handleAddResponse = () => {
-        setResponsesState([{ id: uuidv4() }, ...responsesState])
+    const handleDelete = () => {
+        onDelete()
+    }
+
+    const isValid = () => {
+        console.log(responsesState.some(object => Object.values(object).some(element => element.isValidReponse === "true")))
+        return responsesState && responsesState.length > 0 && queryRef.current.value
     }
 
     return (
@@ -72,11 +82,12 @@ export function Question({ onSave, onCancel, responses }) {
                 name="question"
             />
             <br></br>
-            <div className={classes.responseInstructions}>
+            <div >
                 <p>Please click the button and add each possible response to your question below.</p>
                 <Fab
                     color="secondary"
                     size='small'
+                    className={classes.fabButton}
                     aria-label="add-response"
                     onClick={handleAddResponse}
                 >
@@ -92,11 +103,14 @@ export function Question({ onSave, onCancel, responses }) {
                     {...response}
                 />
             })}
-            <br></br>
+
+            { isValid() ?  
             <div>
                 <Button onClick={handleSave}>Save Question</Button>
-                <Button onClick={onCancel}>Cancel Question</Button>
             </div>
+            : undefined
+            }
+            <Button onClick={handleDelete}>Remove Question</Button>
         </div>
     )
 }
