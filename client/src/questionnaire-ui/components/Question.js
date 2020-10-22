@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 
 
-export function Question({ onSave, onCancel, responses }) {
+export function Question({ onSave, onDelete, responses }) {
     const classes = useStyles();
     const [responsesState, setResponsesState] = useState(responses);
     const queryRef = useRef();
@@ -56,6 +56,9 @@ export function Question({ onSave, onCancel, responses }) {
 
     const handleSave = () => {
         onSave(queryRef.current.value, responsesState)
+    }
+    const handleRemove = () => {
+        onDelete()
     }
 
     const handleAddResponse = () => {
@@ -95,7 +98,7 @@ export function Question({ onSave, onCancel, responses }) {
             <br></br>
             <div>
                 <Button onClick={handleSave}>Save Question</Button>
-                <Button onClick={onCancel}>Cancel Question</Button>
+                <Button onClick={handleRemove}>Remove Question</Button>
             </div>
         </div>
     )
