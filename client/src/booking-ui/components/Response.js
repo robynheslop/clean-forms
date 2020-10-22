@@ -47,7 +47,6 @@ function Response({ responses, handleSaveResponse }) {
                 size="small"
                 color="secondary"
                 onClick={() => {
-                    setFabButtonState(false)
                     handleSaveResponse(checkedState)
                 }}
                 >

@@ -57,6 +57,7 @@ export function Question({ onSave, onDelete, responses }) {
     const handleSave = () => {
         onSave(queryRef.current.value, responsesState)
     }
+
     const handleRemove = () => {
         onDelete()
     }
@@ -106,7 +107,7 @@ export function Question({ onSave, onDelete, responses }) {
 
 Question.propTypes = {
     onSave: PropTypes.func,
-    onCancel: PropTypes.func,
+    onDelete: PropTypes.func,
     responses: PropTypes.arrayOf(
         PropTypes.shape(
             {
@@ -120,7 +121,7 @@ Question.propTypes = {
 
 Question.defaultProps = {
     onSave: () => { },
-    onCancel: () => { },
+    onDelete: () => { },
     responses: []
 }
 
