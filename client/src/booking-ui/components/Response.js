@@ -5,7 +5,7 @@ import { Fab, Checkbox, FormControlLabel } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 
-function Response({ responses, handleDeleteResponse, handleSaveResponse }) {
+function Response({ responses, handleSaveResponse }) {
     const [checkedState, setCheckedState] = useState(
         responses.map(({ id: responseId }) => {
             return { id: responseId, checked: false }
@@ -44,7 +44,12 @@ function Response({ responses, handleDeleteResponse, handleSaveResponse }) {
             <Fab 
                 color="secondary" 
                 aria-label="save"
-                onClick={() => handleSaveResponse(checkedState)}
+                size="small"
+                color="secondary"
+                onClick={() => {
+                    setFabButtonState(false)
+                    handleSaveResponse(checkedState)
+                }}
                 >
                 <CheckCircleOutlineIcon />
             </Fab>
@@ -55,14 +60,11 @@ function Response({ responses, handleDeleteResponse, handleSaveResponse }) {
 Response.propTypes = {
     responses: PropTypes.arrayOf(PropTypes.object),
     handleSaveResponse: PropTypes.func,
-    handleDeleteResponse: PropTypes.func,
-
 }
 
 Response.defaultProps = {
     responses: {},
-    handleSaveResponse: () => {},
-    handleDeleteResponse: () => {}
+    handleSaveResponse: () => {}
 }
 
 export default Response;
