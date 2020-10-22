@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         padding: '10px',
         margin: '10px',
         fontSize: "1.1em",
-        width: '100%',
+        width: '80%',
         border: "none",
         backgroundColor: "none!important"
     },
@@ -23,16 +23,24 @@ const useStyles = makeStyles({
         boxShadow: 'none',
         color: 'white',
         margin: '15px',
+    },
+    fabButton: {
+        float: 'right',
+        display : 'flex',
+        alignSelf : 'flex-end',
     }
 })
 
 
 
-export function Question({ onSave, onCancel, responses }) {
+export function Question({ onSave, onDelete, responses }) {
     const classes = useStyles();
     const [responsesState, setResponsesState] = useState(responses);
     const queryRef = useRef();
 
+    const handleAddResponse = () => {
+        setResponsesState([{ id: uuidv4() }, ...responsesState])
+    }
 
     const handleSaveResponse = (id, responseText, isValidReponse) => {
         const index = findIndex(propEq("id", id))(responsesState);
@@ -55,27 +63,37 @@ export function Question({ onSave, onCancel, responses }) {
         onSave(queryRef.current.value, responsesState)
     }
 
-    const handleAddResponse = () => {
-        setResponsesState([{id: uuidv4()}, ...responsesState])
+    const handleDelete = () => {
+        onDelete()
+    }
+
+    const isValid = () => {
+        console.log(responsesState.some(object => Object.values(object).some(element => element.isValidReponse === "true")))
+        return responsesState && responsesState.length > 0 && queryRef.current.value
     }
 
     return (
         <div>
             <TextField
-                label='Type out your question here and select the valid answer below'
+                label='Type out your question here'
                 type="text"
                 className={classes.input}
                 inputRef={queryRef}
                 name="question"
             />
-<br></br>
-            <Fab
-                color="secondary"
-                aria-label="add-response"
-                onClick={handleAddResponse}
-            >
-                <AddIcon />
-            </Fab>
+            <br></br>
+            <div >
+                <p>Please click the button and add each possible response to your question below.</p>
+                <Fab
+                    color="secondary"
+                    size='small'
+                    className={classes.fabButton}
+                    aria-label="add-response"
+                    onClick={handleAddResponse}
+                >
+                    <AddIcon />
+                </Fab>
+            </div>
 
             {responsesState.map(response => {
                 return <Response
@@ -85,11 +103,14 @@ export function Question({ onSave, onCancel, responses }) {
                     {...response}
                 />
             })}
-            <br></br>
+
+            { isValid() ?  
             <div>
                 <Button onClick={handleSave}>Save Question</Button>
-                <Button onClick={onCancel}>Cancel Question</Button>
             </div>
+            : undefined
+            }
+            <Button onClick={handleDelete}>Remove Question</Button>
         </div>
     )
 }

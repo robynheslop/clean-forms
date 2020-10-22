@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, FormHelperText, Paper, Select, InputLabel, TextField, Button } from '@material-ui/core';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 
 const useStyles = makeStyles({
     root: {
@@ -116,13 +117,27 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
                         required />
                 </div>
                 <div>
-                    <TextField
+                    <KeyboardDatePicker
+                        margin="normal"
                         label='Booking Date'
+                        name='date'
                         className={classes.input}
+                        format="MM/dd/yyyy"
+                        inputRef={dateRef}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
+                    {/* <TextField
+                        
+                        
                         type='date'
                         name='date'
                         inputRef={dateRef}
-                        required />
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        required /> */}
                 </div>
                 <div>
                     <InputLabel>Select A Questionnaire To Send</InputLabel>

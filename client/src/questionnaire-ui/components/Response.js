@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types'
-import { Button, Fab, Checkbox, TextField } from '@material-ui/core';
+import { makeStyles, Button, Fab, Checkbox, TextField } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
     const [checked, setChecked] = useState(isValidResponse);
@@ -20,35 +21,34 @@ function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
     const isValid = () => {
         return responseTextState?.length && responseTextState.length > 0
     }
-
+    
     return (
         <div>
-            <Checkbox
-                checked={checked}
-                onChange={handleChecked}
-            />
-            <TextField
-                label='Response'
-                type="text"
-                onChange={({ target: { value } }) => setResponseTextState(value)}
-                name="response"
-            />
-            {isValid() ?
-                <Fab
-                    color="secondary"
-                    size="small"
-                    onClick={() => {
-                        setIsSavedState(false)
-                        handleSave(responseTextState, checked)
-                    }}
-                ><CheckCircleOutlineIcon />
-                
-                </Fab>
-                : undefined}
+            <div>
+                <Checkbox
+                    checked={checked}
+                    onChange={handleChecked}
+                />
+                <TextField
+                    label='Response'
+                    type="text"
+                    onChange={({ target: { value } }) => setResponseTextState(value)}
+                    name="response"
+                />
+                {isValid() ?
+                    <Fab
+                        color="secondary"
+                        size="small"
+                        onClick={() => {
+                            setIsSavedState(false)
+                            handleSave(responseTextState, checked)
+                        }}
+                    ><CheckCircleOutlineIcon />
 
+                    </Fab>
+                    : undefined}
 
-            {/* <Button onClick={handleCancel}>Cancel</Button>
-            <Button onClick={handleDelete}>Delete</Button> */}
+            </div>
         </div>
     )
 }
