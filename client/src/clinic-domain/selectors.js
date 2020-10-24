@@ -7,6 +7,12 @@ const selectIsAddClinicFailed = (state) => state?.clinicDomain?.isAddClinicFaile
 const selectIsAddClinicSuccess = (state) => state?.clinicDomain?.isAddClinicSuccess;
 
 const selectIsAddBookingPending = (state) => state?.clinicDomain?.isAddBookingPending;
+const selectIsAddBookingSuccess = (state) => state?.clinicDomain?.isAddBookingSuccess;
+const selectIsAddBookingFailed = (state) => state?.clinicDomain?.isAddBookingFailed;
+
+const selectIsSendScreeningPending = (state) => state?.clinicDomain?.isSendScreeningPending;
+const selectIsSendScreeningSuccess = (state) => state?.clinicDomain?.isSendScreeningSuccess;
+const selectIsSendScreeningFailed = (state) => state?.clinicDomain?.isSendScreeningFailed;
 
 const selectActiveClinic = (state) => state?.clinicDomain?.activeClinic;
 
@@ -19,6 +25,11 @@ export default {
     selectIsAddClinicFailed,
     selectIsAddClinicSuccess,
     selectIsAddBookingPending,
+    selectIsAddBookingSuccess,
+    selectIsAddBookingFailed,
+    selectIsSendScreeningPending,
+    selectIsSendScreeningSuccess,
+    selectIsSendScreeningFailed,
     selectIsLoadBookingsPending,
     selectActiveClinic
 }

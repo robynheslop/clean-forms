@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, FormHelperText, Paper, Select, InputLabel, TextField, Button } from '@material-ui/core';
 
@@ -51,8 +51,13 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
     const emailRef = useRef();
     const dateRef = useRef();
     const phoneRef = useRef();
-    const questionnaireRef = useRef();
-    const { id, clinicname, phone, isAddingBookingSuccess, isAddingBookingFailed } = activeClinic;
+    const [questionnaireState, setQuestionnaireState] = useState('');
+    const { id, clinicname, phone, isSendScreeningFailed, isSendScreeningSuccess } = activeClinic;
+
+    const handleChange = (event) => {
+        setQuestionnaireState(event.target.value)
+    }
+
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
@@ -64,13 +69,12 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
             phone: phoneRef.current.value,
             email: emailRef.current.value,
             date: dateRef.current.value,
-            questionnaireId: questionnaireRef.current.value
+            questionnaireId: questionnaireState
         });
         clientNameRef.current.value = '';
         phoneRef.current.value = '';
         emailRef.current.value = '';
         dateRef.current.value = '';
-        questionnaireRef.current.value = '';
     }
     return (
         <Paper className={classes.root}>
@@ -119,11 +123,12 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
                         label='Select A Questionnaire To Send'
                         type='date'
                         name='date'
-                        defaultValue=''
+                        value={questionnaireState}
+                        onChange={handleChange}
                         disabled={questionnaires[0] === undefined ? true : false}
                         className={classes.select}
-                        inputRef={questionnaireRef}
                         required>
+                            <option value="">None</option>
                         {questionnaires[0] === undefined ?
                             undefined :
                             questionnaires.map(questionnaire => {
@@ -144,10 +149,10 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
                     >Create Booking</Button>
                 </div>
             </form>
-            {isAddingBookingSuccess ?
+            {isSendScreeningSuccess ?
                 <p className={classes.successErrorMessage} >Booking Successfully Added</p>
                 : undefined}
-            {isAddingBookingFailed ?
+            {isSendScreeningFailed ?
                 <p className={classes.successErrorMessage} >Booking Could Not Be Added At This Time</p>
                 : undefined}
         </Paper>
@@ -157,14 +162,18 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
 AddBooking.propTypes = {
     createScreening: PropTypes.func,
     questionnaires: PropTypes.array,
-    isAddingBookingPending: PropTypes.bool,
+    isSendScreeningPending: PropTypes.bool,
+    isSendScreeningSuccess: PropTypes.bool,
+    isSendScreeningFailed: PropTypes.bool,
     activeClinic: PropTypes.object
 }
 
 AddBooking.defaultProps = {
     createScreening: () => { },
     questionnaires: [],
-    isAddingBookingPending: false,
+    isSendScreeningPending: false,
+    isSendScreeningSuccess: false,
+    isSendScreeningFailed: false,
     activeClinic: {}
 }
 

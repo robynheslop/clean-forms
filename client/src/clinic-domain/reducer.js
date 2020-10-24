@@ -10,9 +10,15 @@ export default createReducer({
         clinicname: undefined,
         phone: undefined,
         isLoadBookingsPending: false,
+        isAddScreeningPending: false,
+        isAddScreeningSuccess: false,
+        isAddScreeningFailed: false,
         isAddBookingPending: false,
-        isAddingBookingSuccess: false,
-        isAddingBookingFailed: false,
+        isAddBookingSuccess: false,
+        isAddBookingFailed: false,
+        isSendScreeningPending: false,
+        isSendScreeningSuccess: false,
+        isSendScreeningFailed: false,
         bookings: [],
         errors: [],
     },
@@ -86,19 +92,48 @@ export default createReducer({
             })
             .addCase(actions.createScreening.pending, (state) => {
                 state.activeClinic.errors = [];
-                state.activeClinic.isAddBookingPending = true;
-                state.activeClinic.isAddingBookingSuccess = false;
-                state.activeClinic.isAddingBookingFailed = false;
+                state.activeClinic.isAddScreeningPending = true;
+                state.activeClinic.isAddScreeningSuccess = false;
+                state.activeClinic.isAddScreeningFailed = false;
             })
             .addCase(actions.createScreening.rejected, (state, { error: { message } }) => {
                 state.activeClinic.errors.push(message);
-                state.activeClinic.isAddBookingPending = false;
-                state.activeClinic.isAddingBookingFailed = true;
+                state.activeClinic.isAddScreeningPending = false;
+                state.activeClinic.isAddScreeningFailed = true;
             })
             .addCase(actions.createScreening.fulfilled, (state) => {
-                
+                state.activeClinic.isAddScreeningPending = false;
+                state.activeClinic.isAddScreeningSuccess = true;
+            })
+            .addCase(actions.createBooking.pending, (state) => {
+                state.activeClinic.errors = [];
+                state.activeClinic.isAddBookingPending = true;
+                state.activeClinic.isAddBookingSuccess = false;
+                state.activeClinic.isAddBookingFailed = false;
+            })
+            .addCase(actions.createBooking.rejected, (state, { error: { message } }) => {
+                state.activeClinic.errors.push(message);
                 state.activeClinic.isAddBookingPending = false;
-                state.activeClinic.isAddingBookingSuccess = true;
+                state.activeClinic.isAddBookingFailed = true;
+            })
+            .addCase(actions.createBooking.fulfilled, (state) => {
+                state.activeClinic.isAddBookingPending = false;
+                state.activeClinic.isAddBookingSuccess = true;
+            })
+            .addCase(actions.sendScreening.pending, (state) => {
+                state.activeClinic.errors = [];
+                state.activeClinic.isSendScreeningPending = true;
+                state.activeClinic.isSendScreeningSuccess = false;
+                state.activeClinic.isSendScreeningFailed = false;
+            })
+            .addCase(actions.sendScreening.rejected, (state, { error: { message } }) => {
+                state.activeClinic.errors.push(message);
+                state.activeClinic.isSendScreeningPending = false;
+                state.activeClinic.isSendScreeningFailed = true;
+            })
+            .addCase(actions.sendScreening.fulfilled, (state) => {
+                state.activeClinic.isSendScreeningPending = false;
+                state.activeClinic.isSendScreeningSuccess = true;
             })
             .addCase(events.activeClinicSelected, (state, { payload: {id, clinicname, phone} }) => {
                 state.activeClinic.id = id;

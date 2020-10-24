@@ -12,6 +12,6 @@ export default function* rootSagas() {
     yield fork (gradeScreeningSaga)  
     yield fork (updateScreeningSaga)  
     yield fork (updateBookingSaga)  
-    yield fork (screeningEmailSaga)  
+    yield fork (screeningEmailSaga )  
     yield fork (newBookingSaga)  
 } 

@@ -1,10 +1,13 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import actions from "../actions";
 
-function* sendScreeningEmail(payload) {
-    yield put(actions.sendScreening(payload));
+function* screeningEmail(payload) {
+    const screeningId = payload.payload;
+    const {clinic, clientName, email, phone, date} = payload.meta.arg;
+    yield put(actions.sendScreening({clinic, clientName, email, phone, date, screeningId}));
 }
 
 export function* screeningEmailSaga() {
-    yield takeEvery('clinic-domain/CREATE_BOOKING/fulfilled', sendScreeningEmail)
+    console.log('hit email saga');
+    yield takeEvery('clinic-domain/CREATE_BOOKING/fulfilled', screeningEmail);
 }

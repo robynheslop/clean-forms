@@ -77,7 +77,7 @@ export const createScreening = createAsyncThunk(
 )
 
 export const createBooking = createAsyncThunk(
-    "clinc-domain/CREATE_BOOKING",
+    "clinic-domain/CREATE_BOOKING",
     async ({ clinic, clientName, email, phone, date, screeningId }) => {
         const bookingResponse = await fetch("/api/new-booking", {
             method: "POST",
@@ -92,7 +92,7 @@ export const createBooking = createAsyncThunk(
 )
 
 export const sendScreening = createAsyncThunk(
-    "clinc-domain/SEND_SCREENING",
+    "clinic-domain/SEND_SCREENING",
     async ({ clinicName, clinicPhone, clientName, email, screeningId }) => {
         await fetch("/api/screening-request", {
             method: "POST",
@@ -106,7 +106,7 @@ export const sendScreening = createAsyncThunk(
 
 
 export const updateBookingStatus = createAsyncThunk(
-    "clinc-domain/UPDATE_BOOKING",
+    "clinic-domain/UPDATE_BOOKING",
     async (props) => {
         console.log(props)
         const update = await fetch("/api/booking", {
