@@ -14,7 +14,9 @@ export const ConnectedAddBooking = connect(
     state => ({
         activeClinic: selectors.selectActiveClinic(state),
         questionnaires: questionnaireSelectors.selectQuestionnaires(state),
-        isAddBookingPending: selectors.selectIsAddBookingPending(state)
+        isSendScreeningPending: selectors.selectIsAddBookingPending(state),
+        isSendScreeningSuccess: selectors.selectIsAddBookingPending(state),
+        isSendScreeningFailed: selectors.selectIsAddBookingPending(state)
     }),
     mapDispatchToProps)(AddBooking)
 

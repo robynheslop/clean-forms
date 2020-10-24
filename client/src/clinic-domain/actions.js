@@ -62,7 +62,7 @@ export const loadBookings = createAsyncThunk(
 
 export const createScreening = createAsyncThunk(
     "clinic-domain/CREATE_SCREENING",
-    async ({ questionnaireId }) => {
+    async ({ questionnaireId }, rejectWithValue) => {
 
         const screeningResponse = await fetch("/api/new-screening", {
             method: "POST",
@@ -71,14 +71,18 @@ export const createScreening = createAsyncThunk(
             },
             body: JSON.stringify({ questionnaire: questionnaireId })
         });
+        
         const { _id: screeningId } = await screeningResponse.json();
+        if (!screeningId) {
+            return rejectWithValue("Could not create screening.");
+        }
         return screeningId;
     }
 )
 
 export const createBooking = createAsyncThunk(
     "clinic-domain/CREATE_BOOKING",
-    async ({ clinic, clientName, email, phone, date, screeningId }) => {
+    async ({ clinic, clientName, email, phone, date, screeningId }, rejectWithValue) => {
         const bookingResponse = await fetch("/api/new-booking", {
             method: "POST",
             headers: {
@@ -87,20 +91,28 @@ export const createBooking = createAsyncThunk(
             body: JSON.stringify({ clinic, clientName, email, phone, date, screeningId })
         })
         const bookingResponseJson = await bookingResponse.json();
-        return bookingResponseJson
+        if (bookingResponseJson === "Could not create booking.") {
+            return rejectWithValue(bookingResponseJson);
+        }
+        return bookingResponseJson;
     }
 )
 
 export const sendScreening = createAsyncThunk(
     "clinic-domain/SEND_SCREENING",
-    async ({ clinicName, clinicPhone, clientName, email, screeningId }) => {
-        await fetch("/api/screening-request", {
+    async ({ clinicName, clinicPhone, clientName, email, screeningId }, rejectWithValue) => {
+        const screeningRequest = await fetch("/api/screening-request", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ clientName, clinicName, clinicPhone, email, screeningId })
         })
+        const screeningRequestJson = await screeningRequest.json();
+        if (screeningRequestJson === "Could not send screening request.") {
+            return rejectWithValue(screeningRequestJson);
+        }
+        return screeningRequestJson;
     }
 )
 

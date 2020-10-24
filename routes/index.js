@@ -78,7 +78,7 @@ router.post("/new-booking", (request, response) => {
         })
         .catch(error => {
             console.log(error)
-            response.status(500).json("Could not create booking");
+            response.status(500).json("Could not create booking.");
         })
 })
 
@@ -146,14 +146,13 @@ router.delete('/questionnaire/:id', async (request, response) => {
 
 // create a new screening document
 router.post('/new-screening', async (request, response) => {
-
     try {
         const createScreening = await db.Screening.create(
             { questionnaire: request.body.questionnaire })
         response.json(createScreening);
     }
     catch (error) {
-        response.status(500).json(error)
+        response.status(500).json("Could not create screening.")
     }
 })
 
@@ -192,7 +191,7 @@ router.post('/screening-request', async (request, response) => {
     }
 
     await transporter.sendMail(mailOptions, (error, info) => {
-        if (error) return response.status(500).json(error, info);
+        if (error) return response.status(500).json("Could not send screening request.");
         response.status(200).json("Message sent: " + info.messageId);
     })
 
