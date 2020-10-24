@@ -18,7 +18,7 @@ server.use(express.static(__dirname + '/public'))
 
 
 mongoose.connect(
-    process.env.MONGODB_URI || process.env.DATABASE_INFO,
+    process.env.MONGODB_URI || "mongodb://localhost/cleanforms",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,

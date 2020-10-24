@@ -36,10 +36,14 @@ const useStyles = makeStyles({
         boxShadow: 'none',
         color: 'white',
         margin: '15px',
-    }
+    },
+    successErrorMessage: {
+        color: '#be294f',
+        textAlign: 'center'
+    },
 })
 
-function AddClinics({ isAddingClinicSuccess, isAddingClinicFailed, addClinic, userId }) {
+function AddClinics({ isAddClinicSuccess, isAddClinicFailed, addClinic, userId }) {
     const classes = useStyles()
     const clinicNameRef = useRef();
     const emailRef = useRef();
@@ -98,11 +102,11 @@ function AddClinics({ isAddingClinicSuccess, isAddingClinicFailed, addClinic, us
                 </div>
             </form>
 
-            {isAddingClinicSuccess ?
-                <p className={classes.successErrorMessage} >Questionnaire Successfully Added</p>
+            {isAddClinicSuccess ?
+                <p className={classes.successErrorMessage} >Successfully added your new clinic.</p>
                 : undefined}
-            {isAddingClinicFailed ?
-                <p className={classes.successErrorMessage} >Questionnaire Could Not Be Added At This Time</p>
+            {isAddClinicFailed ?
+                <p className={classes.successErrorMessage} >Clinic could not be added.</p>
                 : undefined}
         </Paper>
     )
@@ -110,15 +114,15 @@ function AddClinics({ isAddingClinicSuccess, isAddingClinicFailed, addClinic, us
 
 AddClinics.propTypes = {
     addClinic: PropTypes.func,
-    isAddingClinicPending: PropTypes.bool,
-    isAddingClinicFailed: PropTypes.bool,
-    isAddingClinicSuccess: PropTypes.bool,
+    isAddClinicPending: PropTypes.bool,
+    isAddClinicFailed: PropTypes.bool,
+    isAddClinicSuccess: PropTypes.bool,
     userId: PropTypes.string
 }
 
 AddClinics.defaultProps = {
     addClinic: () => { },
-    isAddingClinicPending: false,
+    isAddClinicPending: false,
     userId: undefined
 }
 

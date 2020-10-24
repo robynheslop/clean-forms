@@ -13,6 +13,8 @@ const mapDispatchToProps = dispatch => {
 export const ConnectedAddClinic = connect(
     state => ({
         isAddClinicPending: selectors.selectIsAddClinicPending(state),
+        isAddClinicFailed: selectors.selectIsAddClinicFailed(state),
+        isAddClinicSuccess: selectors.selectIsAddClinicSuccess(state),
         userId: appSelectors.selectUserId(state)
     }),
     mapDispatchToProps)(AddClinics)

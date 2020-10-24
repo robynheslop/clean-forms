@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     }
 })
 
-function AddBooking({ addBooking, activeClinic, questionnaires }) {
+function AddBooking({ createScreening, activeClinic, questionnaires }) {
     const classes = useStyles();
     const clientNameRef = useRef();
     const emailRef = useRef();
@@ -53,22 +53,10 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
     const phoneRef = useRef();
     const questionnaireRef = useRef();
     const { id, clinicname, phone, isAddingBookingSuccess, isAddingBookingFailed } = activeClinic;
-
-
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
-        console.log('addboking', {
-            clinic: id,
-            clinicName: clinicname,
-            clinicPhone: phone,
-            clientName: clientNameRef.current.value,
-            phone: phoneRef.current.value,
-            email: emailRef.current.value,
-            date: dateRef.current.value,
-            questionnaireId: questionnaireRef.current.value
-        })
-        addBooking({
+        createScreening({
             clinic: id,
             clinicName: clinicname,
             clinicPhone: phone,
@@ -167,17 +155,17 @@ function AddBooking({ addBooking, activeClinic, questionnaires }) {
 }
 
 AddBooking.propTypes = {
-    addBooking: PropTypes.func,
+    createScreening: PropTypes.func,
     questionnaires: PropTypes.array,
     isAddingBookingPending: PropTypes.bool,
-    clinicId: PropTypes.string
+    activeClinic: PropTypes.object
 }
 
 AddBooking.defaultProps = {
-    addBooking: () => { },
+    createScreening: () => { },
     questionnaires: [],
     isAddingBookingPending: false,
-    clinicId: undefined
+    activeClinic: {}
 }
 
 export default AddBooking;

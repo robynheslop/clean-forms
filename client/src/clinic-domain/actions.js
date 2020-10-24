@@ -23,7 +23,7 @@ export const loadClinics = createAsyncThunk(
 
 export const addClinic = createAsyncThunk(
     "clinic-domain/ADD_CLINIC",
-    async ({ owner, clinicname, email, phone }) => {
+    async ({ owner, clinicname, email, phone }, { rejectWithValue }) => {
         const response = await fetch("/api/new-clinic", {
             method: "POST",
             headers: {
@@ -32,6 +32,9 @@ export const addClinic = createAsyncThunk(
             body: JSON.stringify({ owner, clinicname, email, phone })
         })
         const responseJson = await response.json();
+        if (responseJson === "Could not create clinic") {
+            return rejectWithValue(responseJson);
+        }
         return responseJson;
     }
 )
@@ -57,13 +60,10 @@ export const loadBookings = createAsyncThunk(
     }
 )
 
-export const addBooking = createAsyncThunk(
-    "clinic-domain/ADD_BOOKINGS",
-    async ({ clinic, clinicName, clinicPhone, clientName, email, phone, date, questionnaireId }) => {
-        console.log('props', { clinic, clinicName, clinicPhone, clientName, email, phone, date, questionnaireId })
-        /*
-        create new screening
-        */
+export const createScreening = createAsyncThunk(
+    "clinic-domain/CREATE_SCREENING",
+    async ({ questionnaireId }) => {
+
         const screeningResponse = await fetch("/api/new-screening", {
             method: "POST",
             headers: {
@@ -72,10 +72,13 @@ export const addBooking = createAsyncThunk(
             body: JSON.stringify({ questionnaire: questionnaireId })
         });
         const { _id: screeningId } = await screeningResponse.json();
+        return screeningId;
+    }
+)
 
-        /*
-        creating new booking
-        */
+export const createBooking = createAsyncThunk(
+    "clinc-domain/CREATE_BOOKING",
+    async ({ clinic, clientName, email, phone, date, screeningId }) => {
         const bookingResponse = await fetch("/api/new-booking", {
             method: "POST",
             headers: {
@@ -84,12 +87,13 @@ export const addBooking = createAsyncThunk(
             body: JSON.stringify({ clinic, clientName, email, phone, date, screeningId })
         })
         const bookingResponseJson = await bookingResponse.json();
+        return bookingResponseJson
+    }
+)
 
-        /*
-        dispatch email to client 
-         */
-
-        console.log('email params', { clientName, clinicName, clinicPhone, email, screeningId })
+export const sendScreening = createAsyncThunk(
+    "clinc-domain/SEND_SCREENING",
+    async ({ clinicName, clinicPhone, clientName, email, screeningId }) => {
         await fetch("/api/screening-request", {
             method: "POST",
             headers: {
@@ -97,10 +101,9 @@ export const addBooking = createAsyncThunk(
             },
             body: JSON.stringify({ clientName, clinicName, clinicPhone, email, screeningId })
         })
-
-        return bookingResponseJson
     }
 )
+
 
 export const updateBookingStatus = createAsyncThunk(
     "clinc-domain/UPDATE_BOOKING",
@@ -119,7 +122,7 @@ export const updateBookingStatus = createAsyncThunk(
 )
 
 export const selectActiveClinic = (id, clinicname, phone) => (dispatch) => {
-    dispatch(events.activeClinicSelected({id, clinicname, phone}));
+    dispatch(events.activeClinicSelected({ id, clinicname, phone }));
 }
 
 export const deselectActiveClinic = () => (dispatch) => {
@@ -132,7 +135,9 @@ const actions = {
     loadClinics,
     addClinic,
     loadBookings,
-    addBooking,
+    createScreening,
+    createBooking,
+    sendScreening,
     updateBookingStatus,
     selectActiveClinic,
     deselectActiveClinic
