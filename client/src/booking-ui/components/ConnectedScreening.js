@@ -16,7 +16,8 @@ export const ConnectedScreening = connect(
     state => ({
         questionnaire: selectors.selectQuestionaire(state),
         isQuestionnaireLoading: selectors.selectIsQuestionnaireLoading(state),
-        isCompleteScreeningFulfilled: selectors.selectIsCompleteScreeningFulfilled(state)
+        isCompleteScreeningFulfilled: selectors.selectIsCompleteScreeningFulfilled(state),
+        isCompleteScreeningRejected: selectors.selectIsCompleteScreeningRejected(state)
     }),
     mapDispatchToProps)(Screening)
 

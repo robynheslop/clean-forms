@@ -21,7 +21,14 @@ const useStyles = makeStyles({
     },
 })
 
-export function Screening({ location, onLoad, isCompleteScreeningFulfilled, handleSaveQuestionnaire, screeningId, questionnaire }) {
+export function Screening({
+    location,
+    onLoad,
+    isCompleteScreeningFulfilled,
+    isCompleteScreeningRejected,
+    handleSaveQuestionnaire,
+    screeningId,
+    questionnaire }) {
     const classes = useStyles()
     const [responsesState, setResponsesState] = useState([]);
     useEffect(() => {
@@ -58,49 +65,56 @@ export function Screening({ location, onLoad, isCompleteScreeningFulfilled, hand
                 </div>
 
                 :
-                
-                (questionnaire?.id !== undefined) ?
-                    <form >
-                        <h2>{questionnaire.title}</h2>
-                        <h3>{questionnaire.preText ? questionnaire.preText : undefined}</h3>
 
-                        <br></br>
-                        <h4>Please select your answer to each queston, click the red tick button to confirm.
-                        Once all questions are confirmed, then you can submit.</h4>
-=
-                    {questionnaire.questions.map(({ queryText, id, responses }) => {
-                            return <div>
-                                <FormControl key={id}>
-                                    <FormLabel >{queryText}</FormLabel>
-                                    <FormGroup>
-
-                                        <Responses
-                                            handleSaveResponse={(checkedState) => handleSaveResponse(id, checkedState)}
-                                            {...{ responses }}
-                                        ></Responses>
-                                    </FormGroup>
-                                </FormControl>
-                                <br></br>
-                                <br></br>
-                            </div>
-
-                        })
-                        }
-                        <h3>{questionnaire.postText ? questionnaire.postText : undefined}</h3>
-                        <Button
-                            // className={classes.button}
-                            type="submit"
-                            onClick={handleSubmit}
-                        >Submit</Button>
-                    </form>
-
-                    :
+                isCompleteScreeningRejected ?
                     <div>
-                        <h2>ERROR</h2>
-                        <p>We are unable to access your questionnaire right now. Please contact the clinic for further help.</p>
+                        <h2>ERROR!</h2>
+
+                        <p>There is a problem submitting your responses.</p>
+                        <p>Please contact the clinic regarding further steps.</p>
                     </div>
+                    :
 
+                    (questionnaire?.id !== undefined) ?
+                        <form >
+                            <h2>{questionnaire.title}</h2>
+                            <h3>{questionnaire.preText ? questionnaire.preText : undefined}</h3>
 
+                            <br></br>
+                            <h4>Please select your answer to each queston, click the red tick button to confirm.
+                        Once all questions are confirmed, then you can submit.</h4>
+
+                            {questionnaire.questions.map(({ queryText, id, responses }) => {
+                                return <div>
+                                    <FormControl key={id}>
+                                        <FormLabel >{queryText}</FormLabel>
+                                        <FormGroup>
+
+                                            <Responses
+                                                handleSaveResponse={(checkedState) => handleSaveResponse(id, checkedState)}
+                                                {...{ responses }}
+                                            ></Responses>
+                                        </FormGroup>
+                                    </FormControl>
+                                    <br></br>
+                                    <br></br>
+                                </div>
+
+                            })
+                            }
+                            <h3>{questionnaire.postText ? questionnaire.postText : undefined}</h3>
+                            <Button
+                                // className={classes.button}
+                                type="submit"
+                                onClick={handleSubmit}
+                            >Submit</Button>
+                        </form>
+
+                        :
+                        <div>
+                            <h2>ERROR</h2>
+                            <p>We are unable to access your questionnaire right now. Please contact the clinic for further help.</p>
+                        </div>
             }
         </Paper >
     )
@@ -112,11 +126,14 @@ Screening.propTypes = {
     handleSaveResponse: PropTypes.func,
     handleSaveQuestionnaire: PropTypes.func,
     onLoad: PropTypes.func,
-    isCompleteScreeningFulfilled: PropTypes.bool
+    isCompleteScreeningFulfilled: PropTypes.bool,
+    isCompleteScreeningRejected: PropTypes.bool
 }
 
 Screening.defaultProps = {
-    isCompleteScreeningFulfilled: false
+    onLoad: () => { },
+    isCompleteScreeningFulfilled: false,
+    isCompleteScreeningRejected: false
 }
 
 export default Screening
