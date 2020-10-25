@@ -1,11 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { findIndex, propEq } from "ramda";
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-import { Fab, Button, TextField } from '@material-ui/core';
-import Response from "./Response"
+import { Fab, TextField } from '@material-ui/core';
+import CancelIcon from '@material-ui/icons/Cancel';
+import Response from "./Response";
 
 const useStyles = makeStyles({
     root: {
@@ -13,7 +14,13 @@ const useStyles = makeStyles({
         margin: '20px auto',
         padding: '15px',
         borderRadius: '5px',
-        width: '80%'
+        width: '80%',
+        position: 'relative'
+    },
+    deleteFab: {
+        position: 'absolute',
+        top: '-15px',
+        right: '-15px'
     },
     input: {
         lineHeight: "1.2em",
@@ -31,18 +38,19 @@ const useStyles = makeStyles({
         color: 'white',
         margin: '15px',
     },
-    
+
 })
 
 
 
-export function Question({ onSave, onCancel, responses }) {
+export function Question({ onSave, queryText, onDelete, responses }) {
     const classes = useStyles();
     const [responsesState, setResponsesState] = useState(responses);
-    const queryRef = useRef();
+    const [questionTextState, setQuestionTextState] = useState(queryText)
 
 
     const handleSaveResponse = (id, responseText, isValidReponse) => {
+        console.log('updating state in question')
         const index = findIndex(propEq("id", id))(responsesState);
         setResponsesState([
             ...responsesState.slice(0, index),
@@ -59,9 +67,13 @@ export function Question({ onSave, onCancel, responses }) {
         ])
     }
 
-    const handleSave = () => {
-        onSave(queryRef.current.value, responsesState)
-    }
+    const handleChange = ({ target: { value } }) => {
+        setQuestionTextState(value)
+    };
+
+    useEffect(() => {
+        onSave(questionTextState, responsesState)
+    }, [questionTextState, responsesState])
 
     const handleAddResponse = () => {
         setResponsesState([{ id: uuidv4() }, ...responsesState])
@@ -69,16 +81,24 @@ export function Question({ onSave, onCancel, responses }) {
 
     return (
         <div className={classes.root}>
+            <Fab
+                color="secondary"
+                className={classes.deleteFab}
+                size='medium'
+                aria-label="add-response"
+                onClick={onDelete}
+            >
+                <CancelIcon />
+            </Fab>
             <TextField
                 label='Type out your question here'
                 type="text"
                 className={classes.input}
-                inputRef={queryRef}
+                onChange={handleChange}
                 name="question"
             />
             <br></br>
             <p>Add each possible reponse, and select the checkboxes of the valid responses.</p>
-            <p>Then, save each response click the red tick button.</p>
             <Fab
                 color="secondary"
                 size='small'
@@ -96,23 +116,20 @@ export function Question({ onSave, onCancel, responses }) {
                     {...response}
                 />
             })}
-            <br></br>
-            <div>
-                <Button onClick={handleSave}>Save Question</Button>
-                <Button onClick={onCancel}>Cancel Question</Button>
-            </div>
+           
         </div>
     )
 }
 
 Question.propTypes = {
     onSave: PropTypes.func,
-    onCancel: PropTypes.func,
+    onDelete: PropTypes.func,
+    queryText: PropTypes.string,
     responses: PropTypes.arrayOf(
         PropTypes.shape(
             {
                 id: PropTypes.string.isRequired,
-                responseText: PropTypes.string.isRequired,
+                responseText: PropTypes.string,
                 isValidResponse: PropTypes.bool
             }
         )
@@ -121,7 +138,8 @@ Question.propTypes = {
 
 Question.defaultProps = {
     onSave: () => { },
-    onCancel: () => { },
+    onDelete: () => { },
+    queryText: undefined,
     responses: []
 }
 

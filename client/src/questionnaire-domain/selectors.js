@@ -4,7 +4,6 @@ const selectQuestionnaires = (state) => state?.questionnaireDomain?.questionnair
 
 const selectQuestionnaire = (state, id) => {
     const questionnaires = selectQuestionnaires(state) || [];
-    console.log('questionnaires, id', questionnaires, id)
     return find(propEq('id', id))(questionnaires || null);
 }
 

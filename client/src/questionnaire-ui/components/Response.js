@@ -1,25 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types'
 import { Button, Fab, Checkbox, TextField } from '@material-ui/core';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
     const [checked, setChecked] = useState(isValidResponse);
     const [responseTextState, setResponseTextState] = useState(responseText)
-    const [isSavedState, setIsSavedState] = useState(false)
 
     const handleChecked = (event) => {
-        console.log('event.target.checked', event.target.checked)
-        setChecked(event.target.checked);
+        setChecked(event.target.checked)
     };
 
-    const handleCancel = () => {
+    const handleChange = ({ target: { value } }) => {
+        setResponseTextState(value)
+    };
 
-    }
-    
-    const isValid = () => {
-        return responseTextState?.length && responseTextState.length > 0
-    }
+    useEffect(() => {
+        handleSave(responseTextState, checked)
+    }, [checked, responseTextState])
+
 
     return (
         <div>
@@ -30,25 +29,14 @@ function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
             <TextField
                 label='Response'
                 type="text"
-                onChange={({ target: { value } }) => setResponseTextState(value)}
+                onChange={handleChange}
                 name="response"
             />
-            {isValid() ?
-                <Fab
-                    color="secondary"
-                    size="small"
-                    onClick={() => {
-                        setIsSavedState(false)
-                        handleSave(responseTextState, checked)
-                    }}
-                ><CheckCircleOutlineIcon />
-                
-                </Fab>
-                : undefined}
-
-
-            {/* <Button onClick={handleCancel}>Cancel</Button>
-            <Button onClick={handleDelete}>Delete</Button> */}
+            <Button
+                size="small"
+                onClick={() => handleDelete()}
+            ><DeleteIcon/>
+            </Button>
         </div>
     )
 }
