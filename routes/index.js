@@ -3,6 +3,7 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const db = require("../db/models");
 const nodemailer = require("nodemailer");
+const isEqual = require('lodash.isequal');
 const hbs = require("nodemailer-express-handlebars")
 require("dotenv").config();
 
@@ -134,7 +135,7 @@ router.put('/questionnaire/:id', async (request, response) => {
 
 // delete questionnaire
 router.delete('/questionnaire/:id', async (request, response) => {
-    console.log('request.params.id',request.params.id);
+    console.log('request.params.id', request.params.id);
     try {
         const res = await db.Questionnaire.deleteOne(
             { id: request.params.id })
@@ -160,6 +161,7 @@ router.post('/new-screening', async (request, response) => {
 
 // dispatch screening request email to client
 router.post('/screening-request', async (request, response) => {
+    console.log('request.body.screeningId', request.body.screeningId)
     let transporter = nodemailer.createTransport({
         host: 'smtp.mail.yahoo.com',
         port: 587,
@@ -218,7 +220,6 @@ router.get("/screening/questionnaire/:id", async (request, response) => {
         function (error, questionnaire) {
             if (error) return response.status(500).json("Could not find questionnaire");
             if (!questionnaire) {
-
                 response.status(500).json("Could not find questionnaire in store");
             }
             return response.json(questionnaire);
@@ -226,36 +227,52 @@ router.get("/screening/questionnaire/:id", async (request, response) => {
 })
 
 // update screening with responses and status
-router.patch('/screening/:id', async (request, response) => {
-    db.Screening.findOneAndUpdate(
-        { _id: request.params.id },
-        { ...request.body },
-        function (error, screening) {
-            if (error) {
-                console.log(error)
-                return response.status(500).json("Could not update screening")
-            };
-            if (!screening) {
-                return response.status(500).json("Could not update screening in store");
-            }
-            return response.json(screening);
-        });
-});
+router.patch('/screening/:_id', async (request, response) => {
+    const { responses } = request.body;
+    try {
+        const screeningData = {
+            responses
+        }
+        const screening = await db.Screening.findOne({ _id: request.params._id })
+        const questionnaire = await db.Questionnaire.findOne({ _id: screening.questionnaire })
+        const { questions } = questionnaire;
+        const formattedQuestions = questions.map(({ id, responses }) => {
+            return {
+                [id]: responses.map(response => {
+                    return {
+                        id: response.id,
+                        checked: response.isValidReponse
+                    }
+                })
 
-// update screening with responses and status
-router.patch('/booking', async (request, response) => {
-    console.log('id', request.body._id)
-    db.Booking.findOneAndUpdate(
-        { screeningId: request.body._id },
-        { status: request.body.status },
-        function (error, booking) {
-            if (error) return response.status(500).json("Could not update booking");
-            if (!booking) {
-                return response.status(500).json("Could not update booking in store");
             }
-            console.log('booking',booking)
-            return response.json(booking);
-        });
+        })
+        if (isEqual(screeningData.responses, formattedQuestions)) {
+            screeningData.status = "passed"
+        } else {
+            screeningData.status = "failed"
+        }
+        await db.Screening.findOneAndUpdate(
+            { _id: request.params._id },
+            {
+                responses: screeningData.responses,
+                status: screeningData.status
+            },
+            { new: true }
+        )
+        await db.Booking.findOneAndUpdate(
+            { screeningId: request.params._id },
+            { status: screeningData.status }, 
+            { new: true }
+        )
+        return response.status(200);
+    }
+    catch (error) {
+        console.log(error)
+        return response.status(500).json("Could not update screening.")
+    }
+
+
 });
 
 module.exports = router;

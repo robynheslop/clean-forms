@@ -39,7 +39,9 @@ export function Screening({ location, onLoad, isCompleteScreeningFulfilled, hand
     const handleSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
-        handleSaveQuestionnaire(responsesState)
+        const { pathname } = (location);
+        const id = (pathname.split('/'))[2];
+        handleSaveQuestionnaire(id, responsesState)
     }
 
     return (

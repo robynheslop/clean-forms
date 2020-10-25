@@ -1,4 +1,4 @@
-import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const createScreening = createAsyncThunk(
     "booking-domain/CREATE_SCREENING",
@@ -17,29 +17,15 @@ export const createScreening = createAsyncThunk(
     }
 )
 
-// export const requestScreening = createAsyncThunk(
-//     "booking-domain/REQUEST_SCREENING",
-//     async ({ screeningId, clientEmail, clientName, clinicEmail, clinicPhone }) => {
-
-//         const screeningResponse = await fetch("/api/screening-request", {
-//             method: "GET",
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify({ screeningId, clientEmail, clientName, clinicEmail, clinicPhone })
-//         });
-//         const { screening } = screeningResponse.json();
-//         return screening;
-//     }
-// )
-
 export const getScreening = createAsyncThunk(
     "booking-domain/GET_SCREENING",
     async (id) => {
+        console.log('id',id)
         const screeningResponse = await fetch("/api/screening/" + id, {
             method: "GET",
         });
-        const screeningJson = screeningResponse.json();
+        const screeningJson = await screeningResponse.json();
+        console.log('screeningJson',screeningJson)
         return screeningJson;
     }
 )
@@ -56,40 +42,29 @@ export const getQuestionnaire = createAsyncThunk(
     }
 )
 
-export const completeScreening = createAsyncThunk(
+export const saveScreeningResponses = createAsyncThunk(
     "booking-domain/COMPLETE_SCREENING",
-    async ({ id, responses, status }) => {
-        console.log('id',id)
+    async ({ id, responsesState: responses }, rejectWithValue) => {
+        console.log(responses)
         const update = await fetch("/api/screening/" + id, {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ responses, status })
+            body: JSON.stringify({responses})
         });
-        const updateJson = update.json();
-        return updateJson;
+        const updateJson = await update.json();
+        if(updateJson === "Could not update screening.") rejectWithValue(updateJson)
+        return
     }
 )
-
-export const saveScreening = (responsesState) => {
-    return { type: "booking-domain/SAVE_SCREENING", payload: { responsesState } }
-}
-
-export const setScreeningStatus = ({ status }) => {
-    return { type: "booking-domain/SET_STATUS", payload: { status } }
-}
-
 
 
 export const actions = {
     createScreening,
-    // requestScreening,
+    saveScreeningResponses,
     getScreening,
-    getQuestionnaire,
-    completeScreening,
-    saveScreening,
-    setScreeningStatus
+    getQuestionnaire
 }
 
 export default actions;
