@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { findIndex, propEq } from "ramda";
 import PropTypes from 'prop-types'
 import { Fab, Checkbox, FormControlLabel } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 function Response({ responses, handleSaveResponse }) {
+    const isFirstRun = useRef(true);
     const [checkedState, setCheckedState] = useState(
         responses.map(({ id: responseId }) => {
             return { id: responseId, checked: false }
         })
     );
-
-    const [fabButtonState, setFabButtonState] = useState(true)
-
     const handleChecked = (event) => {
+        
         const checked = event.target.checked;
         const responseId = event.target.id;
         const index = findIndex(propEq("id", responseId))(checkedState);
@@ -22,9 +21,17 @@ function Response({ responses, handleSaveResponse }) {
             { ...checkedState[index], checked: checked },
             ...checkedState.slice(index + 1)
         ]
-        console.log(newState)
         setCheckedState(newState)
     };
+
+    useEffect(() => {
+        if (isFirstRun.current) {
+            isFirstRun.current = false;
+            return;
+        }
+        console.log('loading up')
+        handleSaveResponse(checkedState)
+    }, [checkedState])
 
     return (
         <div>
@@ -40,7 +47,7 @@ function Response({ responses, handleSaveResponse }) {
                     label={responseText}
                 />
             })}
-            <Fab
+            {/* <Fab
                 disabled={(fabButtonState === false) ? true : false }
                 size="small"
                 color="secondary"
@@ -51,7 +58,7 @@ function Response({ responses, handleSaveResponse }) {
                 }}
             >
                 <CheckCircleOutlineIcon />
-            </Fab>
+            </Fab> */}
         </div>
     )
 }

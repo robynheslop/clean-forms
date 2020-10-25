@@ -11,7 +11,7 @@ const useStyles = makeStyles({
         width: '66%',
         margin: "0 auto",
         marginTop: '50px',
-        padding: "2em 0em",
+        padding: "2em 2em",
         justifyContent: "center"
     },
     h1: {
@@ -21,26 +21,30 @@ const useStyles = makeStyles({
     },
 })
 
-export function Screening({
-    location,
-    onLoad,
-    isCompleteScreeningFulfilled,
-    isCompleteScreeningRejected,
-    handleSaveQuestionnaire,
-    screeningId,
-    questionnaire }) {
+export function Screening({ location, onLoad, isCompleteScreeningFulfilled, isCompleteScreeningRejected, handleSaveQuestionnaire, questionnaire }) {
+
     const classes = useStyles()
     const [responsesState, setResponsesState] = useState([]);
     useEffect(() => {
         const { pathname } = (location);
         const id = (pathname.split('/'))[2];
         onLoad(id);
-
     }, [])
 
     const handleSaveResponse = (id, checkedState) => {
-        console.log('responsesState', responsesState)
-        setResponsesState([...responsesState, { [id]: checkedState }])
+        const index = responsesState.findIndex(response => response[id] !== undefined)
+        console.log(index)
+        if (index !== -1) {
+            setResponsesState([
+                ...responsesState.slice(0, index),
+                { ...responsesState[index], [id]: checkedState },
+                ...responsesState.slice(index + 1)
+            ])
+        } else {
+            setResponsesState([
+                ...responsesState, { ...responsesState[index], [id]: checkedState }
+            ])
+        }
     }
 
     const handleSubmit = event => {
@@ -85,8 +89,8 @@ export function Screening({
                         Once all questions are confirmed, then you can submit.</h4>
 
                             {questionnaire.questions.map(({ queryText, id, responses }) => {
-                                return <div>
-                                    <FormControl key={id}>
+                                return <div key={id}>
+                                    <FormControl>
                                         <FormLabel >{queryText}</FormLabel>
                                         <FormGroup>
 
@@ -121,7 +125,6 @@ export function Screening({
 }
 
 Screening.propTypes = {
-    screeningId: PropTypes.string,
     questionnaire: PropTypes.object,
     handleSaveResponse: PropTypes.func,
     handleSaveQuestionnaire: PropTypes.func,
