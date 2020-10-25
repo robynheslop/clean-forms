@@ -88,7 +88,6 @@ export function Questionnaire({ history, isSaveQuestionnaireFailed, isSaveQuesti
             postText: postTextRef.current.value,
             questions: questionsState
         }
-        console.log('onsave questions params', onSaveQuestions.id)
         onSave(onSaveQuestions);
         history.push('/clinic/questionnaires');
     }
@@ -119,6 +118,7 @@ export function Questionnaire({ history, isSaveQuestionnaireFailed, isSaveQuesti
                     inputRef={preTextRef}
                     required />
                     <br></br>
+                
                 <Fab
                     size="medium"
                     variant="extended"

@@ -8,12 +8,19 @@ import { Fab, Button, TextField } from '@material-ui/core';
 import Response from "./Response"
 
 const useStyles = makeStyles({
+    root: {
+        backgroundColor: '#ebebeb',
+        margin: '20px auto',
+        padding: '15px',
+        borderRadius: '5px',
+        width: '80%'
+    },
     input: {
         lineHeight: "1.2em",
         padding: '10px',
         margin: '10px',
         fontSize: "1.1em",
-        width: '100%',
+        width: '95%',
         border: "none",
         backgroundColor: "none!important"
     },
@@ -23,7 +30,8 @@ const useStyles = makeStyles({
         boxShadow: 'none',
         color: 'white',
         margin: '15px',
-    }
+    },
+    
 })
 
 
@@ -56,21 +64,24 @@ export function Question({ onSave, onCancel, responses }) {
     }
 
     const handleAddResponse = () => {
-        setResponsesState([{id: uuidv4()}, ...responsesState])
+        setResponsesState([{ id: uuidv4() }, ...responsesState])
     }
 
     return (
-        <div>
+        <div className={classes.root}>
             <TextField
-                label='Type out your question here and select the valid answer below'
+                label='Type out your question here'
                 type="text"
                 className={classes.input}
                 inputRef={queryRef}
                 name="question"
             />
-<br></br>
+            <br></br>
+            <p>Add each possible reponse, and select the checkboxes of the valid responses.</p>
+            <p>Then, save each response click the red tick button.</p>
             <Fab
                 color="secondary"
+                size='small'
                 aria-label="add-response"
                 onClick={handleAddResponse}
             >
