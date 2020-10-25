@@ -93,6 +93,7 @@ export function Question({ onSave, queryText, onDelete, responses }) {
             <TextField
                 label='Type out your question here'
                 type="text"
+                multiline
                 className={classes.input}
                 onChange={handleChange}
                 name="question"
@@ -116,7 +117,7 @@ export function Question({ onSave, queryText, onDelete, responses }) {
                     {...response}
                 />
             })}
-           
+
         </div>
     )
 }

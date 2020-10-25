@@ -4,7 +4,7 @@ import { findIndex, propEq } from 'ramda';
 import PropTypes from "prop-types";
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Fab, Button, TextField } from '@material-ui/core';
+import { Paper, Fab, Button, TextField, InputLabel } from '@material-ui/core';
 import Question from "./Question";
 
 const useStyles = makeStyles({
@@ -102,6 +102,7 @@ export function Questionnaire({ history, isSaveQuestionnaireFailed, isSaveQuesti
         <Paper className={classes.root}>
             <h1 className={classes.h1}>ADD A NEW QUESTIONNAIRE</h1>
             <form className={classes.form}>
+                <p>Choose a title for your questionnaire.</p>
                 <TextField
                     label='Questionnaire Title'
                     className={classes.input}
@@ -109,11 +110,13 @@ export function Questionnaire({ history, isSaveQuestionnaireFailed, isSaveQuesti
                     name='questionnaireTitle'
                     inputRef={titleRef}
                     required />
-
+                    
                 <TextField
                     label='Opening Text'
+                    helperText="Add any instructions or explanations about your questionnaire here for your clients to read before they start."
                     className={classes.input}
                     type='text'
+                    multiline
                     name='questionnairePreText'
                     inputRef={preTextRef}
                     required />
@@ -137,12 +140,12 @@ export function Questionnaire({ history, isSaveQuestionnaireFailed, isSaveQuesti
                     />
                 })}
 
-
-
                 <TextField
                     label='Closing Text'
+                    helperText="Add any final notes, such as to thank your clients and let them know the next steps."
                     className={classes.input}
                     type='text'
+                    multiline
                     name='questionnaireClosingText'
                     inputRef={postTextRef}
                 />
