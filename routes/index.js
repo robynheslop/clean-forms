@@ -257,15 +257,13 @@ router.patch('/screening/:_id', async (request, response) => {
             {
                 responses: screeningData.responses,
                 status: screeningData.status
-            },
-            { new: true }
+            }
         )
         await db.Booking.findOneAndUpdate(
             { screeningId: request.params._id },
-            { status: screeningData.status }, 
-            { new: true }
+            { status: screeningData.status }
         )
-        return response.status(200);
+        return response.status(200).json(screeningData.status);
     }
     catch (error) {
         console.log(error)
