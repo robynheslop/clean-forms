@@ -54,7 +54,6 @@ router.get("/clinics/:owner", (request, response) => {
 })
 
 router.post("/new-clinic", (request, response) => {
-    console.log(request.body)
     const clinic = new db.Clinic({
         owner: request.body.owner,
         clinicname: request.body.clinicname,
@@ -248,8 +247,6 @@ router.patch('/screening/:_id', async (request, response) => {
 
             }
         })
-        console.log(formattedQuestions);
-        console.log(screeningData.responses);
         if (isEqual(screeningData.responses, formattedQuestions)) {
             screeningData.status = "passed"
         } else {

@@ -9,6 +9,8 @@ export default createReducer({
         isLoggedIn: false,
         isLogInPending: false,
         isSignUpPending: false,
+        isLogInRejected: false,
+        isSignUpRejected: false,
         errors: []
     }}, 
     builder => {
@@ -21,6 +23,7 @@ export default createReducer({
         .addCase(actions.logIn.rejected, (state, {error:{message}}) => {
             state.session.errors.push(message);
             state.session.isLogInPending = false;
+            state.session.isLogInRejected = true;
         })
         .addCase(actions.logIn.pending, (state) => {
             state.session.errors = [];
@@ -35,6 +38,7 @@ export default createReducer({
         .addCase(actions.signUp.rejected, (state, {error:{message}}) => {
             state.session.errors.push(message);
             state.session.isSignUpPending = false;
+            state.session.isSignUpRejected = true;
         })
         .addCase(actions.signUp.pending, (state) => {
             state.session.errors = [];

@@ -6,6 +6,7 @@ export const ConnectedSignUp = connect(
     state => ({
         isLoggedIn: selectors.selectIsUserLoggedIn(state),
         isSignUpPending: selectors.selectIsSignUpPending(state),
+        isSignUpRejected: selectors.selectIsSignUpRejected(state),
     }),
     { handleSignUp: actions.signUp })(SignUp)
 

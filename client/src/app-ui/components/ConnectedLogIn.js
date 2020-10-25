@@ -11,7 +11,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
     return {
         isLoggedIn: selectors.selectIsUserLoggedIn(state),
-        isLogInPending: selectors.selectIsLogInPending(state)
+        isLogInPending: selectors.selectIsLogInPending(state),
+        isLogInRejected: selectors.selectIsLogInRejected(state)
     }
 }
 

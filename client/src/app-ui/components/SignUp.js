@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Button } from '@material-ui/core';
+import { Paper, Button, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -33,10 +33,13 @@ const useStyles = makeStyles({
         boxShadow: 'none',
         color: 'white',
         margin: '15px',
+    },
+    error: {
+        color: '#be294f',
     }
 })
 
-export function SignUp({ isLoggedIn, location, handleSignUp }) {
+export function SignUp({ isLoggedIn, location, handleSignUp, isSignUpRejected }) {
     const classes = useStyles();
     const usernameRef = useRef();
     const passwordRef = useRef();
@@ -56,30 +59,35 @@ export function SignUp({ isLoggedIn, location, handleSignUp }) {
                 <h2>Sign Up</h2>
                 <form onSubmit={handleFormSubmit}>
                     <div>
-                        <input
+                        <TextField
                             className={classes.textField}
-                            label="Username"
+                            label="Choose a username - no more than 20 characters"
                             type="text"
                             name="password"
                             pattern=".{2,20}"
-                            ref={usernameRef}
+                            inputRef={usernameRef}
                             required />
                     </div>
                     <div>
-                        <input
+                        <TextField
                             className={classes.textField}
                             label="Password"
                             type="password"
                             name="password"
-                            ref={passwordRef}
+                            inputRef={passwordRef}
                             required />
                     </div>
+                    {
+                        isSignUpRejected ? 
+                        <p className={classes.error}>Sorry, there is an error with your sign up. Please try again with different details.</p> :
+                        undefined
+                    }
                     <div>
                         <Button
                             className={classes.button}
                             type="submit"
                             variant="contained"
-                        >Log In</Button>
+                        >Sign Up</Button>
                     </div>
                 </form>
             </Paper >
@@ -90,14 +98,16 @@ SignUp.propTypes = {
     isLoggedIn: PropTypes.bool,
     location: PropTypes.object,
     handleSignUp: PropTypes.func,
-    isSignUpPending: PropTypes.bool
+    isSignUpPending: PropTypes.bool,
+    isSignUpRejected: PropTypes.bool
 }
 
 SignUp.defaultProps = {
     isLoggedIn: false,
     location: undefined,
     handleSignUp: () => { },
-    isSignUpPending: false
+    isSignUpPending: false,
+    isSignUpRejected: false
 }
 
 export default SignUp;

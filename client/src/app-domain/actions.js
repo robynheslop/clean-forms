@@ -12,6 +12,7 @@ export const logIn = createAsyncThunk(
             body: JSON.stringify({ username, password })
         })
         const responseJson = await response.json();
+        console.log(responseJson)
         const { token, userId } = responseJson;
         return { token, userId }; 
     }
@@ -19,7 +20,7 @@ export const logIn = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
     "app-domain/SIGN_UP",
-    async ({username, password}) => {
+    async ({username, password}, rejectWithValue) => {
         const response = await fetch("/api/signup", {
             method: "POST",
             headers: {
@@ -28,6 +29,10 @@ export const signUp = createAsyncThunk(
             body: JSON.stringify({ username, password })
         })
         const responseJson = await response.json();
+        console.log(responseJson);
+        if (responseJson.code) {
+            return rejectWithValue(responseJson)
+        }
         const { token, userId } = responseJson;
         return { token, userId }; 
     }
