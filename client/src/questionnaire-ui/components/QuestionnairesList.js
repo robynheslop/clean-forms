@@ -41,17 +41,16 @@ const useStyles = makeStyles({
     }
 });
 
-export function QuestionnairesList({ questionnaires }) {
+export function QuestionnairesList({ questionnaires, deleteQuestionnaire }) {
     const classes = useStyles();
     return (
         <Paper className={classes.root}>
             {!(questionnaires[0] === null) ?
                 <div>
-                    <h className={classes.h1}>QUESTIONNAIRES</h>
+                    <h1 className={classes.h1}>QUESTIONNAIRES</h1>
                     {questionnaires.map(({ id, title }) =>
 
                         <Card key={id} className={classes.card}>
-                            {console.log({id, title})}
                             <Grid item xs={9}>
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant='h5' component='h2'>
@@ -67,7 +66,10 @@ export function QuestionnairesList({ questionnaires }) {
                                         Edit Questionnaire
                                     </Button>
                                     <Button
-                                        onClick={() => { }}>
+                                        onClick={() => {
+                                            console.log(id);
+                                            deleteQuestionnaire(id)
+                                            }}>
                                         Delete Questionnaire
                                     </Button>
                                 </CardActions>

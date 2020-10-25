@@ -62,20 +62,15 @@ export default createReducer({
                 state.isAddClinicSuccess = false;
             })
             .addCase(events.reset, (state) => {
-                state = {
-                    clinics: [],
-                    owner: undefined,
-                    activeClinic: {
-                        id: undefined,
-                        isLoadBookingsPending: false,
-                        isAddBookingPending: false,
-                        bookings: [],
-                        errors: [],
-                    },
-                    errors: [],
-                    isLoadClinicsPending: false,
-                    isAddClinicPending: false,
-                }
+                state.clinics = [];
+                state.owner = undefined;
+                state.activeClinic = {};
+                state.errors = [];
+                state.isLoadClinicsPending = false;
+                state.isAddClinicPending = false;
+                state.isAddClinicFailed = false;
+                state.isAddClinicSuccess = false;
+                state.isUpdatingBookingFulfilled = false;
             })
             .addCase(actions.loadBookings.pending, (state) => {
                 state.activeClinic.bookings = []
@@ -135,7 +130,7 @@ export default createReducer({
                 state.activeClinic.isSendScreeningPending = false;
                 state.activeClinic.isSendScreeningSuccess = true;
             })
-            .addCase(events.activeClinicSelected, (state, { payload: {id, clinicname, phone} }) => {
+            .addCase(events.activeClinicSelected, (state, { payload: { id, clinicname, phone } }) => {
                 state.activeClinic.id = id;
                 state.activeClinic.clinicname = clinicname;
                 state.activeClinic.phone = phone;

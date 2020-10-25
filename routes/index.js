@@ -132,15 +132,17 @@ router.put('/questionnaire/:id', async (request, response) => {
         });
 })
 
-// delete questionnaire -- second release
+// delete questionnaire
 router.delete('/questionnaire/:id', async (request, response) => {
+    console.log('request.params.id',request.params.id);
     try {
-        const deleteQuestionnaire = await db.Questionnaire.findByIdAndDelete(
-            { owner: request.params.owner })
-        response.json(deleteQuestionnaire)
+        const res = await db.Questionnaire.deleteOne(
+            { id: request.params.id })
+        response.json(res.ok);
     }
     catch (error) {
-        response.status(500).json.error;
+        console.log('error', error)
+        response.status(500).json('Could not delete questionnaire.');
     }
 })
 

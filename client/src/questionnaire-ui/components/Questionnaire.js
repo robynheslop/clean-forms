@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { findIndex, propEq } from 'ramda'
+import { findIndex, propEq } from 'ramda';
 import PropTypes from "prop-types";
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
@@ -48,7 +48,7 @@ const useStyles = makeStyles({
     },
 })
 
-export function Questionnaire({ isSaveQuestionnaireFailed, isSaveQuestionnaireSuccess, onSave, onDelete, onCancel, questions, owner, preText, postText, title, }) {
+export function Questionnaire({ history, isSaveQuestionnaireFailed, isSaveQuestionnaireSuccess, onSave, onDelete, onCancel, id, questions, owner, preText, postText, title, }) {
     const classes = useStyles();
     const [questionsState, setQuestionsState] = useState(questions)
     const titleRef = useRef();
@@ -81,17 +81,22 @@ export function Questionnaire({ isSaveQuestionnaireFailed, isSaveQuestionnaireSu
         event.preventDefault();
         event.stopPropagation();
         const onSaveQuestions = {
+            id,
             owner,
             title: titleRef.current.value,
             preText: preTextRef.current.value,
             postText: postTextRef.current.value,
             questions: questionsState
         }
+        console.log('onsave questions params', onSaveQuestions.id)
         onSave(onSaveQuestions);
-        titleRef.current.value = '';
-        preTextRef.current.value = '';
-        postTextRef.current.value = '';
-        setQuestionsState([])
+        history.push('/clinic/questionnaires');
+    }
+
+    const handleDelete = event => {
+        event.preventDefault();
+        event.stopPropagation();
+        onDelete(id)
     }
 
     return (
@@ -148,7 +153,7 @@ export function Questionnaire({ isSaveQuestionnaireFailed, isSaveQuestionnaireSu
                 >Save</Button>
                 <Button
                     className={classes.button}
-                    onClick={onDelete}
+                    onClick={handleDelete}
                 >Delete</Button>
                 <Button
                     className={classes.button}

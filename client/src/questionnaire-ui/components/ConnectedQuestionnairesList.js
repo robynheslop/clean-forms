@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { actions, selectors } from "../../questionnaire-domain";
 
 const mapDispatchToProps = dispatch => {
-    const deleteQuestionnaire = (_id) => {
-        dispatch(actions.deleteQuestionnaire(_id))
+    const deleteQuestionnaire = (id) => {
+        dispatch(actions.deleteQuestionnaire(id))
     }
     const updateQuestionnaire = (formData) => {
         dispatch(actions.updateQuestionnaire(formData))

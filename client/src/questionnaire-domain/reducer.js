@@ -21,7 +21,7 @@ export default createReducer({
                 state.errors = [];
                 state.isLoadQuestionnairesPending = true;
             })
-            .addCase(actions.loadQuestionnaires.fulfilled, (state, {payload: questionnaires}) => {
+            .addCase(actions.loadQuestionnaires.fulfilled, (state, { payload: questionnaires }) => {
                 state.questionnaires.push(...questionnaires);
                 state.isLoadQuestionnairesPending = false;
                 state.isLoadQuestionnairesSuccess = true;
@@ -49,8 +49,11 @@ export default createReducer({
                 state.errors = [];
                 state.isDeleteQuestionnairePending = true;
             })
-            .addCase(actions.deleteQuestionnaire.fulfilled, (state, { payload: { _id: id } }) => {
-                // remove q with same id in state
+            .addCase(actions.deleteQuestionnaire.fulfilled, (state, { payload: { id } }) => {
+                const newQuestionnaires = (state.questionnaires).filter((questionnaire) => {
+                    return questionnaire.id !== id;
+                })
+                state.questionnaires = newQuestionnaires;
                 state.isDeleteQuestionnaireSuccess = true;
                 state.isDeleteQuestionnairePending = false;
             })
@@ -60,19 +63,18 @@ export default createReducer({
                 state.isDeleteQuestionnaireFailed = true;
             })
             .addCase(events.reset, (state) => {
-                state = {
-                    questionnaires: [],
-                    errors: [],
-                    isLoadQuestionnairesPending: false,
-                    isLoadQuestionnairesSuccess: false,
-                    isLoadQuestionnairesFailed: false,
-                    isSaveQuestionnairePending: false,
-                    isSaveQuestionnaireSuccess: false,
-                    isSaveQuestionnaireFailed: false,
-                    isDeleteQuestionnairePending: false,
-                    isDeleteQuestionnaireSuccess: false,
-                    isDeleteQuestionnaireFailed: false,
-                }
+                state.questionnaires = [];
+                state.errors = [];
+                state.isLoadQuestionnairesPending = false;
+                state.isLoadQuestionnairesSuccess = false;
+                state.isLoadQuestionnairesFailed = false;
+                state.isSaveQuestionnairePending = false;
+                state.isSaveQuestionnaireSuccess = false;
+                state.isSaveQuestionnaireFailed = false;
+                state.isDeleteQuestionnairePending = false;
+                state.isDeleteQuestionnaireSuccess = false;
+                state.isDeleteQuestionnaireFailed = false;
+
             })
     }
 )

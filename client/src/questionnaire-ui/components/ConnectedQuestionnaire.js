@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import { actions as questionDomainActions, selectors as questionDomainSelectors } from "../../questionnaire-domain";
 import { selectors as appDomainSelectors } from '../../app-domain';
 
-const mapDispatchToProps = (dispatch, {id}) => {
-    const onSave = ({ owner, title, preText, postText, questions }) => {
+const mapDispatchToProps = (dispatch) => {
+    const onSave = ({ owner, id, title, preText, postText, questions }) => {
         const createQuestionnaireParameters = { owner, id, title, preText, postText, questions }
         console.log('createQuestionnaireParameters', createQuestionnaireParameters);
         dispatch(questionDomainActions.saveQuestionnaire(createQuestionnaireParameters))
     }
-    const onDelete = () => {
+    const onDelete = (id) => {
         dispatch(questionDomainActions.deleteQuestionnaire(id))
     }
     const onCancel = () => {
@@ -22,7 +22,11 @@ const mapDispatchToProps = (dispatch, {id}) => {
 export const ConnectedQuestionnaire = connect(
     (state, { id }) => {
         const _questionnaire = questionDomainSelectors.selectQuestionnaire(state, id)
-        const questionnaire = _questionnaire === undefined ? {owner: appDomainSelectors.selectUserId(state)} : _questionnaire
+        const questionnaire = _questionnaire === undefined ? {
+            id: uuidv4(),
+            owner: appDomainSelectors.selectUserId(state)
+        } :
+            _questionnaire
         return {
             ...questionnaire,
             isSaveQuestionnairePending: questionDomainSelectors.selectIsSaveQuestionnairePending(state),
@@ -33,13 +37,12 @@ export const ConnectedQuestionnaire = connect(
     mapDispatchToProps)(Questionnaire)
 
 ConnectedQuestionnaire.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     owner: PropTypes.string
 }
 
 ConnectedQuestionnaire.defaultProps = {
-    id: uuidv4(),
-
+    
 }
 
 export default ConnectedQuestionnaire;

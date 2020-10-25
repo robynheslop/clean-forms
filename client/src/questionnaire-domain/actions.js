@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-//  import events from './events';
 
 export const loadQuestionnaires = createAsyncThunk(
     'questionnaire-domain/LOAD_QUESTIONNAIRES',
@@ -29,12 +28,14 @@ export const saveQuestionnaire = createAsyncThunk(
 
 export const deleteQuestionnaire = createAsyncThunk(
     'questionnaire-domain/DELETE_QUESTIONNAIRE',
-    async ({ id }) => {
+    async (id, rejectWithValue) => {
         const response = await fetch(`/api/questionnaire/${id}`, {
             method: "DELETE"
         });
-        const { _id } = await response.json();
-        return { _id };
+        console.log(response)
+        const responseJson = await response.json();
+        if (responseJson === "Could not delete questionnaire.") rejectWithValue(responseJson)
+        return { id };
     }
 )
 
