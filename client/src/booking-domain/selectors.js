@@ -2,6 +2,8 @@ const selectQuestionaire = (state) => state?.bookingDomain?.questionnaire;
 
 const selectIsQuestionnaireLoading = (state) => state?.bookingDomain?.isQuestionnaireLoading
 
+const selectIsLoadingScreeningRejected = (state) => state?.bookingDomain?.isLoadingScreeningRejected;
+
 const selectScreeningId = (state) => state?.bookingDomain?.screening?.id
 
 const selectScreeningResponses = (state) => state?.bookingDomain?.screening?.responses
@@ -19,5 +21,6 @@ export default {
     selectScreeningResponses,
     selectScreeningId,
     selectIsCompleteScreeningFulfilled,
-    selectIsCompleteScreeningRejected
+    selectIsCompleteScreeningRejected,
+    selectIsLoadingScreeningRejected
 };

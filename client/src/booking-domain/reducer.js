@@ -12,6 +12,7 @@ export default createReducer({
     },
     questionnaire: {},
     isQuestionnaireLoading: true,
+    isLoadingScreeningRejected: false,
     isCompleteScreeningPending: false,
     isCompleteScreeningRejected: false,
     isCompleteScreeningFulfilled: false
@@ -29,7 +30,9 @@ export default createReducer({
                 state.screening.questionnaireId = payload.questionnaire;
             })
             .addCase(actions.getScreening.rejected, (state, { error: { message } }) => {
-                state.errors.push(message)
+                state.errors.push(message);
+                state.isLoadingScreeningRejected = true;
+                state.isQuestionnaireLoading = false;
             })
             .addCase(actions.getQuestionnaire.pending, (state) => {
                 state.errors = [];
@@ -41,6 +44,7 @@ export default createReducer({
             })
             .addCase(actions.getQuestionnaire.rejected, (state, { error: { message } }) => {
                 state.errors.push(message);
+                state.isLoadingScreeningRejected = true;
                 state.isQuestionnaireLoading = false;
             })
             .addCase(actions.saveScreeningResponses.pending, (state) => {

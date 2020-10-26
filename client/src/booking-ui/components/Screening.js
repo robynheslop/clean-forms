@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     },
 })
 
-export function Screening({ location, onLoad, isQuestionnaireLoading, isCompleteScreeningFulfilled, isCompleteScreeningRejected, handleSaveQuestionnaire, questionnaire }) {
+export function Screening({ location, onLoad, isQuestionnaireLoading, isLoadingScreeningRejected, isCompleteScreeningFulfilled, isCompleteScreeningRejected, handleSaveQuestionnaire, questionnaire }) {
 
     const classes = useStyles()
     const [responsesState, setResponsesState] = useState([]);
@@ -70,7 +70,9 @@ export function Screening({ location, onLoad, isQuestionnaireLoading, isComplete
                     <div className={classes.progress} >
                         <CircularProgress color="secondary" />
                     </div>
+
                     :
+                    
                     isCompleteScreeningFulfilled ?
 
                         <div>
@@ -89,9 +91,17 @@ export function Screening({ location, onLoad, isQuestionnaireLoading, isComplete
                                 <p>There is a problem submitting your responses.</p>
                                 <p>Please contact the clinic regarding further steps.</p>
                             </div>
+
                             :
 
-                            (questionnaire?.id !== undefined) ?
+                            (questionnaire?.id === undefined) || isLoadingScreeningRejected ?
+                                <div>
+                                    <h2>ERROR</h2>
+                                    <p>There is a problem fetching your questionnaire information right now. Please contact the clinic directly for further help.</p>
+                                </div>
+
+                                :
+
                                 <form >
                                     <h2>{questionnaire.title}</h2>
                                     <h3>{questionnaire.preText ? questionnaire.preText : undefined}</h3>
@@ -122,11 +132,6 @@ export function Screening({ location, onLoad, isQuestionnaireLoading, isComplete
                                     >Submit</Button>
                                 </form>
 
-                                :
-                                <div>
-                                    <h2>ERROR</h2>
-                                    <p>There is a problem fetching your questionnaire data right now. Please contact the clinic directly for further help.</p>
-                                </div>
             }
         </Paper >
     )
@@ -138,6 +143,7 @@ Screening.propTypes = {
     handleSaveQuestionnaire: PropTypes.func,
     onLoad: PropTypes.func,
     isQuestionnaireLoading: PropTypes.bool,
+    isLoadingScreeningRejected: PropTypes.bool,
     isCompleteScreeningFulfilled: PropTypes.bool,
     isCompleteScreeningRejected: PropTypes.bool
 }
@@ -145,6 +151,7 @@ Screening.propTypes = {
 Screening.defaultProps = {
     onLoad: () => { },
     isQuestionnaireLoading: false,
+    isLoadingScreeningRejected: false,
     isCompleteScreeningFulfilled: false,
     isCompleteScreeningRejected: false
 }

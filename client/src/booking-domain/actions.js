@@ -19,13 +19,14 @@ export const createScreening = createAsyncThunk(
 
 export const getScreening = createAsyncThunk(
     "booking-domain/GET_SCREENING",
-    async (id) => {
+    async (id, rejectWithValue) => {
         console.log('id',id)
         const screeningResponse = await fetch("/api/screening/" + id, {
             method: "GET",
         });
         const screeningJson = await screeningResponse.json();
         console.log('screeningJson',screeningJson)
+        if (screeningJson === null) rejectWithValue()
         return screeningJson;
     }
 )
