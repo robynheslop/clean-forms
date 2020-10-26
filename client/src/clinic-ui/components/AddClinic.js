@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Button, TextField } from '@material-ui/core';
+import { Paper, Button, TextField, CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -41,9 +41,13 @@ const useStyles = makeStyles({
         color: '#be294f',
         textAlign: 'center'
     },
+    progress: {
+        display: 'block',
+        margin: '20px auto'
+    }
 })
 
-function AddClinics({ isAddClinicSuccess, isAddClinicFailed, addClinic, userId }) {
+function AddClinics({ isAddClinicPending, isAddClinicSuccess, isAddClinicFailed, addClinic, userId }) {
     const classes = useStyles()
     const clinicNameRef = useRef();
     const emailRef = useRef();
@@ -99,6 +103,13 @@ function AddClinics({ isAddClinicSuccess, isAddClinicFailed, addClinic, userId }
                         className={classes.button}
                         type='submit'
                     >Add Clinic</Button>
+
+                    {isAddClinicPending ?
+                        <div className={classes.progress}>
+                            <CircularProgress color="secondary" />
+                        </div> :
+                        undefined
+                    }
                 </div>
             </form>
 
@@ -123,6 +134,8 @@ AddClinics.propTypes = {
 AddClinics.defaultProps = {
     addClinic: () => { },
     isAddClinicPending: false,
+    isAddClinicFailed: false,
+    isAddClinicSuccess: false,
     userId: undefined
 }
 

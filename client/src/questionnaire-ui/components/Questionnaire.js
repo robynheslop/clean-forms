@@ -4,7 +4,7 @@ import { findIndex, propEq } from 'ramda';
 import PropTypes from "prop-types";
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Fab, Button, TextField, InputLabel } from '@material-ui/core';
+import { Paper, Fab, Button, TextField, CircularProgress } from '@material-ui/core';
 import Question from "./Question";
 
 const useStyles = makeStyles({
@@ -46,9 +46,13 @@ const useStyles = makeStyles({
         color: '#be294f',
         textAlign: 'center'
     },
+    progress: {
+        display: 'block',
+        margin: '20px auto'
+    }
 })
 
-export function Questionnaire({ history, isSaveQuestionnaireFailed, isSaveQuestionnaireSuccess, onSave, onDelete, onCancel, id, questions, owner, preText, postText, title, }) {
+export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuestionnaireFailed, isSaveQuestionnaireSuccess, onSave, onDelete, onCancel, id, questions, owner, preText, postText, title, }) {
     const classes = useStyles();
     const [questionsState, setQuestionsState] = useState(questions)
     const titleRef = useRef();
@@ -110,7 +114,7 @@ export function Questionnaire({ history, isSaveQuestionnaireFailed, isSaveQuesti
                     name='questionnaireTitle'
                     inputRef={titleRef}
                     required />
-                    
+
                 <TextField
                     label='Opening Text'
                     helperText="Add any instructions or explanations about your questionnaire here for your clients to read before they start."
@@ -120,8 +124,8 @@ export function Questionnaire({ history, isSaveQuestionnaireFailed, isSaveQuesti
                     name='questionnairePreText'
                     inputRef={preTextRef}
                     required />
-                    <br></br>
-                
+                <br></br>
+
                 <Fab
                     size="medium"
                     variant="extended"
@@ -162,6 +166,13 @@ export function Questionnaire({ history, isSaveQuestionnaireFailed, isSaveQuesti
                     className={classes.button}
                     onClick={onCancel}
                 >Cancel</Button>
+
+                {isSaveQuestionnairePending ?
+                    <div className={classes.progress}>
+                        <CircularProgress color="secondary" />
+                    </div> :
+                    undefined
+                }
             </form>
 
             {isSaveQuestionnaireSuccess ?
@@ -192,6 +203,7 @@ Questionnaire.propTypes = {
     onSave: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
+    isSaveQuestionnairePending: PropTypes.bool,
     isSaveQuestionnaireSuccess: PropTypes.bool,
     isSaveQuestionnaireFailed: PropTypes.bool
 }
@@ -201,6 +213,9 @@ Questionnaire.defaultProps = {
     onSave: () => { },
     onDelete: () => { },
     onCancel: () => { },
+    isSaveQuestionnairePending: false,
+    isSaveQuestionnaireSuccess: false,
+    isSaveQuestionnaireFailed: false
 }
 
 export default Questionnaire;
