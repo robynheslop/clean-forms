@@ -73,7 +73,7 @@ export default createReducer({
                 state.isUpdatingBookingFulfilled = false;
             })
             .addCase(actions.loadBookings.pending, (state) => {
-                state.activeClinic.bookings = []
+                state.activeClinic.bookings = [];
                 state.activeClinic.errors = [];
                 state.activeClinic.isLoadBookingsPending = true;
             })

@@ -16,7 +16,7 @@ const selectIsSendScreeningFailed = (state) => state?.clinicDomain?.isSendScreen
 
 const selectActiveClinic = (state) => state?.clinicDomain?.activeClinic;
 
-const selectIsLoadBookingsPending = (state) => state?.clinicDomain?.isLoadBookingsPending;
+const selectIsLoadBookingsPending = (state) => state?.clinicDomain?.activeClinic?.isLoadBookingsPending;
 
 export default { 
     selectClinics, 

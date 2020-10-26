@@ -30,49 +30,59 @@ const useStyles = makeStyles({
     },
     progress: {
         display: 'block',
-        margin: '20px auto'
+        margin: '100px auto'
     }
 })
 
 
-function BookingsList({ activeClinic }) {
+function BookingsList({ activeClinic}) {
     const classes = useStyles();
-    const { bookings } = activeClinic;
+    const { bookings, isLoadBookingsPending } = activeClinic;
     return (
         <div className={classes.root}>
-            {bookings.length > 0 ?
-                <div>
-                    <h1 className={classes.h1}>BOOKINGS</h1>
-                    <TableContainer>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Client Name</TableCell>
-                                    <TableCell>Email</TableCell>
-                                    <TableCell>Contact Number</TableCell>
-                                    <TableCell>Screening Status</TableCell>
-                                    <TableCell>Appointment Date</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            {bookings.map(({ id, clientName, status, phone, date, email }) => {
-                                return (
-                                <TableBody key={id}>
-                                    <TableRow className={classes[status.toLowerCase()]}>
-                                        <TableCell>{status === 'failed'? <b>{clientName}</b> : clientName}</TableCell>
-                                        <TableCell>{status === 'failed'? <b>{email}</b> : email}</TableCell>
-                                        <TableCell>{status === 'failed'? <b>{phone}</b> : phone}</TableCell>
-                                        <TableCell>{status === 'failed'? <b>{status.toUpperCase()}</b> : status.toUpperCase()}</TableCell>
-                                        <TableCell>{status === 'failed'? <b>{date.toString().slice(0,10)}</b> : date.toString().slice(0,10)}</TableCell>
-                                    </TableRow>
-                                </TableBody>)
-                            })}
-                        </Table>
-                    </TableContainer>
+            {isLoadBookingsPending ?
+            
+                <div className={classes.progress} >
+                    {console.log('true',isLoadBookingsPending)}
+                    <CircularProgress color="secondary" />
                 </div>
+
                 :
-                <Paper className={classes.paper}>
-                    <h1 className={classes.h1}>YOU HAVE NO SCHEDULED BOOKINGS.</h1>
-                </Paper>
+
+                bookings.length > 0 ?
+                    <div>
+                        <h1 className={classes.h1}>BOOKINGS</h1>
+                        {console.log('false',isLoadBookingsPending)}
+                        <TableContainer>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Client Name</TableCell>
+                                        <TableCell>Email</TableCell>
+                                        <TableCell>Contact Number</TableCell>
+                                        <TableCell>Screening Status</TableCell>
+                                        <TableCell>Appointment Date</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                {bookings.map(({ id, clientName, status, phone, date, email }) => {
+                                    return (
+                                        <TableBody key={id}>
+                                            <TableRow className={classes[status.toLowerCase()]}>
+                                                <TableCell>{status === 'failed' ? <b>{clientName}</b> : clientName}</TableCell>
+                                                <TableCell>{status === 'failed' ? <b>{email}</b> : email}</TableCell>
+                                                <TableCell>{status === 'failed' ? <b>{phone}</b> : phone}</TableCell>
+                                                <TableCell>{status === 'failed' ? <b>{status.toUpperCase()}</b> : status.toUpperCase()}</TableCell>
+                                                <TableCell>{status === 'failed' ? <b>{date.toString().slice(0, 10)}</b> : date.toString().slice(0, 10)}</TableCell>
+                                            </TableRow>
+                                        </TableBody>)
+                                })}
+                            </Table>
+                        </TableContainer>
+                    </div>
+                    :
+                    <Paper className={classes.paper}>
+                        <h1 className={classes.h1}>YOU HAVE NO SCHEDULED BOOKINGS.</h1>
+                    </Paper>
             }
         </div>
     )
@@ -84,11 +94,13 @@ BookingsList.propTypes = {
         clientname: PropTypes.string,
         status: PropTypes.string,
         date: PropTypes.string,
-    }))
+    })),
+    isLoadBookingsPending: PropTypes.bool
 }
 
 BookingsList.defaultProps = {
-    bookings: []
+    bookings: [],
+    isLoadBookingsPending: false
 }
 
 export default BookingsList;
