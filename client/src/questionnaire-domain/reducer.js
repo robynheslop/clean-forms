@@ -19,10 +19,12 @@ export default createReducer({
         builder
             .addCase(actions.loadQuestionnaires.pending, (state) => {
                 state.errors = [];
+                state.questionnaires = [];
                 state.isLoadQuestionnairesPending = true;
             })
             .addCase(actions.loadQuestionnaires.fulfilled, (state, { payload: questionnaires }) => {
                 state.questionnaires.push(...questionnaires);
+                state.isSaveQuestionnaireSuccess = false;
                 state.isLoadQuestionnairesPending = false;
                 state.isLoadQuestionnairesSuccess = true;
             })
@@ -35,8 +37,7 @@ export default createReducer({
                 state.errors = [];
                 state.isSaveQuestionnairePending = true;
             })
-            .addCase(actions.saveQuestionnaire.fulfilled, (state, { payload }) => {
-                state.questionnaires.push(payload);
+            .addCase(actions.saveQuestionnaire.fulfilled, (state) => {
                 state.isSaveQuestionnairePending = false;
                 state.isSaveQuestionnaireSuccess = true;
             })

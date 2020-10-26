@@ -8,7 +8,6 @@ import { selectors as appDomainSelectors } from '../../app-domain';
 const mapDispatchToProps = (dispatch) => {
     const onSave = ({ owner, id, title, preText, postText, questions }) => {
         const createQuestionnaireParameters = { owner, id, title, preText, postText, questions }
-        console.log('createQuestionnaireParameters', createQuestionnaireParameters);
         dispatch(questionDomainActions.saveQuestionnaire(createQuestionnaireParameters))
     }
     const onDelete = (id) => {
@@ -21,7 +20,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 export const ConnectedQuestionnaire = connect(
     (state, { location }) => {
-        console.log('location', location)
         const _questionnaire =
             location.state?.id !== undefined ?
                 questionDomainSelectors.selectQuestionnaire(state, location.state.id)
@@ -35,7 +33,6 @@ export const ConnectedQuestionnaire = connect(
                 ..._questionnaire,
                 isEditing: true
             }
-        console.log('questionnaire', questionnaire)
         return {
             ...questionnaire,
             isSaveQuestionnairePending: questionDomainSelectors.selectIsSaveQuestionnairePending(state),

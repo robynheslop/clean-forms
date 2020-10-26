@@ -16,12 +16,12 @@ const useStyles = makeStyles({
     card: {
         textAlign: 'left',
         display: 'flex',
-        width: '83%',
+        width: '66%',
         margin: '0 auto',
         marginBottom: '15px'
     },
     cardContent: {
-        padding: '0px 1em'
+        padding: '1em'
     },
     h1: {
         fontFamily: 'Poiret One',
@@ -35,9 +35,8 @@ const useStyles = makeStyles({
         margin: 'auto',
     },
     link: {
-        color: '#be294f',
-        textDecoration: 'none',
-        margin: '10px'
+        color: 'black',
+        textDecoration: 'none'
     },
     progress: {
         display: 'block',
@@ -67,7 +66,10 @@ export function QuestionnairesList({ questionnaires, deleteQuestionnaire, isLoad
                                     <Grid item xs={9}>
                                         <CardContent className={classes.cardContent}>
                                             <Typography gutterBottom variant='h5' component='h2'>
-                                                Questionnaire Title: <b>{title}</b>
+                                                {title}
+                                            </Typography>
+                                            <Typography color='textSecondary'>
+                                                Questions: {questions.length}
                                             </Typography>
                                         </CardContent>
                                     </Grid>
@@ -76,6 +78,7 @@ export function QuestionnairesList({ questionnaires, deleteQuestionnaire, isLoad
                                         <CardActions className={classes.cardActions}>
                                             <Button>
                                                 <Link
+                                                    className={classes.link}
                                                     to={{
                                                         pathname: "/clinic/questionnaires/edit-questionnaire",
                                                         state: {id}
@@ -83,6 +86,7 @@ export function QuestionnairesList({ questionnaires, deleteQuestionnaire, isLoad
                                                 >Edit Questionnaire</Link>
                                             </Button>
                                             <Button
+                                                
                                                 onClick={() => {
                                                     console.log(id);
                                                     deleteQuestionnaire(id)

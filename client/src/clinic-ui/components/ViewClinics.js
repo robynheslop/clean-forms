@@ -21,12 +21,12 @@ const useStyles = makeStyles({
     card: {
         textAlign: 'left',
         display: 'flex',
-        width: '83%',
+        width: '80%',
         margin: '0 auto',
         marginBottom: '15px'
     },
     cardContent: {
-        padding: '0px 1em'
+        padding: '1em'
     },
     cardActions: {
         display: 'flex',
@@ -69,7 +69,7 @@ function ViewClinics({ isLoadClinicsPending, handleViewBookings, handleMakeBooki
                                 <Grid item xs={9}>
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom variant='h5' component='h2'>
-                                            Clinic Name: {clinicname}
+                                            {clinicname}
                                         </Typography>
                                         <Typography color='textSecondary'>
                                             Clinic Email: {email}

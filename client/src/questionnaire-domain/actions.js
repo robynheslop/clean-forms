@@ -12,7 +12,7 @@ export const loadQuestionnaires = createAsyncThunk(
 )
 
 export const saveQuestionnaire = createAsyncThunk(
-    'questionnaire-domain/CREATE_QUESTIONNAIRE',
+    'questionnaire-domain/SAVE_QUESTIONNAIRE',
     async ({ owner, id, title, preText, questions, postText }) => {
         const response = await fetch(`/api/questionnaire/${id}`, {
             method: "PUT",
