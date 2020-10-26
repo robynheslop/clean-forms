@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { Paper, Card, CircularProgress, CardActions, CardContent, Typography, Button, Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -50,51 +50,55 @@ export function QuestionnairesList({ questionnaires, deleteQuestionnaire, isLoad
     return (
         <Paper className={classes.root}>
             {
-            isLoadQuestionnairePending ?
-            
-            <div className={classes.progress} >
-                <CircularProgress color="secondary" />
-            </div>
+                isLoadQuestionnairePending ?
 
-            :
-            
-            !(questionnaires[0] === null) ?
-                <div>
-                    <h1 className={classes.h1}>QUESTIONNAIRES</h1>
-                    {questionnaires.map(({ id, title }) =>
+                    <div className={classes.progress} >
+                        <CircularProgress color="secondary" />
+                    </div>
 
-                        <Card key={id} className={classes.card}>
-                            <Grid item xs={9}>
-                                <CardContent className={classes.cardContent}>
-                                    <Typography gutterBottom variant='h5' component='h2'>
-                                        Questionnaire Title: <b>{title}</b>
-                                    </Typography>
-                                </CardContent>
-                            </Grid>
+                    :
 
-                            <Grid item xs={3}>
-                                <CardActions className={classes.cardActions}>
-                                    <Button
-                                        onClick={() => { }}>
-                                        Edit Questionnaire
+                    !(questionnaires[0] === null) ?
+                        <div>
+                            <h1 className={classes.h1}>QUESTIONNAIRES</h1>
+                            {questionnaires.map(({ id, questions, owner, preText, postText, title }) =>
+
+                                <Card key={id} className={classes.card}>
+                                    <Grid item xs={9}>
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom variant='h5' component='h2'>
+                                                Questionnaire Title: <b>{title}</b>
+                                            </Typography>
+                                        </CardContent>
+                                    </Grid>
+
+                                    <Grid item xs={3}>
+                                        <CardActions className={classes.cardActions}>
+                                            <Button>
+                                                <Link
+                                                    to={{
+                                                        pathname: "/clinic/questionnaires/edit-questionnaire",
+                                                        state: {id}
+                                                    }}
+                                                >Edit Questionnaire</Link>
+                                            </Button>
+                                            <Button
+                                                onClick={() => {
+                                                    console.log(id);
+                                                    deleteQuestionnaire(id)
+                                                }}>
+                                                Delete Questionnaire
                                     </Button>
-                                    <Button
-                                        onClick={() => {
-                                            console.log(id);
-                                            deleteQuestionnaire(id)
-                                            }}>
-                                        Delete Questionnaire
-                                    </Button>
-                                </CardActions>
-                            </Grid>
-                        </Card>
-                    )}
-                </div>
-                :
-                <div>
-                    <h1>You Have No Listed Questionnaires </h1>
-                    <h3><Link className={classes.link} to={`/clinic/questionnaires/add-questionnaire`}>Add some today</Link></h3>
-                </div>
+                                        </CardActions>
+                                    </Grid>
+                                </Card>
+                            )}
+                        </div>
+                        :
+                        <div>
+                            <h1>You Have No Listed Questionnaires </h1>
+                            <h3><Link className={classes.link} to={`/clinic/questionnaires/add-questionnaire`}>Add some today</Link></h3>
+                        </div>
             }
         </Paper >
     )

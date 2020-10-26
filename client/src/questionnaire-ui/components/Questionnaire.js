@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState, } from "react";
+import { useLocation } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid';
 import { findIndex, propEq } from 'ramda';
 import PropTypes from "prop-types";
@@ -52,12 +53,21 @@ const useStyles = makeStyles({
     }
 })
 
-export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuestionnaireFailed, isSaveQuestionnaireSuccess, onSave, onDelete, onCancel, id, questions, owner, preText, postText, title, }) {
+export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuestionnaireFailed, isSaveQuestionnaireSuccess, onSave, onDelete, onCancel, id, questions, owner, preText, postText, title, isEditing }) {
+    console.log('isEditing',isEditing)
     const classes = useStyles();
-    const [questionsState, setQuestionsState] = useState(questions)
-    const titleRef = useRef();
-    const preTextRef = useRef();
-    const postTextRef = useRef();
+    const [questionsState, setQuestionsState] = useState(questions );
+    const [titleState, setTitleState] = useState(title);
+    const [preTextState, setPreTextState] = useState(preText);
+    const [postTextState, setPostTextState] = useState(postText);
+
+    useEffect(()=> {
+        if (isEditing) return 
+        setQuestionsState(questions)
+        setTitleState('')
+        setPreTextState('')
+        setPostTextState('')
+    }, [id, questions, owner, preText, postText, title, isEditing])
 
     const handleSaveQuestion = (id, queryText, responses) => {
         const index = findIndex(propEq("id", id))(questionsState);
@@ -87,9 +97,9 @@ export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuest
         const onSaveQuestions = {
             id,
             owner,
-            title: titleRef.current.value,
-            preText: preTextRef.current.value,
-            postText: postTextRef.current.value,
+            title: titleState,
+            preText: preTextState,
+            postText: postTextState,
             questions: questionsState
         }
         onSave(onSaveQuestions);
@@ -103,16 +113,22 @@ export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuest
     }
 
     return (
-        <Paper className={classes.root}>
-            <h1 className={classes.h1}>ADD A NEW QUESTIONNAIRE</h1>
-            <form className={classes.form}>
-                <p>Choose a title for your questionnaire.</p>
+        <Paper className={classes.root} >
+            { isEditing ?
+                <h1 className={classes.h1}>EDIT YOUR QUESTIONNAIRE</h1>
+                :
+                <h1 className={classes.h1}>ADD A NEW QUESTIONNAIRE</h1>
+            }
+            <form className={classes.form} autoComplete="off">
                 <TextField
                     label='Questionnaire Title'
                     className={classes.input}
                     type='text'
                     name='questionnaireTitle'
-                    inputRef={titleRef}
+                    value={titleState}
+                    onChange={({ target: { value } }) => {
+                        setTitleState(value)
+                    }}
                     required />
 
                 <TextField
@@ -122,7 +138,10 @@ export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuest
                     type='text'
                     multiline
                     name='questionnairePreText'
-                    inputRef={preTextRef}
+                    value={preTextState}
+                    onChange={({ target: { value } }) => {
+                        setPreTextState(value)
+                    }}
                     required />
                 <br></br>
 
@@ -141,6 +160,7 @@ export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuest
                         onSave={(queryText, responses) => handleSaveQuestion(question.id, queryText, responses)}
                         onDelete={() => { handleDeleteQuestion(question.id) }}
                         {...question}
+
                     />
                 })}
 
@@ -151,7 +171,10 @@ export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuest
                     type='text'
                     multiline
                     name='questionnaireClosingText'
-                    inputRef={postTextRef}
+                    value={postTextState}
+                    onChange={({ target: { value } }) => {
+                        setPostTextState(value)
+                    }}
                 />
 
                 <Button
@@ -187,6 +210,7 @@ export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuest
 }
 
 Questionnaire.propTypes = {
+    isEditing: PropTypes.bool.isRequired,
     owner: PropTypes.string.isRequired,
     questions: PropTypes.arrayOf(
         PropTypes.shape(
@@ -209,6 +233,7 @@ Questionnaire.propTypes = {
 }
 
 Questionnaire.defaultProps = {
+    isEditing: false,
     questions: [],
     onSave: () => { },
     onDelete: () => { },

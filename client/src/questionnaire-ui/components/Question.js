@@ -47,12 +47,11 @@ export function Question({ onSave, queryText, onDelete, responses }) {
     const [questionTextState, setQuestionTextState] = useState(queryText)
 
 
-    const handleSaveResponse = (id, responseText, isValidReponse) => {
-        console.log('updating state in question')
+    const handleSaveResponse = (id, responseText, isValidResponse) => {
         const index = findIndex(propEq("id", id))(responsesState);
         setResponsesState([
             ...responsesState.slice(0, index),
-            { ...responsesState[index], responseText, isValidReponse },
+            { ...responsesState[index], responseText, isValidResponse },
             ...responsesState.slice(index + 1)
         ])
     }
@@ -83,7 +82,7 @@ export function Question({ onSave, queryText, onDelete, responses }) {
                 color="secondary"
                 className={classes.deleteFab}
                 size='medium'
-                aria-label="add-response"
+                aria-label="remove-question"
                 onClick={onDelete}
             >
                 <CancelIcon />
@@ -93,11 +92,12 @@ export function Question({ onSave, queryText, onDelete, responses }) {
                 type="text"
                 multiline
                 className={classes.input}
+                value={questionTextState}
                 onChange={handleChange}
                 name="question"
             />
             <br></br>
-            <p>Add each possible reponse, and select the checkboxes of the valid responses.</p>
+            <p>Add each possible response, and select the checkboxes of the valid responses.</p>
             <Fab
                 color="secondary"
                 size='small'
@@ -110,7 +110,7 @@ export function Question({ onSave, queryText, onDelete, responses }) {
             {responsesState.map(response => {
                 return <Response
                     key={response.id}
-                    handleSave={(responseText, isValidReponse) => handleSaveResponse(response.id, responseText, isValidReponse)}
+                    handleSave={(responseText, isValidResponse) => handleSaveResponse(response.id, responseText, isValidResponse)}
                     handleDelete={() => handleDeleteResponse(response.id)}
                     {...response}
                 />

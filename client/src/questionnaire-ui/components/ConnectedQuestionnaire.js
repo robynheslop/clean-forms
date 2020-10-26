@@ -20,13 +20,22 @@ const mapDispatchToProps = (dispatch) => {
     return { onSave, onDelete, onCancel }
 }
 export const ConnectedQuestionnaire = connect(
-    (state, { id }) => {
-        const _questionnaire = questionDomainSelectors.selectQuestionnaire(state, id)
-        const questionnaire = _questionnaire === undefined ? {
+    (state, { location }) => {
+        console.log('location', location)
+        const _questionnaire =
+            location.state?.id !== undefined ?
+                questionDomainSelectors.selectQuestionnaire(state, location.state.id)
+                : undefined;
+        const questionnaire = _questionnaire === undefined || location.pathname === "/clinic/questionnaires/add-questionnaire" ? {
             id: uuidv4(),
-            owner: appDomainSelectors.selectUserId(state)
+            owner: appDomainSelectors.selectUserId(state),
+            isEditing: false
         } :
-            _questionnaire
+            {
+                ..._questionnaire,
+                isEditing: true
+            }
+        console.log('questionnaire', questionnaire)
         return {
             ...questionnaire,
             isSaveQuestionnairePending: questionDomainSelectors.selectIsSaveQuestionnairePending(state),
@@ -42,7 +51,7 @@ ConnectedQuestionnaire.propTypes = {
 }
 
 ConnectedQuestionnaire.defaultProps = {
-    
+
 }
 
 export default ConnectedQuestionnaire;

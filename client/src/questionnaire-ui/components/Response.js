@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Fab, Checkbox, TextField } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
+function Response({ handleSave, handleDelete, responseText, isValidResponse }) {
     const [checked, setChecked] = useState(isValidResponse);
     const [responseTextState, setResponseTextState] = useState(responseText)
 
@@ -29,6 +29,7 @@ function Response({ handleSave, handleDelete, isValidResponse, responseText }) {
             <TextField
                 label='Response'
                 type="text"
+                value={responseTextState}
                 onChange={handleChange}
                 name="response"
             />
@@ -51,7 +52,6 @@ Response.defaultProps = {
     handleSave: () => { },
     handleDelete: () => { },
     responseText: undefined,
-    isValidResponse: false
 }
 
 export default Response;

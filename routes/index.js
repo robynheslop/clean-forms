@@ -241,7 +241,7 @@ router.patch('/screening/:_id', async (request, response) => {
                 [id]: responses.map(response => {
                     return {
                         id: response.id,
-                        checked: response.isValidReponse
+                        checked: response.isValidResponse
                     }
                 })
 

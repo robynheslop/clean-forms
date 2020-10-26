@@ -34,6 +34,7 @@ export function ClinicDashboard() {
                 <Route exact path={`${path}/add-clinic`} component={AddClinic} />
                 <Route exact path={`${path}/questionnaires`} component={QuestionnairesList} />
                 <Route exact path={`${path}/questionnaires/add-questionnaire`} component={Questionnaire} />
+                <Route exact path={`${path}/questionnaires/edit-questionnaire`} component={Questionnaire} />
                 <Route path={path} component={ViewClinics} />
             </ Switch >
             </Grid>
