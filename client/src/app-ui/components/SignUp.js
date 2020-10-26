@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Button, TextField } from '@material-ui/core';
+import { Paper, Button, TextField, CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     }
 })
 
-export function SignUp({ isLoggedIn, location, handleSignUp, isSignUpRejected }) {
+export function SignUp({ isLoggedIn, location, handleSignUp, isSignUpRejected, isSignUpPending }) {
     const classes = useStyles();
     const usernameRef = useRef();
     const passwordRef = useRef();
@@ -89,6 +89,12 @@ export function SignUp({ isLoggedIn, location, handleSignUp, isSignUpRejected })
                             variant="contained"
                         >Sign Up</Button>
                     </div>
+                    {isSignUpPending ?
+                        <div className={classes.progress}>
+                            <CircularProgress color="secondary" />
+                        </div> :
+                        undefined
+                    }
                 </form>
             </Paper >
     )

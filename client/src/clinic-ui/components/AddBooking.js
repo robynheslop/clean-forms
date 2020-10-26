@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, FormHelperText, Paper, Select, InputLabel, TextField, Button } from '@material-ui/core';
+import { makeStyles, CircularProgress, FormHelperText, Paper, Select, InputLabel, TextField, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -42,6 +42,10 @@ const useStyles = makeStyles({
     },
     select: {
         width: '50%'
+    },
+    progress: {
+        display: 'block',
+        margin: '20px auto'
     }
 })
 
@@ -52,7 +56,7 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
     const dateRef = useRef();
     const phoneRef = useRef();
     const [questionnaireState, setQuestionnaireState] = useState('');
-    const { id, clinicname, phone, isSendScreeningFailed, isSendScreeningSuccess } = activeClinic;
+    const { id, clinicname, phone, isSendScreeningFailed, isSendScreeningSuccess, isSendScreeningPending} = activeClinic;
 
     const handleChange = (event) => {
         setQuestionnaireState(event.target.value)
@@ -128,7 +132,7 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
                         disabled={questionnaires[0] === undefined ? true : false}
                         className={classes.select}
                         required>
-                            <option value="">None</option>
+                        <option value="">None</option>
                         {questionnaires[0] === undefined ?
                             undefined :
                             questionnaires.map(questionnaire => {
@@ -149,6 +153,15 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
                     >Create Booking</Button>
                 </div>
             </form>
+
+            { isSendScreeningPending ?
+                <div className={classes.progress}>
+                    <CircularProgress color="secondary" />
+                </div> :
+                undefined
+            }
+
+
             {isSendScreeningSuccess ?
                 <p className={classes.successErrorMessage} >Booking Successfully Added</p>
                 : undefined}

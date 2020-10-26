@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Button, TextField } from '@material-ui/core';
+import { Paper, Button, TextField, CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -36,10 +36,14 @@ const useStyles = makeStyles({
     },
     error: {
         color: '#be294f',
+    },
+    progress: {
+        display: 'block',
+        margin: '20px auto'
     }
 })
 
-export function LogIn({ handleLogIn, location, isLoggedIn, isLogInRejected }) {
+export function LogIn({ handleLogIn, location, isLoggedIn, isLogInPending, isLogInRejected }) {
     const classes = useStyles();
     const usernameRef = useRef();
     const passwordRef = useRef();
@@ -77,9 +81,9 @@ export function LogIn({ handleLogIn, location, isLoggedIn, isLogInRejected }) {
                             required />
                     </div>
                     {
-                        isLogInRejected ? 
-                        <p className={classes.error}>We could not validate those credentials. Please check your log in details.</p> :
-                        undefined
+                        isLogInRejected ?
+                            <p className={classes.error}>We could not validate those credentials. Please check your log in details.</p> :
+                            undefined
                     }
                     <div>
                         <Button
@@ -88,6 +92,13 @@ export function LogIn({ handleLogIn, location, isLoggedIn, isLogInRejected }) {
                             variant="contained"
                         >Log In</Button>
                     </div>
+                    {isLogInPending ?
+                        <div className={classes.progress}>
+                            <CircularProgress color="secondary" />
+                        </div> :
+                        undefined
+                    }
+
                 </form>
             </Paper >
     )

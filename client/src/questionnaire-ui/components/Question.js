@@ -41,8 +41,6 @@ const useStyles = makeStyles({
 
 })
 
-
-
 export function Question({ onSave, queryText, onDelete, responses }) {
     const classes = useStyles();
     const [responsesState, setResponsesState] = useState(responses);
