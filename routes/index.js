@@ -236,9 +236,7 @@ router.patch('/screening/:_id', async (request, response) => {
         const screening = await db.Screening.findOne({ _id: request.params._id })
         const questionnaire = await db.Questionnaire.findOne({ _id: screening.questionnaire })
         const { questions } = questionnaire;
-        
         const formattedQuestions = questions.map(({ id, responses }) => {
-
             return {
                 [id]: responses.map(response => {
                     return {
