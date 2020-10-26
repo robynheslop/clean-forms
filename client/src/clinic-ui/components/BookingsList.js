@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Paper, Table, TableCell, TableHead, TableContainer, TableRow, TableBody } from '@material-ui/core';
+import { makeStyles, Paper, CircularProgress, Table, TableCell, TableHead, TableContainer, TableRow, TableBody } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -27,6 +27,10 @@ const useStyles = makeStyles({
     },
     incomplete: {
         backgroundColor: '#e8e4e4'
+    },
+    progress: {
+        display: 'block',
+        margin: '20px auto'
     }
 })
 
