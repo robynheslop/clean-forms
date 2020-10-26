@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { Paper, Card, CardActions, CardContent, Typography, Button, Grid } from '@material-ui/core';
+import { Paper, Card, CircularProgress, CardActions, CardContent, Typography, Button, Grid } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -38,14 +38,27 @@ const useStyles = makeStyles({
         color: '#be294f',
         textDecoration: 'none',
         margin: '10px'
+    },
+    progress: {
+        display: 'block',
+        margin: '100px auto'
     }
 });
 
-export function QuestionnairesList({ questionnaires, deleteQuestionnaire }) {
+export function QuestionnairesList({ questionnaires, deleteQuestionnaire, isLoadQuestionnairePending }) {
     const classes = useStyles();
     return (
         <Paper className={classes.root}>
-            {!(questionnaires[0] === null) ?
+            {
+            isLoadQuestionnairePending ?
+            
+            <div className={classes.progress} >
+                <CircularProgress color="secondary" />
+            </div>
+
+            :
+            
+            !(questionnaires[0] === null) ?
                 <div>
                     <h1 className={classes.h1}>QUESTIONNAIRES</h1>
                     {questionnaires.map(({ id, title }) =>

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from "prop-types";
-import { findIndex, propEq } from "ramda";
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, FormGroup, FormLabel, Button, FormControl } from '@material-ui/core';
+import { Paper, CircularProgress, FormGroup, FormLabel, Button, FormControl } from '@material-ui/core';
 import Responses from './Response';
 
 
 const useStyles = makeStyles({
     root: {
         width: '66%',
+        maxWidth: '1400px',
         margin: "0 auto",
         marginTop: '50px',
-        padding: "2em 2em",
+        padding: "2em 5em",
         justifyContent: "center"
     },
     h1: {
@@ -19,9 +19,16 @@ const useStyles = makeStyles({
         fontSize: '75px',
         padding: '30px'
     },
+    button: {
+        backgroundColor: '#be294f',
+        padding: "15px 25px",
+        boxShadow: 'none',
+        color: 'white',
+        margin: '15px',
+    },
 })
 
-export function Screening({ location, onLoad, isCompleteScreeningFulfilled, isCompleteScreeningRejected, handleSaveQuestionnaire, questionnaire }) {
+export function Screening({ location, onLoad, isQuestionnaireLoading, isCompleteScreeningFulfilled, isCompleteScreeningRejected, handleSaveQuestionnaire, questionnaire }) {
 
     const classes = useStyles()
     const [responsesState, setResponsesState] = useState([]);
@@ -58,63 +65,68 @@ export function Screening({ location, onLoad, isCompleteScreeningFulfilled, isCo
     return (
         <Paper className={classes.root}>
             <h1 className={classes.h1}>CLEAN FORMS</h1>
-
-            {isCompleteScreeningFulfilled ?
-
-                <div>
-                    <h2>Thank You.</h2>
-
-                    <p>Your questionnaire has been submitted for review.</p>
-                    <p>If there are any issues with your responses, the clinic will be in touch with you regarding further steps.</p>
-                </div>
-
-                :
-
-                isCompleteScreeningRejected ?
-                    <div>
-                        <h2>ERROR!</h2>
-
-                        <p>There is a problem submitting your responses.</p>
-                        <p>Please contact the clinic regarding further steps.</p>
+            {
+                isQuestionnaireLoading ?
+                    <div className={classes.progress} >
+                        <CircularProgress color="secondary" />
                     </div>
                     :
+                    isCompleteScreeningFulfilled ?
 
-                    (questionnaire?.id !== undefined) ?
-                        <form >
-                            <h2>{questionnaire.title}</h2>
-                            <h3>{questionnaire.preText ? questionnaire.preText : undefined}</h3>
+                        <div>
+                            <h2>Thank You.</h2>
 
-                            {questionnaire.questions.map(({ queryText, id, responses }) => {
-                                return <div key={id}>
-                                    <FormControl>
-                                        <FormLabel >{queryText}</FormLabel>
-                                        <FormGroup>
-
-                                            <Responses
-                                                handleSaveResponse={(checkedState) => handleSaveResponse(id, checkedState)}
-                                                {...{ responses }}
-                                            ></Responses>
-                                        </FormGroup>
-                                    </FormControl>
-                                    <br></br>
-                                    <br></br>
-                                </div>
-
-                            })
-                            }
-                            <h3>{questionnaire.postText ? questionnaire.postText : undefined}</h3>
-                            <Button
-                                // className={classes.button}
-                                type="submit"
-                                onClick={handleSubmit}
-                            >Submit</Button>
-                        </form>
+                            <p>Your questionnaire has been submitted for review.</p>
+                            <p>If there are any issues with your responses, the clinic will be in touch with you regarding further steps.</p>
+                        </div>
 
                         :
-                        <div>
-                            <h2>ERROR</h2>
-                            <p>We are unable to access your questionnaire right now. Please contact the clinic for further help.</p>
-                        </div>
+
+                        isCompleteScreeningRejected ?
+                            <div>
+                                <h2>ERROR!</h2>
+
+                                <p>There is a problem submitting your responses.</p>
+                                <p>Please contact the clinic regarding further steps.</p>
+                            </div>
+                            :
+
+                            (questionnaire?.id !== undefined) ?
+                                <form >
+                                    <h2>{questionnaire.title}</h2>
+                                    <h3>{questionnaire.preText ? questionnaire.preText : undefined}</h3>
+
+                                    {questionnaire.questions.map(({ queryText, id, responses }) => {
+                                        return <div key={id}>
+                                            <FormControl>
+                                                <FormLabel >{queryText}</FormLabel>
+                                                <FormGroup>
+
+                                                    <Responses
+                                                        handleSaveResponse={(checkedState) => handleSaveResponse(id, checkedState)}
+                                                        {...{ responses }}
+                                                    ></Responses>
+                                                </FormGroup>
+                                            </FormControl>
+                                            <br></br>
+                                            <br></br>
+                                        </div>
+
+                                    })
+                                    }
+                                    <h3>{questionnaire.postText ? questionnaire.postText : undefined}</h3>
+                                    <Button
+                                        className={classes.button}
+                                        type="submit"
+                                        onClick={handleSubmit}
+                                    >Submit</Button>
+                                </form>
+
+                                :
+                                <div>
+                                    <h2>ERROR</h2>
+                                    <p>There is a problem fetching your questionnaire data right now. Please contact the clinic directly for further help.</p>
+                                </div>
             }
         </Paper >
     )
@@ -125,12 +137,14 @@ Screening.propTypes = {
     handleSaveResponse: PropTypes.func,
     handleSaveQuestionnaire: PropTypes.func,
     onLoad: PropTypes.func,
+    isQuestionnaireLoading: PropTypes.bool,
     isCompleteScreeningFulfilled: PropTypes.bool,
     isCompleteScreeningRejected: PropTypes.bool
 }
 
 Screening.defaultProps = {
     onLoad: () => { },
+    isQuestionnaireLoading: false,
     isCompleteScreeningFulfilled: false,
     isCompleteScreeningRejected: false
 }

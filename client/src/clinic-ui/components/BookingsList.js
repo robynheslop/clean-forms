@@ -43,7 +43,6 @@ function BookingsList({ activeClinic}) {
             {isLoadBookingsPending ?
             
                 <div className={classes.progress} >
-                    {console.log('true',isLoadBookingsPending)}
                     <CircularProgress color="secondary" />
                 </div>
 
@@ -52,7 +51,6 @@ function BookingsList({ activeClinic}) {
                 bookings.length > 0 ?
                     <div>
                         <h1 className={classes.h1}>BOOKINGS</h1>
-                        {console.log('false',isLoadBookingsPending)}
                         <TableContainer>
                             <Table>
                                 <TableHead>
