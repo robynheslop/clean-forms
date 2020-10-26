@@ -73,6 +73,7 @@ function AddClinics({ isAddClinicPending, isAddClinicSuccess, isAddClinicFailed,
                 <div>
                     <TextField
                         label='Clinic Name'
+                        color="secondary"
                         className={classes.input}
                         type='text'
                         name='clinicName'
@@ -83,6 +84,7 @@ function AddClinics({ isAddClinicPending, isAddClinicSuccess, isAddClinicFailed,
                 <div>
                     <TextField
                         label='Email'
+                        color="secondary"
                         className={classes.input}
                         type='email'
                         name='email'
@@ -92,8 +94,9 @@ function AddClinics({ isAddClinicPending, isAddClinicSuccess, isAddClinicFailed,
                 <div>
                     <TextField
                         label='Office Number'
+                        color="secondary"
                         className={classes.input}
-                        type='phone'
+                        type='number'
                         name='phone'
                         inputRef={phoneRef}
                         required />

@@ -89,6 +89,7 @@ export function Question({ onSave, queryText, onDelete, responses }) {
             </Fab>
             <TextField
                 label='Type out your question here'
+                color="secondary"
                 type="text"
                 multiline
                 className={classes.input}

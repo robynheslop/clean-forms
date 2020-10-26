@@ -65,6 +65,7 @@ export function LogIn({ handleLogIn, location, isLoggedIn, isLogInPending, isLog
                         <TextField
                             className={classes.textField}
                             label="Username"
+                            color="secondary"
                             type="text"
                             name="password"
                             pattern=".{2,20}"
@@ -74,6 +75,7 @@ export function LogIn({ handleLogIn, location, isLoggedIn, isLogInPending, isLog
                     <div>
                         <TextField
                             className={classes.textField}
+                            color="secondary"
                             label="Password"
                             type="password"
                             name="password"

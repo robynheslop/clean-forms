@@ -122,6 +122,7 @@ export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuest
             <form className={classes.form} autoComplete="off">
                 <TextField
                     label='Questionnaire Title'
+                    color="secondary"
                     className={classes.input}
                     type='text'
                     name='questionnaireTitle'
@@ -133,6 +134,7 @@ export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuest
 
                 <TextField
                     label='Opening Text'
+                    color="secondary"
                     helperText="Add any instructions or explanations about your questionnaire here for your clients to read before they start."
                     className={classes.input}
                     type='text'
@@ -166,6 +168,7 @@ export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuest
 
                 <TextField
                     label='Closing Text'
+                    color="secondary"
                     helperText="Add any final notes, such as to thank your clients and let them know the next steps."
                     className={classes.input}
                     type='text'

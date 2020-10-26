@@ -108,8 +108,12 @@ export function Screening({ location, onLoad, isQuestionnaireLoading, isLoadingS
 
                                     {questionnaire.questions.map(({ queryText, id, responses }) => {
                                         return <div key={id}>
-                                            <FormControl>
-                                                <FormLabel >{queryText}</FormLabel>
+                                            <FormControl
+                                            color="secondary"
+                                            >
+                                                <FormLabel
+                                                color="secondary"
+                                                 >{queryText}</FormLabel>
                                                 <FormGroup>
 
                                                     <Responses

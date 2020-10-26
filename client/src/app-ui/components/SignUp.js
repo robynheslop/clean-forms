@@ -61,6 +61,7 @@ export function SignUp({ isLoggedIn, location, handleSignUp, isSignUpRejected, i
                     <div>
                         <TextField
                             className={classes.textField}
+                            color="secondary"
                             label="Choose a username - no more than 20 characters"
                             type="text"
                             name="password"
@@ -71,6 +72,7 @@ export function SignUp({ isLoggedIn, location, handleSignUp, isSignUpRejected, i
                     <div>
                         <TextField
                             className={classes.textField}
+                            color="secondary"
                             label="Password"
                             type="password"
                             name="password"

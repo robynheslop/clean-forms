@@ -28,6 +28,7 @@ function Response({ handleSave, handleDelete, responseText, isValidResponse }) {
             />
             <TextField
                 label='Response'
+                color="secondary"
                 type="text"
                 value={responseTextState}
                 onChange={handleChange}
