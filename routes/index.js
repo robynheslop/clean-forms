@@ -238,16 +238,19 @@ router.patch('/screening/:_id', async (request, response) => {
         const { questions } = questionnaire;
         
         const formattedQuestions = questions.map(({ id, responses }) => {
+
             return {
                 [id]: responses.map(response => {
                     return {
                         id: response.id,
-                        checked: response.isValidResponse
+                        checked: response.isValidResponse ? true : false
                     }
                 })
 
             }
         })
+        console.log('screeningData.responses',screeningData.responses)
+        console.log('formattedQuestions',formattedQuestions)
         if (isEqual(screeningData.responses, formattedQuestions)) {
             screeningData.status = "passed"
         } else {
