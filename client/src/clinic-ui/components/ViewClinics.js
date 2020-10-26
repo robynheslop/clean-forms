@@ -63,13 +63,13 @@ function ViewClinics({ isLoadClinicsPending, handleViewBookings, handleMakeBooki
                 !(clinics.length === 0) ?
                     <div>
                         <h1 className={classes.h1}>CLINICS</h1>
-                        {clinics.map(({ id, clinicname, email, phone }) =>
+                        {clinics.map(({ id, clinicName, email, phone }) =>
                             <Card key={id} className={classes.card}>
 
                                 <Grid item xs={9}>
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom variant='h5' component='h2'>
-                                            {clinicname}
+                                            {clinicName}
                                         </Typography>
                                         <Typography color='textSecondary'>
                                             Clinic Email: {email}
@@ -85,7 +85,7 @@ function ViewClinics({ isLoadClinicsPending, handleViewBookings, handleMakeBooki
                                         <Button
                                             onClick={() => {
                                                 history.push(`/clinic/new-booking`)
-                                                handleMakeBooking(id, clinicname, phone)
+                                                handleMakeBooking(id, clinicName, phone)
                                             }}>
                                             Add New Booking
                                 </Button>

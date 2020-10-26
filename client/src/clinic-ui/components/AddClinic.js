@@ -57,7 +57,7 @@ function AddClinics({ isAddClinicPending, isAddClinicSuccess, isAddClinicFailed,
         event.stopPropagation();
         addClinic({
             owner: userId,
-            clinicname: clinicNameRef.current.value,
+            clinicName: clinicNameRef.current.value,
             email: emailRef.current.value,
             phone: phoneRef.current.value
         })

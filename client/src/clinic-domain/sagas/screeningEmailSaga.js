@@ -1,12 +1,14 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, select, takeEvery } from 'redux-saga/effects';
 import actions from "../actions";
+import selectors from '../selectors';
 
 function* screeningEmail(payload) {
-    const { clinic, clientName, email, phone, date, screeningId } = payload.meta.arg;
-    yield put(actions.sendScreening({ clinic, clientName, email, phone, date, screeningId }));
+    const { clientName, email, date, screeningId } = payload.meta.arg;
+    const { clinicName, phone } = yield select(selectors.selectActiveClinic)
+    console.log('clinicName, phone ', clinicName, phone )
+    yield put(actions.sendScreening({ clinicName, phone, clientName, email, date, screeningId }));
 }
 
 export function* screeningEmailSaga() {
-    console.log('hit email saga');
     yield takeEvery('clinic-domain/CREATE_BOOKING/fulfilled', screeningEmail);
 }

@@ -27,7 +27,7 @@ router.post("/signup", (request, response) => {
 router.post("/login", passport.authenticate("local", { session: false }),
     (request, response) => {
         const token = jwt.sign({ id: request.user.id }, "jwt_secret");
-        response.status(200).json({ token, userId: request.user.id })
+        response.json({ token, userId: request.user.id })
     });
 
 router.get("/user", passport.authenticate("jwt", { session: false }), (request, response) => {
@@ -35,7 +35,7 @@ router.get("/user", passport.authenticate("jwt", { session: false }), (request, 
         response.json({ username: "nobody" })
     } else {
         response.json({
-            clinicname: request.user.username,
+            clinicName: request.user.username,
             email: request.user.email
         })
     }
@@ -56,7 +56,7 @@ router.get("/clinics/:owner", (request, response) => {
 router.post("/new-clinic", (request, response) => {
     const clinic = new db.Clinic({
         owner: request.body.owner,
-        clinicname: request.body.clinicname,
+        clinicName: request.body.clinicName,
         email: request.body.email,
         phone: request.body.phone
     });
@@ -159,8 +159,8 @@ router.post('/new-screening', async (request, response) => {
 })
 
 // dispatch screening request email to client
-router.post('/screening-request', async (request, response) => {
-    console.log('request.body.screeningId', request.body.screeningId)
+router.post('/screening-request', (request, response) => {
+    console.log('request.body', request.body)
     let transporter = nodemailer.createTransport({
         host: 'smtp.mail.yahoo.com',
         port: 587,
@@ -186,14 +186,15 @@ router.post('/screening-request', async (request, response) => {
         template: "emailTemplate",
         context: {
             clientName: request.body.clientName,
+            bookingDate: request.body.date,
             clinicName: request.body.clinicName,
-            clinicPhone: request.body.clinicPhone,
+            clinicPhone: request.body.phone,
             screeningId: request.body.screeningId,
             link: `www.cleanforms.com/${request.body.screeningId}`,
         }
     }
 
-    await transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error, info) => {
         if (error) return response.status(500).json("Could not send screening request.");
         response.status(200).json("Message sent: " + info.messageId);
     })

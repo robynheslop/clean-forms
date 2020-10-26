@@ -4,8 +4,8 @@ import { actions, selectors } from "../../clinic-domain";
 import { selectors as appSelectors } from "../../app-domain"
 
 const mapDispatchToProps = dispatch => {
-    const addClinic = ({owner, clinicname, email, phone }) => {
-        dispatch(actions.addClinic({owner, clinicname, email, phone}))
+    const addClinic = ({owner, clinicName, email, phone }) => {
+        dispatch(actions.addClinic({owner, clinicName, email, phone}))
     }
     return { addClinic }
 }

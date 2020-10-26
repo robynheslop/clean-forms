@@ -56,7 +56,7 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
     const dateRef = useRef();
     const phoneRef = useRef();
     const [questionnaireState, setQuestionnaireState] = useState('');
-    const { id, clinicname, phone, isSendScreeningFailed, isSendScreeningSuccess, isSendScreeningPending} = activeClinic;
+    const { id, clinicName, phone, isSendScreeningFailed, isSendScreeningSuccess, isSendScreeningPending} = activeClinic;
 
     const handleChange = (event) => {
         setQuestionnaireState(event.target.value)
@@ -67,7 +67,7 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
         event.stopPropagation();
         createScreening({
             clinic: id,
-            clinicName: clinicname,
+            clinicName: clinicName,
             clinicPhone: phone,
             clientName: clientNameRef.current.value,
             phone: phoneRef.current.value,

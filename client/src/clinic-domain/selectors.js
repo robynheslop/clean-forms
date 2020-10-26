@@ -1,3 +1,5 @@
+import {find, propEq} from 'ramda';
+
 const selectClinics = (state) => state?.clinicDomain?.clinics;
 
 const selectIsLoadClinicsPending = (state) => state?.clinicDomain?.isLoadClinicsPending;
@@ -31,5 +33,5 @@ export default {
     selectIsSendScreeningSuccess,
     selectIsSendScreeningFailed,
     selectIsLoadBookingsPending,
-    selectActiveClinic
+    selectActiveClinic,
 }

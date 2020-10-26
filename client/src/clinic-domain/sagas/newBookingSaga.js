@@ -4,8 +4,9 @@ import actions from "../actions";
 function* createBookingDocument(payload) {
     const screeningId = payload.payload;
     console.log('payload', payload)
-    const {clinic, clientName, email, phone, date} = payload.meta.arg;
-    yield put(actions.createBooking({clinic, clientName, email, phone, date, screeningId}));
+    const { clinic, clientName, email, phone, date } = payload.meta.arg;
+    console.log('clinic', clinic);
+    yield put(actions.createBooking({ clinic, clientName, email, phone, date, screeningId }));
 }
 
 export function* newBookingSaga() {

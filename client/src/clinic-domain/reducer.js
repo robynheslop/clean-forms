@@ -7,7 +7,7 @@ export default createReducer({
     owner: undefined,
     activeClinic: {
         id: undefined,
-        clinicname: undefined,
+        clinicName: undefined,
         phone: undefined,
         isLoadBookingsPending: false,
         isAddScreeningPending: false,
@@ -130,9 +130,9 @@ export default createReducer({
                 state.activeClinic.isSendScreeningPending = false;
                 state.activeClinic.isSendScreeningSuccess = true;
             })
-            .addCase(events.activeClinicSelected, (state, { payload: { id, clinicname, phone } }) => {
+            .addCase(events.activeClinicSelected, (state, { payload: { id, clinicName, phone } }) => {
                 state.activeClinic.id = id;
-                state.activeClinic.clinicname = clinicname;
+                state.activeClinic.clinicName = clinicName;
                 state.activeClinic.phone = phone;
             })
             .addCase(events.activeClinicDeselected, (state) => {

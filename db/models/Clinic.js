@@ -5,14 +5,13 @@ const clinicSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    clinicname: {
+    clinicName: {
         type: String,
         index: true,
         unique: true,
         minlength: 2,
         maxlength: 20,
-        required: true,
-        lowercase: true
+        required: true
     },
     email: {
         type: String,

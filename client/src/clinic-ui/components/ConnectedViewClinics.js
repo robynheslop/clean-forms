@@ -7,8 +7,8 @@ const mapDispatchToProps = dispatch => {
         dispatch(actions.selectActiveClinic(id))
         dispatch(actions.loadBookings(id))
     }
-    const handleMakeBooking = (id, clinicname, phone) => {
-        dispatch(actions.selectActiveClinic(id, clinicname, phone))
+    const handleMakeBooking = (id, clinicName, phone) => {
+        dispatch(actions.selectActiveClinic(id, clinicName, phone))
     }
     return { handleMakeBooking, handleViewBookings }
 }
