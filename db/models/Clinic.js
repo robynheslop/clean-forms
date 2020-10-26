@@ -8,9 +8,6 @@ const clinicSchema = new mongoose.Schema({
     clinicName: {
         type: String,
         index: true,
-        unique: true,
-        minlength: 2,
-        maxlength: 20,
         required: true
     },
     email: {
