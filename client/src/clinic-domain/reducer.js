@@ -34,16 +34,16 @@ export default createReducer({
             .addCase(actions.loadClinics.fulfilled, (state, { payload: { owner, clinics } }) => {
                 state.clinics.push(...clinics);
                 state.owner = owner;
-                state.isGetClinicsPending = false;
+                state.isLoadClinicsPending = false;
             })
             .addCase(actions.loadClinics.rejected, (state, { error: { message } }) => {
                 state.errors.push(message);
-                state.isGettingClinicsPending = false;
+                state.isLoadClinicsPending = false;
             })
             .addCase(actions.loadClinics.pending, (state) => {
                 state.errors = [];
                 state.clinics = [];
-                state.isGettingClinicsPending = true;
+                state.isLoadClinicsPending = true;
             })
             .addCase(actions.addClinic.fulfilled, (state, { payload }) => {
                 state.isAddClinicPending = false;
