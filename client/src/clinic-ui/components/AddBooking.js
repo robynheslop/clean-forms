@@ -166,7 +166,7 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
                             onChange={
                                 (date) => setBookingDate(moment(date).format("YYYY-MM-DD"))
                             }
-                            disablePast={true}
+                            // disablePast={true}
                             format="yyyy/MM/DD"
                             variant={"inline"}
                             required
