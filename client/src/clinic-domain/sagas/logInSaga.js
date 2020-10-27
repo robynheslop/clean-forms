@@ -7,4 +7,5 @@ function * notifiyClinicLogIn({payload: {userId}}) {
 
 export function * logInSaga() {
    yield takeEvery("app-domain/LOG_IN/fulfilled", notifiyClinicLogIn)
+   yield takeEvery("app-domain/SIGN_UP/fulfilled", notifiyClinicLogIn)
 }

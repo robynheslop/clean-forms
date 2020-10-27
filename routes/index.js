@@ -17,7 +17,7 @@ router.post("/signup", (request, response) => {
     user.save()
         .then(() => {
             const token = jwt.sign({ id: user.id }, "jwt_secret");
-            response.status(200).json({ token })
+            response.status(200).json({ token, userId: user.id})
         })
         .catch(error => {
             response.status(500).json(error);
@@ -53,33 +53,34 @@ router.get("/clinics/:owner", (request, response) => {
         })
 })
 
-router.post("/new-clinic", (request, response) => {
-    const clinic = new db.Clinic({
-        owner: request.body.owner,
-        clinicName: request.body.clinicName,
-        email: request.body.email,
-        phone: request.body.phone
-    });
-    clinic.save()
-        .then(clinic => {
-            response.json(clinic)
-        })
-        .catch(error => {
-            response.status(500).json("Could not create clinic");
-        })
+router.post("/new-clinic", async (request, response) => {
+    try {
+        const booking = await db.Clinic.create(
+            {
+                owner: request.body.owner,
+                clinicName: request.body.clinicName,
+                email: request.body.email,
+                phone: request.body.phone
+            })
+        response.json(booking);
+    }
+    catch (error) {
+        response.status(500).json("Could not create clinic");
+    }
 })
 
+
 // creat new booking
-router.post("/new-booking", (request, response) => {
-    const booking = new db.Booking(request.body);
-    booking.save()
-        .then(booking => {
-            response.json(booking)
-        })
-        .catch(error => {
-            console.log(error)
-            response.status(500).json("Could not create booking.");
-        })
+router.post("/new-booking", async (request, response) => {
+    try {
+        const booking = await db.Booking.create(
+            { ...request.body })
+        response.json(booking);
+    }
+    catch (error) {
+        console.log('error',error)
+        response.status(500).json("Could not create booking.");
+    }
 })
 
 // get all bookings made by a clinic
@@ -247,8 +248,8 @@ router.patch('/screening/:_id', async (request, response) => {
 
             }
         })
-        console.log('screeningData.responses',screeningData.responses)
-        console.log('formattedQuestions',formattedQuestions)
+        console.log('screeningData.responses', screeningData.responses)
+        console.log('formattedQuestions', formattedQuestions)
         if (isEqual(screeningData.responses, formattedQuestions)) {
             screeningData.status = "passed"
         } else {

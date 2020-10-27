@@ -30,6 +30,7 @@ export default createReducer({
             state.session.isLogInPending = true;
         })
         .addCase(actions.signUp.fulfilled, (state, {payload})=>{
+            console.log('payload',payload);
             state.session.token = payload.token;
             state.session.userId = payload.userId;
             state.session.isLoggedIn = true;
