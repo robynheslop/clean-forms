@@ -79,7 +79,7 @@ router.post("/new-booking", (request, response) => {
         })
         .catch(error => {
             console.log(error)
-            response.status(500).json("Could not create booking.");
+            response.status(500).json(error);
         })
 })
 
