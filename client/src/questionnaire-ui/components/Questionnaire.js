@@ -11,11 +11,10 @@ import Question from "./Question";
 const useStyles = makeStyles({
     root: {
         maxWidth: '83.333333%',
-        margin: '0 auto',
+        margin: '50px auto',
         marginTop: '50px',
         padding: '3em 0em',
-        minHeight: 'fit-conent',
-        height: '75%'
+        height: 'fit-content'
     },
     form: {
         maxWidth: '50%',

@@ -27,15 +27,12 @@ const useStyles = makeStyles({
 export function ClinicNavigation() {
     const classes = useStyles();
     return (
-        <div>
             <AppBar className={classes.root}>
                 <Link className={classes.link} to='/clinic'>View Clinics</Link>
                 <Link className={classes.link} to='/clinic/add-clinic'>Add New Clinics</Link>
                 <Link className={classes.link} to='/clinic/questionnaires'>View Questionnaires</Link>
                 <Link className={classes.link} to='/clinic/questionnaires/add-questionnaire'>Add New Questionnaire</Link>
             </AppBar>
-
-        </div>
     )
 }
 

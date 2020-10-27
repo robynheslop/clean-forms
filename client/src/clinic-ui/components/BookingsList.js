@@ -9,10 +9,10 @@ const useStyles = makeStyles({
     },
     paper: {
         maxWidth: '83.333333%',
-        margin: '0 auto',
+        margin: '50px auto',
         marginTop: '50px',
         padding: '3em 0em',
-        height: '75%'
+        height: 'fit-content'
     },
     h1: {
         fontFamily: 'Poiret One',

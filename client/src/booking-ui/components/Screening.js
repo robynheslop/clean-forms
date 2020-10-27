@@ -9,8 +9,8 @@ const useStyles = makeStyles({
     root: {
         width: '66%',
         maxWidth: '1400px',
-        margin: "0 auto",
-        marginTop: '50px',
+        margin: "50px auto",
+        height: 'fit-content',
         padding: "2em 5em",
         justifyContent: "center"
     },

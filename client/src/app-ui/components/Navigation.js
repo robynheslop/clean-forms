@@ -15,11 +15,13 @@ const useStyles = makeStyles({
         backgroundColor: '#be294f',
         border: 0,
         borderRadius: 3,
+        top: '0px',
+        position: 'sticky',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         color: 'white',
         padding: '0px',
         margin: '0px',
-        height: '70px'
+        height: '70px'    
     },
     tabs: {
         width: 'fit-content',

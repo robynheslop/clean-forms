@@ -6,10 +6,10 @@ import { Paper, Button, TextField, CircularProgress } from '@material-ui/core';
 const useStyles = makeStyles({
     root: {
         maxWidth: '83.333333%',
-        margin: '0 auto',
+        margin: '50px auto',
         marginTop: '50px',
         padding: '3em 0em',
-        height: '75%'
+        height: 'fit-content'
     },
     form: {
         maxWidth: '50%',
