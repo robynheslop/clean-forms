@@ -30,7 +30,7 @@ const bookingSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: "Incomplete"
+        default: "incomplete"
     }
 });
 
