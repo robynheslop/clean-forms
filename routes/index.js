@@ -66,7 +66,7 @@ router.post("/new-clinic", (request, response) => {
         })
         .catch(error => {
             console.log(error)
-            response.status(500).json("Could not create clinic");
+            response.status(500).json(error);
         })
 })
 
