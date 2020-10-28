@@ -33,8 +33,12 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         margin: 'auto',
     },
-    link: {
+    questionnaireLink: {
         color: 'black',
+        textDecoration: 'none'
+    },
+    link: {
+        color: '#be294f',
         textDecoration: 'none'
     },
     progress: {
@@ -56,7 +60,7 @@ export function QuestionnairesList({ questionnaires, deleteQuestionnaire, isLoad
 
                     :
 
-                    !(questionnaires[0] === null) ?
+                    !(questionnaires.length === 0) ?
                         <div>
                             <h1 className={classes.h1}>QUESTIONNAIRES</h1>
                             {questionnaires.map(({ id, questions, owner, preText, postText, title }) =>
@@ -77,7 +81,7 @@ export function QuestionnairesList({ questionnaires, deleteQuestionnaire, isLoad
                                         <CardActions className={classes.cardActions}>
                                             <Button>
                                                 <Link
-                                                    className={classes.link}
+                                                    className={classes.questionnaireLink}
                                                     to={{
                                                         pathname: "/clinic/questionnaires/edit-questionnaire",
                                                         state: {id}
@@ -98,7 +102,7 @@ export function QuestionnairesList({ questionnaires, deleteQuestionnaire, isLoad
                         </div>
                         :
                         <div>
-                            <h1>You Have No Listed Questionnaires </h1>
+                            <h1 className={classes.h1}>YOU HAVE NO QUESTIONNAIRES</h1>
                             <h3><Link className={classes.link} to={`/clinic/questionnaires/add-questionnaire`}>Add some today</Link></h3>
                         </div>
             }
