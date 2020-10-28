@@ -37,6 +37,9 @@ const useStyles = makeStyles({
         display: 'block',
         float: 'right',
         padding: '20px 0'
+    },
+    table: {
+        marginBottom: '40px'
     }
 })
 
@@ -94,7 +97,7 @@ function BookingsList({ activeClinic: { bookings, isLoadBookingsPending } }) {
                         />
 
                         <TableContainer>
-                            <Table>
+                            <Table className={classes.table}>
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Client Name</TableCell>
