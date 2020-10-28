@@ -35,7 +35,15 @@ export const addClinic = createAsyncThunk(
         if (responseJson === "Could not create clinic") {
             return rejectWithValue(responseJson);
         }
-        return responseJson;
+        const clinic = {
+            id: responseJson._id,
+            owner: responseJson.owner,
+            clinicName: responseJson.clinicName,
+            email: responseJson.email,
+            phone: responseJson.phone
+        }
+
+        return clinic;
     }
 )
 
@@ -71,7 +79,7 @@ export const createScreening = createAsyncThunk(
             },
             body: JSON.stringify({ questionnaire: questionnaireId })
         });
-        
+
         const { _id: screeningId } = await screeningResponse.json();
         if (!screeningId) {
             return rejectWithValue("Could not create screening.");
@@ -83,8 +91,6 @@ export const createScreening = createAsyncThunk(
 export const createBooking = createAsyncThunk(
     "clinic-domain/CREATE_BOOKING",
     async ({ clinic, clientName, email, phone, date, screeningId }, rejectWithValue) => {
-        
-        console.log('props', { clinic, clientName, email, phone, date, screeningId })
         const bookingResponse = await fetch("/api/new-booking", {
             method: "POST",
             headers: {
@@ -102,7 +108,7 @@ export const createBooking = createAsyncThunk(
 
 export const sendScreening = createAsyncThunk(
     "clinic-domain/SEND_SCREENING",
-    async ({ clinicName, clientName, email,  phone, date, screeningId }, rejectWithValue) => {
+    async ({ clinicName, clientName, email, phone, date, screeningId }, rejectWithValue) => {
         const screeningRequest = await fetch("/api/screening-request", {
             method: "POST",
             headers: {
@@ -122,7 +128,6 @@ export const sendScreening = createAsyncThunk(
 export const updateBookingStatus = createAsyncThunk(
     "clinic-domain/UPDATE_BOOKING",
     async (props) => {
-        console.log(props)
         const update = await fetch("/api/booking", {
             method: "PATCH",
             headers: {

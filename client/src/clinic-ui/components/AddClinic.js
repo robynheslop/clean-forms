@@ -53,8 +53,6 @@ function AddClinics({ isAddClinicPending, isAddClinicSuccess, isAddClinicFailed,
     const emailRef = useRef();
     const phoneRef = useRef();
 
-    console.log('userId',userId)
-
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();

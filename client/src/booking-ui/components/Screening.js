@@ -40,7 +40,6 @@ export function Screening({ location, onLoad, isQuestionnaireLoading, isLoadingS
 
     const handleSaveResponse = (id, checkedState) => {
         const index = responsesState.findIndex(response => response[id] !== undefined)
-        console.log(index)
         if (index !== -1) {
             setResponsesState([
                 ...responsesState.slice(0, index),

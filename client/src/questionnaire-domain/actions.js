@@ -32,7 +32,6 @@ export const deleteQuestionnaire = createAsyncThunk(
         const response = await fetch(`/api/questionnaire/${id}`, {
             method: "DELETE"
         });
-        console.log(response)
         const responseJson = await response.json();
         if (responseJson === "Could not delete questionnaire.") rejectWithValue(responseJson)
         return { id };

@@ -29,7 +29,6 @@ function Response({ responses, handleSaveResponse }) {
             isFirstRun.current = false;
             return;
         }
-        console.log('loading up')
         handleSaveResponse(checkedState)
     }, [checkedState])
 

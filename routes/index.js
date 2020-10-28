@@ -78,7 +78,6 @@ router.post("/new-booking", async (request, response) => {
         response.json(booking);
     }
     catch (error) {
-        console.log('error',error)
         response.status(500).json("Could not create booking.");
     }
 })
@@ -135,14 +134,12 @@ router.put('/questionnaire/:id', async (request, response) => {
 
 // delete questionnaire
 router.delete('/questionnaire/:id', async (request, response) => {
-    console.log('request.params.id', request.params.id);
     try {
         const res = await db.Questionnaire.deleteOne(
             { id: request.params.id })
         response.json(res.ok);
     }
     catch (error) {
-        console.log('error', error)
         response.status(500).json('Could not delete questionnaire.');
     }
 })
@@ -161,7 +158,6 @@ router.post('/new-screening', async (request, response) => {
 
 // dispatch screening request email to client
 router.post('/screening-request', (request, response) => {
-    console.log('request.body', request.body)
     let transporter = nodemailer.createTransport({
         host: 'smtp.mail.yahoo.com',
         port: 587,
@@ -248,8 +244,6 @@ router.patch('/screening/:_id', async (request, response) => {
 
             }
         })
-        console.log('screeningData.responses', screeningData.responses)
-        console.log('formattedQuestions', formattedQuestions)
         if (isEqual(screeningData.responses, formattedQuestions)) {
             screeningData.status = "passed"
         } else {
@@ -269,11 +263,8 @@ router.patch('/screening/:_id', async (request, response) => {
         return response.status(200).json(screeningData.status);
     }
     catch (error) {
-        console.log(error)
         return response.status(500).json("Could not update screening.")
     }
-
-
 });
 
 module.exports = router;

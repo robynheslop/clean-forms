@@ -48,7 +48,6 @@ const useStyles = makeStyles({
 function ViewClinics({ isLoadClinicsPending, handleViewBookings, handleMakeBooking, clinics }) {
     const classes = useStyles();
     const history = useHistory();
-    console.log(clinics.length)
     return (
         <Paper className={classes.root}>
             { isLoadClinicsPending ?

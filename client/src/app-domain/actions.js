@@ -12,7 +12,6 @@ export const logIn = createAsyncThunk(
             body: JSON.stringify({ username, password })
         })
         const responseJson = await response.json();
-        console.log(responseJson)
         const { token, userId } = responseJson;
         return { token, userId }; 
     }
@@ -29,7 +28,6 @@ export const signUp = createAsyncThunk(
             body: JSON.stringify({ username, password })
         })
         const responseJson = await response.json();
-        console.log(responseJson);
         if (responseJson.code) {
             return rejectWithValue(responseJson)
         }

@@ -53,7 +53,6 @@ const useStyles = makeStyles({
 })
 
 export function Questionnaire({ history, isSaveQuestionnairePending, isSaveQuestionnaireFailed, isSaveQuestionnaireSuccess, onSave, onDelete, onCancel, id, questions, owner, preText, postText, title, isEditing }) {
-    console.log('isEditing',isEditing)
     const classes = useStyles();
     const [questionsState, setQuestionsState] = useState(questions );
     const [titleState, setTitleState] = useState(title);

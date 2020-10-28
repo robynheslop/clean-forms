@@ -87,7 +87,6 @@ export function QuestionnairesList({ questionnaires, deleteQuestionnaire, isLoad
                                             <Button
                                                 
                                                 onClick={() => {
-                                                    console.log(id);
                                                     deleteQuestionnaire(id)
                                                 }}>
                                                 Delete Questionnaire

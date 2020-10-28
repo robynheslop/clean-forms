@@ -96,7 +96,6 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
     const [bookingDate, setBookingDate] = useState(moment().format("YYYY-MM-DD"));
     const [questionnaireState, setQuestionnaireState] = useState('');
     const { id, clinicName, phone, isSendScreeningFailed, isSendScreeningSuccess, isSendScreeningPending } = activeClinic;
-
     const handleChange = (event) => {
         setQuestionnaireState(event.target.value)
     }
@@ -104,7 +103,6 @@ function AddBooking({ createScreening, activeClinic, questionnaires }) {
     const handleFormSubmit = event => {
         event.preventDefault();
         event.stopPropagation();
-        console.log(bookingDate)
         createScreening({
             clinic: id,
             clinicName: clinicName,
